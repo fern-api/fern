@@ -338,6 +338,16 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "documentId": "string",
+          "eventId": "string",
+          "eventType": "document.uploaded",
+          "fileName": "string",
+          "mimeType": "string",
+          "uploadedAt": "2024-01-15T09:30:00Z",
+        },
+      ],
       "name": "DocumentUploadedEvent",
       "shape": {
         "extends": [],
@@ -443,6 +453,9 @@
       "availability": undefined,
       "description": "Type of the event",
       "displayName": undefined,
+      "examples": [
+        "document.uploaded",
+      ],
       "name": "DocumentUploadedEventEventType",
       "shape": {
         "default": undefined,
@@ -460,6 +473,15 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "amount": 1.1,
+          "createdAt": "2024-01-15T09:30:00Z",
+          "currency": "string",
+          "id": "ps_abc123",
+          "status": "pending",
+        },
+      ],
       "name": "PaymentSession",
       "shape": {
         "extends": [],
@@ -570,6 +592,20 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "eventId": "evt_xyz789",
+          "eventType": "payment_session.completed",
+          "paymentSession": {
+            "amount": 1.1,
+            "createdAt": "2024-01-15T09:30:00Z",
+            "currency": "string",
+            "id": "ps_abc123",
+            "status": "pending",
+          },
+          "timestamp": "2024-01-15T09:30:00Z",
+        },
+      ],
       "name": "PaymentSessionCompletedEvent",
       "shape": {
         "extends": [],
@@ -635,6 +671,9 @@
       "availability": undefined,
       "description": "Type of the event",
       "displayName": undefined,
+      "examples": [
+        "payment_session.completed",
+      ],
       "name": "PaymentSessionCompletedEventEventType",
       "shape": {
         "default": undefined,
@@ -652,6 +691,9 @@
       "availability": undefined,
       "description": "Current status of the payment session",
       "displayName": undefined,
+      "examples": [
+        "pending",
+      ],
       "name": "PaymentSessionStatus",
       "shape": {
         "default": undefined,
@@ -684,6 +726,9 @@
       "availability": undefined,
       "description": "Type of the event",
       "displayName": undefined,
+      "examples": [
+        "document.uploaded",
+      ],
       "name": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
       "shape": {
         "default": undefined,

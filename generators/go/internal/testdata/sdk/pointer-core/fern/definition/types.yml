@@ -1,4 +1,0 @@
-types:
-  String:
-    properties:
-      value: string

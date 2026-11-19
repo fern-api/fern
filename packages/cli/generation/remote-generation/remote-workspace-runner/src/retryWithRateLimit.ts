@@ -4,7 +4,8 @@ import { CliError } from "@fern-api/task-context";
 
 const RATE_LIMIT_INITIAL_RETRY_DELAY_MS = 2_000;
 const RATE_LIMIT_MAX_RETRY_DELAY_MS = 120_000;
-const RATE_LIMIT_MAX_RETRIES = 5;
+// About 10 minutes of total backoff, enough for Fiddle's per-org bucket to drain for a large group.
+const RATE_LIMIT_MAX_RETRIES = 10;
 const RATE_LIMIT_JITTER_FACTOR = 0.5;
 
 export class TooManyRequestsError extends Error {

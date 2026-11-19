@@ -1,3 +1,0 @@
-rootProject.name = 'java-oauth-token-optional'
-
-include 'sample-app'

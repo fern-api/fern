@@ -1,7 +1,0 @@
-import type * as SeedExhaustive from "../../../../../index.mjs";
-/**
- * Tests that map value types with unknown types don't get spurious | undefined.
- */
-export type MapOfDocumentedUnknownType = {
-    [key: string]: SeedExhaustive.types.DocumentedUnknownType;
-};

@@ -1,4 +1,5 @@
 export { CliError, resolveErrorCode, shouldReportToSentry } from "./CliError.js";
+export { InstructionsTopic } from "./InstructionsTopic.js";
 export { createMockTaskContext } from "./MockTaskContext.js";
 export { TaskAbortSignal } from "./TaskAbortSignal.js";
 export {

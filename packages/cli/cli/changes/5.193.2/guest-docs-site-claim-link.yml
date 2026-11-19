@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs --guest` prints the published site's own claim link again, next to the guest session's
+    claim link. Opening it enables the Claim button in the site's banner, which claims just the docs site into an
+    organization you administer; the session link (`Claim it to keep this work`, or `fern claim`) still claims the
+    whole session.
+  type: fix

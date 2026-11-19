@@ -164,6 +164,51 @@ describe("fern generate --docs", () => {
         return request?.body as { definition: ApiDefinition; dynamicIRs?: Record<string, { dynamicIR: unknown }> };
     }
 
+    describe("without an account, in a non-interactive run", () => {
+        let isTTY: PropertyDescriptor | undefined;
+
+        beforeEach(() => {
+            vi.stubEnv("FERN_TOKEN", "");
+            vi.stubEnv("LOCAL_STORAGE_FOLDER", ".fern-test-no-login");
+            isTTY = Object.getOwnPropertyDescriptor(process.stdout, "isTTY");
+            Object.defineProperty(process.stdout, "isTTY", { value: false, configurable: true });
+        });
+
+        afterEach(() => {
+            if (isTTY != null) {
+                Object.defineProperty(process.stdout, "isTTY", isTTY);
+            } else {
+                Reflect.deleteProperty(process.stdout, "isTTY");
+            }
+        });
+
+        it("fails on the missing account, naming --guest, before asking about the production site", async () => {
+            testProject = await fernProject({ docs: docsYml() });
+            const { cliContext, logged } = createTestCliContext();
+
+            await expect(
+                generateDocsWorkspace({
+                    project: testProject.project,
+                    cliContext,
+                    instance: undefined,
+                    preview: false,
+                    previewId: undefined,
+                    force: true,
+                    brokenLinks: false,
+                    strictBrokenLinks: false,
+                    disableTemplates: undefined,
+                    noPrompt: false,
+                    skipUpload: false
+                })
+            ).rejects.toThrow();
+
+            expect(logged("No Fern account found")).toBe(true);
+            expect(logged("rerun with --guest")).toBe(true);
+            expect(cliContext.confirmPrompt).not.toHaveBeenCalled();
+            expect(fdr.requests).toHaveLength(0);
+        });
+    });
+
     describe("for SDKs built with generators.yml", () => {
         it("asks FDR whether the SDK's dynamic IR exists, by the package and version docs.yml names", async () => {
             await run(fernProject({ docs: docsYml({ snippets: TYPESCRIPT_SNIPPETS }) }));
@@ -240,7 +285,9 @@ describe("fern generate --docs", () => {
                 fernProject({ docs: docsYml({ snippets: '    snippets:\n      python: "acme-py"\n' }) })
             );
 
-            expect(logs).toContain("warn: Failed to upload python SDK snippets because of unknown package `acme-py`.");
+            expect(logs).toContainEqual(
+                expect.stringMatching(/^warn: No python SDK snippets for package `acme-py`: no sdk-gen build was found/)
+            );
             expect(registeredApi().dynamicIRs).toBeUndefined();
         });
 
@@ -276,7 +323,7 @@ ${PYTHON_GENERATOR}`,
         });
     });
 
-    describe("with FERN_UPLOAD_SDK_GEN_SNIPPETS=true", () => {
+    describe("with SDK snippets in sdk-gen-api", () => {
         const TYPESCRIPT_BUILD = {
             sdkName: "acme",
             version: "1.0.0",
@@ -290,7 +337,6 @@ ${PYTHON_GENERATOR}`,
         }
 
         beforeEach(() => {
-            vi.stubEnv("FERN_UPLOAD_SDK_GEN_SNIPPETS", "true");
             sdkGenApi.hasBuilt(TYPESCRIPT_BUILD);
         });
 
@@ -454,18 +500,6 @@ ${PYTHON_GENERATOR}`,
 
             expect(fdr.to("POST /docs-ledger/preview/init")).toHaveLength(1);
             expect(codeSamples()).toHaveLength(1);
-        });
-    });
-
-    describe("without the flag", () => {
-        it("asks sdk-gen-api and FDR's snippet store for nothing, and adds no code", async () => {
-            sdkGenApi.hasBuilt({ sdkName: "acme", version: "1.0.0", language: "typescript", snippets: "{}" });
-
-            await run(sdkConfigProject({ snippets: TYPESCRIPT_SNIPPETS }));
-
-            expect(sdkGenApi.artifactListRequests).toEqual([]);
-            expect(fdr.to("POST /snippets/load")).toEqual([]);
-            expect(registeredApi().definition.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toBeUndefined();
         });
     });
 });

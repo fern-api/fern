@@ -158,6 +158,7 @@ function makeObjectSchema({
         additionalProperties,
         minProperties: undefined,
         maxProperties: undefined,
+        examples: undefined,
         description: undefined,
         availability: undefined,
         generatedName: "TestObject",

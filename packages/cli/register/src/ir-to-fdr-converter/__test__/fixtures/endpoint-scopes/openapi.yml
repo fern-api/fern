@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  title: Scopes API
+  version: 1.0.0
+components:
+  securitySchemes:
+    legacyApiKey:
+      type: http
+      scheme: bearer
+    oauth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            audiences:read: Read audiences
+security:
+  - legacyApiKey: []
+  - oauth: []
+paths:
+  /lists:
+    get:
+      operationId: listAudiences
+      security:
+        - legacyApiKey: []
+        - oauth:
+            - audiences:read
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string

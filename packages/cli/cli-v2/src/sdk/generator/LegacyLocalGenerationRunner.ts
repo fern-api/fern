@@ -243,8 +243,6 @@ export class LegacyLocalGenerationRunner {
             ai: args.ai,
             absolutePathToFernConfig: undefined,
             irVersionOverride: undefined,
-            shouldGenerateDynamicSnippetTests: false,
-            skipUnstableDynamicSnippetTests: true,
             inspect: false,
             skipFernignore: args.skipFernignore
         });

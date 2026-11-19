@@ -174,6 +174,29 @@ describe("buildSdkConfigIrFromSdkConfig", () => {
         }
     });
 
+    it("uses the SDK Config default when the customer omits sdkVersion", async () => {
+        const sdkConfig = await loadFixture(`
+schemaVersion: sdk-config/v1
+sdkName: Abbey Movies
+source:
+  specs:
+    - id: movies
+      type: openapi
+      path: ./openapi.yml
+targets:
+  - language: typescript
+    output:
+      delivery: files
+`);
+
+        const built = build(sdkConfig);
+
+        expect(built.success).toBe(true);
+        if (built.success) {
+            expect(built.sdkConfigIr.target.sdkVersion).toBe("1.0.0");
+        }
+    });
+
     it("omits defaulted optional fields from the generator wire payload", async () => {
         const built = build(await loadFixture());
         expect(built.success).toBe(true);

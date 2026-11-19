@@ -1,5 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Respect custom OAuth token headers and prefixes for client credentials authentication.
-  type: fix

@@ -4,7 +4,11 @@ import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { FERN_GENERATOR_LATEST_VERSION } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
-import type { SdkConfigV1, SdkConfigV1OutputConfig } from "@postman/sdk-config/sdk-config/v1";
+import type {
+    SdkConfigV1,
+    SdkConfigV1McpOutputConfig,
+    SdkConfigV1OutputConfig
+} from "@postman/sdk-config/sdk-config/v1";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { getDuplicateTargetLanguageIndexes } from "../generate/getDuplicateTargetLanguageIndexes.js";
 import { loadSdkConfigV1 } from "../generate/loadSdkConfigV1.js";
@@ -18,7 +22,7 @@ export interface SdkConfigTargetSummary {
     generator: string | undefined;
     /** The pinned `generatorVersion`, or `latest` when the target leaves it unpinned. */
     version: string;
-    output: SdkConfigV1OutputConfig | undefined;
+    output: SdkConfigV1OutputConfig | SdkConfigV1McpOutputConfig | undefined;
 }
 
 export interface SdkConfigTargetSource {

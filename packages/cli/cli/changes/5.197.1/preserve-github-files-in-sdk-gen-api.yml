@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Preserve repository files when GitHub SDK generation is routed through sdk-gen-api. The CLI now
+    forwards the configured GitHub license and supplies the runtime snippet path for GitHub outputs,
+    so LICENSE, README.md, reference.md, and CONTRIBUTING.md are generated before publishing.
+  type: fix

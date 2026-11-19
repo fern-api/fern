@@ -91,6 +91,49 @@ const DISTRIBUTION_FIELDS: Record<string, FieldTreatment> = Object.fromEntries(
     ])
 );
 
+/** OAuth flow settings the oauth rule does not write yet; dropping them would change how login behaves. */
+const OAUTH_UNMAPPED_FIELDS: Record<string, FieldTreatment> = Object.fromEntries(
+    [
+        "redirectUri",
+        "redirectUriBackupPorts",
+        "successRedirectUrl",
+        "errorRedirectUrl",
+        "authorizationParameters.*",
+        "tokenParameters.*",
+        "refreshParameters.*",
+        "deviceAuthorizationUrl",
+        "deviceAuthorizationParameters.*"
+    ].map((field) => [
+        `api.auth.schemes[].flows[].${field}`,
+        {
+            treatment: "Reject",
+            note: "Not written yet: the oauth rule does not translate this OAuth flow setting, so the login would behave differently."
+        }
+    ])
+);
+
+/** Token endpoint property names: the oauth rule infers them from RFC 6749 names, so custom ones are not honored. */
+const OAUTH_TOKEN_ENDPOINT_FIELDS: Record<string, FieldTreatment> = Object.fromEntries(
+    [
+        "token.requestProperties.clientId",
+        "token.requestProperties.clientSecret",
+        "token.requestProperties.scopes",
+        "token.responseProperties.accessToken",
+        "token.responseProperties.expiresIn",
+        "token.responseProperties.refreshToken",
+        "refresh.requestProperties.refreshToken",
+        "refresh.responseProperties.accessToken",
+        "refresh.responseProperties.expiresIn",
+        "refresh.responseProperties.refreshToken"
+    ].map((field) => [
+        `generation.language.cli.oauthTokenEndpoints.*.${field}`,
+        {
+            treatment: "Reject",
+            note: "Not written: get-token and refresh-token property names are inferred from the spec by RFC 6749 names."
+        }
+    ])
+);
+
 /**
  * Where the translation treats a field differently from the hosted bridge (see README.md). The hosted
  * table assumes sdk-gen-api owns delivery and that the generator version is pinned; locally, the translation
@@ -136,6 +179,16 @@ export const LOCAL_FIELD_ADDITIONS: Record<string, FieldTreatment> = {
     "api.auth.schemes[].flows[].clientId": {
         treatment: "Map",
         note: "`client-id` on an authorization-code OAuth scheme: the public client ID browser login sends."
+    },
+    ...OAUTH_UNMAPPED_FIELDS,
+    ...OAUTH_TOKEN_ENDPOINT_FIELDS,
+    "api.auth.schemes[].omitTokenPrefix": {
+        treatment: "Reject",
+        note: "Not written: the OAuth scheme always sends a token prefix (`token-prefix`, `Bearer` by default)."
+    },
+    "generation.language.cli.crateName": {
+        treatment: "Warn",
+        note: "Not written: the generator names the Cargo package after the binary."
     },
     "package.extraPeerDependenciesMeta.*": { treatment: "Reject", note: "npm-only; no Cargo equivalent." },
     ...Object.fromEntries(

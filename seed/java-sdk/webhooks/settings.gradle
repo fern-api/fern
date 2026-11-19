@@ -1,3 +1,0 @@
-rootProject.name = 'webhooks'
-
-include 'sample-app'

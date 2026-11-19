@@ -236,6 +236,16 @@ types:
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
+      profiles:
+        type: optional<map<string, ProfileConfig>>
+        docs: |
+          Named sets of values. Set `profile: <name>` on the site, a product, version, tab, tab variant,
+          section or page, and `${NAME}` in its pages is filled from that profile when rendered.
+          The innermost `profile:` wins; profiles never merge. Names no profile defines keep
+          today's publish-time substitution.
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
       title:
         type: optional<string>
         docs: A string that is used as the tab bar title.
@@ -354,6 +364,11 @@ types:
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<RedirectsConfiguration>
+      remote-paths:
+        type: optional<list<RemotePathConfig>>
+        docs: |
+          Path prefixes on your docs domain that Fern reverse-proxies to another HTTPS service
+          you run. Fern keeps serving the rest of the site.
 
       # validation
       check: optional<CheckConfig>
@@ -476,6 +491,15 @@ types:
           discovering the endpoint would cause confusion.
 
           @default: true
+      mcp-auth:
+        type: optional<boolean>
+        docs: |
+          Lets MCP clients sign in to this docs site's MCP server (`/_mcp/server?sign_in=true`) through
+          the site's own password, JWT or OAuth2 login, so their results include the docs that user can
+          read. Only applies to sites with one of those logins; WorkOS SSO sites offer MCP sign-in without
+          this flag. Clients that don't sign in still read the public docs.
+
+          @default: false
       vscode:
         type: optional<boolean>
         docs: |
@@ -599,6 +623,11 @@ types:
         docs: |
           Overrides the disclaimer shown in the Ask Fern chat
           (default: "Responses are generated using AI and may contain mistakes.").
+      "button-text":
+        type: optional<string>
+        docs: |
+          Overrides the "Ask AI" label on the header button and in the search dialog
+          (default: "Ask AI", translated on localized sites).
 
   AIChatLocation:
     enum:
@@ -629,6 +658,32 @@ types:
       - value: command-a
         name: command_a
 
+  ProfileConfig:
+    properties:
+      vars:
+        type: optional<ProfileVarsConfiguration>
+        docs: Values for `${NAME}` in pages that use this profile. Profile values are committed to the repo; never put secrets here.
+
+  ProfileVarsConfiguration:
+    discriminated: false
+    docs: |
+      Either an inline map of values, or one or more filepaths to YAML files containing
+      only a `vars` map. A name defined in two files is an error.
+
+      ```yaml
+      vars: ./vars/enterprise.yml
+      ```
+
+      ```yaml
+      vars:
+        - ./vars/common.yml
+        - ./vars/enterprise.yml
+      ```
+    union:
+      - map<string, string>
+      - string
+      - list<string>
+
   TabConfig:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
@@ -646,6 +701,20 @@ types:
       target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
       blog: optional<ChangelogFolderRelativePath>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
+      tab-menu:
+        type: optional<list<TabMenuEntry>>
+        docs: |
+          Turns this tab into a menu of other tabs that opens from the header tab. Entries are tabs (defined here,
+          with their pages under their own `- tab:` entry in `navigation`), `group` entries with a header and `tabs`,
+          and links. Without header tabs, the menu falls back to a selector at the top of the sidebar.
+      tab-menu-column-height:
+        type: optional<VariantsColumnHeight>
+        docs: |
+          Maximum number of items per column in this tab's header menu. `no-limit` keeps a single column.
+          Overrides `layout.tab-menu.default-column-height`. Only applies when the tab has a `tab-menu`.
 
   ChangelogFolderRelativePath:
     type: string
@@ -724,6 +793,9 @@ types:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
       display-name: string
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
       path:
         type: optional<string>
         docs: |
@@ -861,7 +933,75 @@ types:
   TabbedNavigationItemWithVariants:
     properties:
       tab: TabId
-      variants: list<TabVariant>
+      variants:
+        type: list<TabVariantItem>
+        docs: Variants shown in a selector at the top of the tab's sidebar.
+
+  TabMenuEntry:
+    discriminated: false
+    union:
+      - TabMenuTab
+      - TabMenuGroup
+      - LinkConfiguration
+
+  TabMenuGroup:
+    properties:
+      group:
+        type: string
+        docs: Header shown above this group's tabs in the menu.
+      tabs: list<TabMenuGroupItem>
+
+  TabMenuGroupItem:
+    discriminated: false
+    union:
+      - TabMenuTab
+      - LinkConfiguration
+
+  TabMenuTab:
+    docs: |
+      A tab in a tab menu. Its pages come from the `- tab:` entry with the same id in `navigation`, which has either a
+      `layout` (one sidebar) or `variants` (a selector at the top of its sidebar).
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      tab: TabId
+      display-name: string
+      subtitle: optional<string>
+      icon: optional<string>
+      slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
+      default: optional<boolean>
+
+  VariantsColumnHeight:
+    discriminated: false
+    union:
+      - VariantsColumnHeightCount
+      - literal<"no-limit">
+
+  VariantsColumnHeightCount:
+    type: integer
+    validation:
+      min: 1
+
+  TabVariantItem:
+    discriminated: false
+    union:
+      - TabVariant
+      - TabVariantGroup
+      - LinkConfiguration
+
+  TabVariantGroup:
+    properties:
+      group:
+        type: string
+        docs: Header shown above this group's items in the variant menu.
+      items: list<TabVariantGroupItem>
+
+  TabVariantGroupItem:
+    discriminated: false
+    union:
+      - TabVariant
+      - LinkConfiguration
 
   TabVariant:
     extends: [WithPermissions, WithFeatureFlags]
@@ -874,6 +1014,9 @@ types:
       skip-slug: optional<boolean>
       hidden: optional<boolean>
       default: optional<boolean>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
 
   NavigationItem:
     discriminated: false
@@ -1000,6 +1143,10 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
+      tab-menu:
+        type: optional<TabMenuLayoutConfig>
+        docs: Defaults for header tab menus.
+
       tabs-placement:
         type: optional<TabsPlacement>
         docs: |
@@ -1120,6 +1267,17 @@ types:
         docs: |
           If `current-page` is set to true, the current page is appended to the breadcrumb trail
           as a non-clickable item. Defaults to false.
+      sticky:
+        type: optional<boolean>
+        docs: |
+          If `sticky` is set to true, the breadcrumb row stays pinned below the header
+          while the page scrolls. Defaults to false.
+      disable-non-page-ancestors:
+        type: optional<boolean>
+        docs: |
+          If `disable-non-page-ancestors` is set to true, ancestors in the breadcrumb trail that
+          aren't pages (sections, API references and API packages without an overview page) are
+          shown as disabled, non-clickable items. Defaults to false.
 
   DocsSettingsConfig:
     properties:
@@ -1259,6 +1417,14 @@ types:
           facet filter, so only results from the current product are shown by
           default. Equivalent to the legacy `settings.default-search-filters`
           setting, which is preserved as an alias for backwards compatibility.
+
+          @default: false
+      popular-searches:
+        type: optional<boolean>
+        docs: |
+          If set to true, the empty search box lists the site's most popular
+          searches from the last 30 days, before the reader types. Only
+          searches that return public results are shown.
 
           @default: false
 
@@ -1598,6 +1764,9 @@ types:
       hidden: optional<boolean>
       noindex: optional<boolean>
       availability: optional<Availability>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
 
   ChangelogConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -1628,6 +1797,9 @@ types:
         docs: |
           The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
       collapsed:
         type: optional<CollapsedValue>
         docs: |
@@ -1843,7 +2015,12 @@ types:
         docs: If true, the API reference will be paginated rather than displayed in a single page (long-scrolling).
       show-scopes:
         type: optional<boolean>
-        docs: If true, appends the scopes each endpoint requires (from its `security` requirements) to the endpoint description.
+        docs: If true, lists the scopes each endpoint requires (from its `security` requirements) under each scheme in the endpoint's Authentication section.
+      types:
+        availability: in-development
+        type: optional<boolean>
+        docs: |
+          If `types` is set to true, every schema that no endpoint, webhook or WebSocket of the API references gets its own page, grouped under a `Types` section at the end of the API reference. Schemas an operation references are still documented inline on that operation's page.
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
@@ -1928,11 +2105,37 @@ types:
           (`doca_pcc_dev_get_port_counter_id` -> `docapccdevgetportcounterid`);
           `hyphenated` keeps word boundaries (`doca-pcc-dev-get-port-counter-id`).
           Changing this renames every generated page. Only valid when lang is cpp.
+      organize-by:
+        type: optional<LibraryOrganizeBy>
+        docs: |
+          `kind` (default) groups generated pages by symbol kind (functions/, structs/, ...).
+          `header` additionally writes a `headers/` folder with one page per source header
+          listing everything it declares. Only valid when lang is cpp.
+      include:
+        type: optional<list<string>>
+        docs: |
+          Files or directories to scan, relative to `input.path`. When set, only these are
+          parsed (Doxygen `INPUT`). Only valid when lang is cpp.
+      exclude:
+        type: optional<list<string>>
+        docs: |
+          Files, directories (relative to `input.path`) or glob patterns (containing `*`/`?`)
+          to leave out of the scan (Doxygen `EXCLUDE` / `EXCLUDE_PATTERNS`). Only valid when lang is cpp.
+      exclude-symbols:
+        type: optional<list<string>>
+        docs: |
+          Symbol names or patterns to leave out, e.g. `INTERNAL_*` or `detail::*`
+          (Doxygen `EXCLUDE_SYMBOLS`). Only valid when lang is cpp.
 
   LibrarySlugStyle:
     enum:
       - compact
       - hyphenated
+
+  LibraryOrganizeBy:
+    enum:
+      - kind
+      - header
 
   LibraryConfiguration:
     docs: |
@@ -2067,6 +2270,17 @@ types:
       slug: optional<string>
       hidden: optional<boolean>
       availability: optional<Availability>
+
+  TabMenuLayoutConfig:
+    properties:
+      default-column-height:
+        type: optional<VariantsColumnHeight>
+        docs: Column height for every header tab menu that doesn't set `tab-menu-column-height`.
+      interact-on-click-only:
+        type: optional<boolean>
+        docs: |
+          When true, header tab menus open and close on click only, with no open animation.
+          By default they open on hover and close when the pointer leaves the tab and menu.
 
   LinkConfiguration:
     properties:
@@ -2608,6 +2822,29 @@ types:
 
           @default: true
 
+  RemotePathConfig:
+    docs: |
+      Reverse-proxy a path prefix on your docs domain to another HTTPS service. The path matches
+      itself and everything below it on whole segments (`/ui` matches `/ui` and `/ui/settings`,
+      not `/uix`). The rest of the request path and the query string are appended to `destination`.
+
+      ```yaml
+      remote-paths:
+        - path: /ui
+          destination: https://app.example.com/ui
+      ```
+    properties:
+      path:
+        type: string
+        docs: |
+          The path prefix to proxy, relative to the site's basepath, for example `/ui`. Can't
+          overlap a docs page or a path Fern reserves (such as `/api/fern-docs` or `/_fern-files`).
+      destination:
+        type: string
+        docs: |
+          The `https` URL to proxy to, for example `https://app.example.com/ui`. Must be a public
+          hostname, not an IP address, a Fern-hosted domain, or this site's own domain.
+
   IntegrationsConfig:
     properties:
       intercom: optional<string>
@@ -2761,6 +2998,9 @@ types:
         docs: The image to display in the product card. This will override the icon field if both are set.
       versions: optional<list<VersionConfig>>
       audiences: optional<Audience>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
 
   ProductConfig:
     discriminated: false

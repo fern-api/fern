@@ -9,6 +9,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { FDR_ORIGIN } from "../../docs-theme/themeOrigin.js";
 import {
     deployHostedMcpServer,
+    describeHostedMcpAuth,
     getModuleContentType,
     getSlugValidationError,
     getToolNameValidationErrors,
@@ -638,5 +639,52 @@ describe("deployHostedMcpServer", () => {
         expect(errorText).toContain("Input validation failed");
         expect(errorText).toContain("must match /^[a-zA-Z0-9_-]{1,64}$/");
         expect(errorText).toContain("metadata.tools.29.name");
+    });
+});
+
+describe("describeHostedMcpAuth", () => {
+    const dashboardUrl = "https://dashboard.buildwithfern.com/acme/mcp/petstore";
+
+    it("says OAuth is on when the server signs callers in", () => {
+        expect(describeHostedMcpAuth({}, { mode: "oauth", issuer: "https://auth.acme.com" }, dashboardUrl)).toBe(
+            "Sign-in: OAuth with https://auth.acme.com. MCP clients sign users in when they connect."
+        );
+    });
+
+    it("points to the dashboard when the API definition declares OAuth", () => {
+        const metadata = {
+            auth: {
+                schemes: [{ type: "bearer" }],
+                required: true,
+                oauth: {
+                    schemes: [
+                        { name: "oauth", type: "oauth2", flows: { authorizationCode: {}, clientCredentials: {} } },
+                        { name: "oidc", type: "openIdConnect", openIdConnectUrl: "https://idp" }
+                    ]
+                }
+            }
+        };
+        expect(describeHostedMcpAuth(metadata, { mode: "headers" }, dashboardUrl)).toBe(
+            "OAuth detected in your API definition (authorizationCode, clientCredentials, OpenID Connect). Turn on OAuth sign-in at https://dashboard.buildwithfern.com/acme/mcp/petstore?tab=settings"
+        );
+    });
+
+    it("prints nothing without OAuth, for unrecognized schemes, or when the registry does not report sign-in", () => {
+        const declaresOAuth = { auth: { oauth: { schemes: [{ type: "oauth2", flows: { authorizationCode: {} } }] } } };
+        expect(
+            describeHostedMcpAuth({ auth: { schemes: [], required: false } }, { mode: "headers" }, dashboardUrl)
+        ).toBeUndefined();
+        expect(describeHostedMcpAuth(undefined, { mode: "headers" }, dashboardUrl)).toBeUndefined();
+        expect(
+            describeHostedMcpAuth({ auth: { oauth: { schemes: [] } } }, { mode: "headers" }, dashboardUrl)
+        ).toBeUndefined();
+        expect(
+            describeHostedMcpAuth(
+                { auth: { oauth: { schemes: [{ type: "mystery" }, 3] } } },
+                { mode: "headers" },
+                dashboardUrl
+            )
+        ).toBeUndefined();
+        expect(describeHostedMcpAuth(declaresOAuth, undefined, dashboardUrl)).toBeUndefined();
     });
 });

@@ -1,8 +1,22 @@
+import { InstructionsTopic } from "./InstructionsTopic.js";
+
 export class CliError extends Error {
     public readonly code: CliError.Code;
     public readonly docsLink?: string;
+    /** `fern instructions` topic that helps resolve this error, shown to coding agents. */
+    public readonly instructionsTopic?: InstructionsTopic;
 
-    constructor({ message, code, docsLink }: { code: CliError.Code; message?: string; docsLink?: string }) {
+    constructor({
+        message,
+        code,
+        docsLink,
+        instructionsTopic
+    }: {
+        code: CliError.Code;
+        message?: string;
+        docsLink?: string;
+        instructionsTopic?: InstructionsTopic;
+    }) {
         super(message);
 
         Object.setPrototypeOf(this, new.target.prototype);
@@ -13,6 +27,7 @@ export class CliError extends Error {
 
         this.code = code;
         this.docsLink = docsLink;
+        this.instructionsTopic = instructionsTopic;
     }
 
     public static authRequired(message?: string): CliError {
@@ -20,7 +35,8 @@ export class CliError extends Error {
             message:
                 message ??
                 "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable.",
-            code: CliError.Code.AuthError
+            code: CliError.Code.AuthError,
+            instructionsTopic: InstructionsTopic.NewSite
         });
     }
 

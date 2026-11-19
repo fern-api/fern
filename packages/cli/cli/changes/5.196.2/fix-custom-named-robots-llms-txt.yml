@@ -1,0 +1,5 @@
+- summary: |
+    Serve `agents.robots-txt`, `agents.llms-txt`, and `agents.llms-full-txt` files that are not named
+    `robots.txt`, `llms.txt`, or `llms-full.txt` (or that live in a subfolder) on the new docs hosting.
+    The configured file is now also published at its well-known path.
+  type: fix

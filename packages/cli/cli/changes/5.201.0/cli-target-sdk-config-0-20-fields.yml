@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+- summary: |
+    The `cli` target translation now knows the fields added in `@postman/sdk-config` 0.20.0. The OAuth redirect,
+    parameter and device-authorization settings, custom `oauthTokenEndpoints` property names and `omitTokenPrefix`
+    are rejected with a clear error instead of being reported as unknown; `crateName` is reported as not written.
+  type: chore

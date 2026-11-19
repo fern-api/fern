@@ -16,7 +16,7 @@ import { resolveSdkConfigGeneratorVersion } from "@fern-api/remote-workspace-run
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { loadSingleNamespaceAPIWorkspace, resolveRemoteSpecs } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
+import type { SdkConfigV1, SdkConfigV1McpOutputConfig, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 
 import { getDuplicateTargetLanguageIndexes } from "./getDuplicateTargetLanguageIndexes.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
@@ -182,7 +182,7 @@ function createGeneratorInvocation({
     name: string;
     version: string;
     language: string;
-    output: SdkConfigV1["output"];
+    output: SdkConfigV1["output"] | SdkConfigV1McpOutputConfig;
     configDirectory: string;
     local: boolean;
     sdkConfigTargetIndex: number;
@@ -211,6 +211,11 @@ function createGeneratorInvocation({
                       )
                   )
                 : undefined,
+        // A hosted MCP target has no output path: generation lands in a managed temporary directory and
+        // the generated bundle is deployed from there (see fernHostedOutputs.ts). It never combines with
+        // `--local`: the MCP language has no local (on-prem) generator, so `resolveLocalGenerator` rejects
+        // the target before this invocation is built.
+        ...(output?.delivery === "hosted" ? { fernHostedOutput: { slug: output.slug } } : {}),
         absolutePathToLocalSnippets: undefined,
         keywords: undefined,
         smartCasing: false,

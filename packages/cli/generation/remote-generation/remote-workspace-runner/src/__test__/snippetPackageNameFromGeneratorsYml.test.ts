@@ -12,7 +12,7 @@ import {
     getDocsSnippetPackageName,
     getSoleUnnamedGenerator,
     getSoleUnnamedSnippetGenerator,
-    getUnknownSnippetPackageWarningLines,
+    getUnknownSnippetPackageWarning,
     selectVersionGeneratorForSnippet
 } from "../publishDocs.js";
 
@@ -204,23 +204,15 @@ function asWorkspace(
 }
 
 describe("unknown snippet package warning", () => {
-    const base = {
-        language: "typescript",
-        packageName: "@postman-uat/pets",
-        workspaceName: undefined,
-        otherApiWorkspaceCount: 0
-    };
-
-    it("keeps the generators.yml guidance and adds nothing when the project has no sdk-config.yml", () => {
-        const lines = getUnknownSnippetPackageWarningLines({ ...base, usesSdkConfig: false });
-        expect(lines).toHaveLength(2);
-        expect(lines[0]).toContain("unknown package `@postman-uat/pets`");
-        expect(lines[1]).toContain("generators.yml");
-    });
-
-    it("says snippets are not supported for sdk-config.yml when the project uses sdk-config.yml", () => {
-        const lines = getUnknownSnippetPackageWarningLines({ ...base, usesSdkConfig: true });
-        expect(lines).toHaveLength(3);
-        expect(lines[2]).toContain("not supported for SDKs configured in sdk-config.yml");
+    it("names the language and package, and where it looked for a generator", () => {
+        const warning = getUnknownSnippetPackageWarning({
+            language: "typescript",
+            packageName: "@postman-uat/pets",
+            workspaceName: "pets",
+            otherApiWorkspaceCount: 2
+        });
+        expect(warning).toContain("No typescript SDK snippets for package `@postman-uat/pets`");
+        expect(warning).toContain("no sdk-gen build was found");
+        expect(warning).toContain("pets/generators.yml and the other 2 API workspace(s)");
     });
 });

@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedMultiUrlEnvironmentNoDefault.Test/SeedMultiUrlEnvironmentNoDefault.Test.csproj" />
-  <Project Path="src/SeedMultiUrlEnvironmentNoDefault/SeedMultiUrlEnvironmentNoDefault.csproj" />
-</Solution>

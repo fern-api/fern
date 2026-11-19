@@ -1,6 +1,0 @@
-- summary: |
-    Unknown JSON keys that match a declared property's wire name case-insensitively (e.g. `VALUE` next to
-    `value`) are no longer kept in `additionalProperties`, so they are not re-emitted on serialization where a
-    case-insensitive, last-wins decoder downstream would read them instead of the declared field. Non-colliding
-    unknown keys are still preserved and round-tripped.
-  type: fix

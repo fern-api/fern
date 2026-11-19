@@ -1,0 +1,4 @@
+- summary: |
+    A generators.yml build sent to sdk-gen-api is filed under the workspace name (`fern/apis/<name>`) when the
+    API definition carries the default name "api", so each API of an organization gets its own SDK.
+  type: fix

@@ -50,6 +50,7 @@ function createResolverWithTranslations(
         pageActions: undefined,
         pages: {},
         redirects: undefined,
+        remotePaths: undefined,
         roles: undefined,
         settings: undefined,
         theme: undefined,

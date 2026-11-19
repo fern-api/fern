@@ -1,3 +1,0 @@
-- summary: |
-    Fix duplicate root client generation that caused a lint error.
-  type: fix

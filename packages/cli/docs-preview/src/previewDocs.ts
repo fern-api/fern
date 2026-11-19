@@ -1,5 +1,5 @@
 import { getUserToken } from "@fern-api/auth";
-import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage, getProfileVarNames, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -452,7 +452,7 @@ export async function getPreviewDocsDefinition({
         const substitutedDocs = replaceEnvVariables(
             docsWithoutJsFiles,
             { onError: (e) => context.logger.error(e ?? "Unknown error during environment variable substitution") },
-            { substituteAsEmpty: true }
+            { substituteAsEmpty: true, keep: getProfileVarNames(docsWorkspace.config.profiles) }
         );
         docsDefinition = { ...substitutedDocs, jsFiles };
     }
@@ -527,7 +527,8 @@ function convertTranslatedIrToReadApi(
             graphqlOperations: spec.graphqlOperations ?? {},
             graphqlTypes: spec.graphqlTypes ?? {},
             context,
-            apiNameOverride: spec.apiName
+            apiNameOverride: spec.apiName,
+            showScopes: spec.showScopes
         }),
         FdrAPI.ApiDefinitionId(apiDefinitionId),
         new SDKSnippetHolder({
@@ -601,7 +602,8 @@ class ReferencedAPICollector {
         playgroundConfig,
         apiName,
         graphqlOperations = {},
-        graphqlTypes = {}
+        graphqlTypes = {},
+        showScopes
     }: {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
@@ -609,6 +611,7 @@ class ReferencedAPICollector {
         apiName?: string;
         graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
         graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+        showScopes?: boolean;
     }): APIDefinitionID {
         try {
             const id = uuidv4();
@@ -620,7 +623,8 @@ class ReferencedAPICollector {
                 graphqlOperations,
                 graphqlTypes,
                 context: this.context,
-                apiNameOverride: apiName
+                apiNameOverride: apiName,
+                showScopes
             });
             this.writeApis.set(id, writeApiDefinition);
 

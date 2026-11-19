@@ -1,0 +1,4 @@
+- summary: |
+    Add an optional `button-text` field to the `ai-search`/`ai-chat` docs.yml config.
+    It replaces the "Ask AI" label on the docs header button and in the search dialog.
+  type: feat

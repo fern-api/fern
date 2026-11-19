@@ -327,7 +327,11 @@ export async function writeFilesToDiskAndRunGenerator({
             rawSpecsManifest
         });
         if (!built.success) {
-            throw new CliError({ message: built.message, code: CliError.Code.ConfigError });
+            throw new CliError({
+                message: built.message,
+                code: CliError.Code.ConfigError,
+                instructionsTopic: built.instructionsTopic
+            });
         }
         for (const warning of built.warnings) {
             context.logger.warn(warning);

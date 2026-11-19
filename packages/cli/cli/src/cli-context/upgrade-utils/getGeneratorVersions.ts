@@ -1,3 +1,4 @@
+import { getToken } from "@fern-api/auth";
 import {
     addDefaultDockerOrgIfNotPresent,
     generatorsYml,
@@ -66,8 +67,11 @@ export async function getLatestGeneratorVersions({
     skipFeatureFlagRequest?: boolean;
 }): Promise<GeneratorVersions> {
     const { apiWorkspaces } = project;
-    // Lazy: only generators the flag routes through sdk-gen-api trigger a login.
-    const getSdkGenApiToken = createSdkGenApiTokenProvider(cliContext);
+    // Lazy: only generators the flag routes through sdk-gen-api trigger a login. Except at exit time: a run
+    // without an account (e.g. `fern generate --guest`) has just succeeded, so the nudge must not ask for one;
+    // sdk-gen-api version discovery is skipped instead (an unreadable token file counts as no account).
+    const hasAccount = skipFeatureFlagRequest !== true || (await getToken().catch(() => undefined)) != null;
+    const getSdkGenApiToken = hasAccount ? createSdkGenApiTokenProvider(cliContext) : undefined;
     if (apiWorkspaces.length === 1) {
         const versions: SingleApiWorkspaceGeneratorVersions = { type: "singleApi", versions: {} };
         await processGeneratorsYml({
@@ -267,7 +271,7 @@ async function lookupLatestGeneratorVersion({
     includeMajor?: boolean;
     organization: string;
     skipFeatureFlagRequest: boolean | undefined;
-    getSdkGenApiToken: GetSdkGenApiToken;
+    getSdkGenApiToken: GetSdkGenApiToken | undefined;
     context: TaskContext;
 }): Promise<string | undefined> {
     if (currentGeneratorVersion === "latest") {
@@ -279,6 +283,9 @@ async function lookupLatestGeneratorVersion({
         skipFeatureFlagRequest
     });
     if (useSdkGenApi) {
+        if (getSdkGenApiToken == null) {
+            return undefined;
+        }
         return (
             await getSdkGenApiGeneratorVersions({
                 generatorId: addDefaultDockerOrgIfNotPresent(generatorName),

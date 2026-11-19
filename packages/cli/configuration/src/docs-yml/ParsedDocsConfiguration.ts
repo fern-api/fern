@@ -41,6 +41,7 @@ export interface ParsedPageActionsConfig {
         claudeCode: boolean;
         vscode: boolean;
         mcp: boolean;
+        mcpAuth: boolean;
         custom: ParsedCustomPageAction[];
         skills: CjsFdrSdk.docs.v1.commons.PageActionOptions["skills"];
     };
@@ -58,14 +59,23 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
         | {
               prioritizeCurrentProduct: boolean | undefined;
               defaultFilterByCurrentProduct: boolean | undefined;
+              popularSearches: boolean | undefined;
               externalSitemaps: ExternalSitemap[] | undefined;
           }
         | undefined;
 }
 
+export interface ParsedProfile {
+    vars: Record<string, string>;
+}
+
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
     title: string | undefined;
+    /** `profiles:` from docs.yml: name to values for `${NAME}`. */
+    profiles?: Record<string, ParsedProfile> | undefined;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
 
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
@@ -91,6 +101,7 @@ export interface ParsedDocsConfiguration {
     /* seo */
     metadata: ParsedMetadataConfig | undefined;
     redirects: CjsFdrSdk.docs.v1.commons.RedirectConfig[] | undefined;
+    remotePaths: RemotePathConfig[] | undefined;
 
     /* branding */
     logo: Logo | undefined;
@@ -99,6 +110,8 @@ export interface ParsedDocsConfiguration {
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
+    /* layout.tab-menu defaults, resolved per tab by `resolveVariantsSettings` */
+    variantsLayout?: VariantsLayout;
     settings: ParsedDocsSettingsConfig | undefined;
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;
@@ -258,6 +271,8 @@ export interface VersionInfo
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
     availability: VersionAvailability | undefined;
     slug: string | undefined;
     hidden: boolean | undefined;
@@ -302,6 +317,8 @@ export interface InternalProduct
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     type: "internal";
     landingPage: DocsNavigationItem.Page | undefined;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
     subtitle: string | undefined;
     product: string;
     navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
@@ -336,6 +353,8 @@ export interface TabbedNavigation
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     // tab: string;
     title: string;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
     icon: string | AbsoluteFilePath | undefined;
     slug: string | undefined;
     skipUrlSlug: boolean | undefined;
@@ -368,8 +387,89 @@ export declare namespace TabbedNavigationChild {
 
     export interface Variants {
         type: "variants";
+        /** Every variant in menu order, groups flattened. */
         variants: TabVariant[];
+        /** `tab` when written as a `tab-menu` (header tab menu), `sidebar` when written as `variants`. */
+        location: VariantsLocation;
+        /** `tabs.<id>.tab-menu-column-height`. Sidebar selectors have no columns. */
+        columnHeight: VariantsColumnHeight | undefined;
+        /** Groups and links around the variants. Undefined when the list only holds variants. */
+        menu: TabVariantMenuItem[] | undefined;
     }
+}
+
+export type VariantsLocation = "tab" | "sidebar";
+
+/** `no-limit` keeps a single column; a number is the max items per column. */
+export type VariantsColumnHeight = number | "no-limit";
+
+export interface VariantsLayout {
+    /** `layout.tab-menu.default-column-height` */
+    tabMenuDefaultColumnHeight: VariantsColumnHeight | undefined;
+    /** `layout.tab-menu.interact-on-click-only` */
+    tabMenuInteractOnClickOnly: boolean | undefined;
+}
+
+export type TabVariantMenuEntry = TabVariantMenuEntry.Variant | TabVariantMenuEntry.Link;
+
+export declare namespace TabVariantMenuEntry {
+    export interface Variant {
+        type: "variant";
+        variant: TabVariant;
+    }
+
+    export interface Link {
+        type: "link";
+        title: string;
+        href: string;
+        icon: string | AbsoluteFilePath | undefined;
+        target: Target | undefined;
+    }
+}
+
+export interface TabVariantMenuGroup {
+    type: "group";
+    title: string;
+    children: TabVariantMenuEntry[];
+}
+
+export type TabVariantMenuItem = TabVariantMenuEntry | TabVariantMenuGroup;
+
+export interface ResolvedVariantsSettings {
+    location: VariantsLocation;
+    /** Max items per column; undefined means a single column. */
+    columnHeight: number | undefined;
+    /** True when `tab` was requested but the site has no header tabs, so it fell back to `sidebar`. */
+    fellBackToSidebar: boolean;
+    /** Header tab menus only: true opens on click with no animation instead of on hover. */
+    interactOnClickOnly: true | undefined;
+}
+
+/**
+ * Header tab menus: `tabs.<id>.tab-menu-column-height` > `layout.tab-menu.default-column-height` > single column.
+ * Sidebar selectors (including a tab menu that fell back without header tabs) are always one list.
+ */
+export function resolveVariantsSettings({
+    location,
+    columnHeight,
+    layout,
+    hasHeaderTabs
+}: {
+    location: VariantsLocation;
+    columnHeight: VariantsColumnHeight | undefined;
+    layout: VariantsLayout | undefined;
+    hasHeaderTabs: boolean;
+}): ResolvedVariantsSettings {
+    const fellBackToSidebar = location === "tab" && !hasHeaderTabs;
+    const effectiveLocation: VariantsLocation = fellBackToSidebar ? "sidebar" : location;
+    const height = effectiveLocation === "tab" ? (columnHeight ?? layout?.tabMenuDefaultColumnHeight) : undefined;
+    return {
+        location: effectiveLocation,
+        columnHeight: typeof height === "number" && height > 0 ? Math.floor(height) : undefined,
+        fellBackToSidebar,
+        interactOnClickOnly:
+            effectiveLocation === "tab" && layout?.tabMenuInteractOnClickOnly === true ? true : undefined
+    };
 }
 
 export interface TabVariant
@@ -383,6 +483,33 @@ export interface TabVariant
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
     default: boolean | undefined;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
+    /** A tab-menu member with its own `variants`; `layout` is then empty. */
+    nestedVariants: NestedTabVariants | undefined;
+    /** The docs.yml tab id of a tab-menu member, used for its node and variant ids instead of its title. */
+    tabId: string | undefined;
+}
+
+export interface NestedTabVariants {
+    variants: TabVariant[];
+    columnHeight: VariantsColumnHeight | undefined;
+    menu: TabVariantMenuItem[] | undefined;
+}
+
+/** Every layout under these variants, including variants nested under tab-menu members. */
+export function flattenTabVariantLayouts(variants: TabVariant[]): DocsNavigationItem[][] {
+    return variants.flatMap((variant) =>
+        variant.nestedVariants != null ? flattenTabVariantLayouts(variant.nestedVariants.variants) : [variant.layout]
+    );
+}
+
+/** These variants and every variant nested under them, outer first. */
+export function flattenNestedTabVariants(variants: TabVariant[]): TabVariant[] {
+    return variants.flatMap((variant) => [
+        variant,
+        ...(variant.nestedVariants != null ? flattenNestedTabVariants(variant.nestedVariants.variants) : [])
+    ]);
 }
 
 export type DocsNavigationItem =
@@ -399,6 +526,8 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "page";
         title: string;
+        /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+        profile?: string | undefined;
         icon: string | AbsoluteFilePath | undefined;
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
@@ -412,6 +541,8 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "section";
         title: string;
+        /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+        profile?: string | undefined;
         icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
         collapsed: boolean | "open-by-default" | undefined;
@@ -450,6 +581,7 @@ export declare namespace DocsNavigationItem {
         flattened: boolean;
         paginated: boolean;
         showScopes: boolean;
+        types: boolean;
         playground: PlaygroundSettings | undefined;
     }
 
@@ -650,6 +782,8 @@ export interface TranslationNavigationOverlay {
      * navbar links in the FDR upload for this locale.
      */
     navbarLinks: CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined;
+    /** Translated `settings.search-text` (the search bar placeholder) for this locale. */
+    searchText?: string;
 }
 
 export interface TabOverlay {
@@ -750,4 +884,10 @@ export interface VariantOverlay {
     title: string | undefined;
     subtitle: string | undefined;
     slug: string | undefined;
+}
+
+/** A docs.yml `remote-paths` entry: a path prefix reverse-proxied to an HTTPS destination. */
+export interface RemotePathConfig {
+    path: string;
+    destination: string;
 }

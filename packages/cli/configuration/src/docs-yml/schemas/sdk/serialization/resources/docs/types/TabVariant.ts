@@ -17,6 +17,7 @@ export const TabVariant: core.serialization.ObjectSchema<serializers.TabVariant.
             skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
             hidden: core.serialization.boolean().optional(),
             default: core.serialization.boolean().optional(),
+            profile: core.serialization.string().optional(),
         })
         .extend(WithPermissions)
         .extend(WithFeatureFlags);
@@ -31,5 +32,6 @@ export declare namespace TabVariant {
         "skip-slug"?: boolean | null;
         hidden?: boolean | null;
         default?: boolean | null;
+        profile?: string | null;
     }
 }

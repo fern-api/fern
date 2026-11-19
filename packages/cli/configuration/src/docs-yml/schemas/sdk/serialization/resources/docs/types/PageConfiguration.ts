@@ -19,6 +19,7 @@ export const PageConfiguration: core.serialization.ObjectSchema<
         hidden: core.serialization.boolean().optional(),
         noindex: core.serialization.boolean().optional(),
         availability: Availability.optional(),
+        profile: core.serialization.string().optional(),
     })
     .extend(WithPermissions)
     .extend(WithFeatureFlags);
@@ -32,5 +33,6 @@ export declare namespace PageConfiguration {
         hidden?: boolean | null;
         noindex?: boolean | null;
         availability?: Availability.Raw | null;
+        profile?: string | null;
     }
 }

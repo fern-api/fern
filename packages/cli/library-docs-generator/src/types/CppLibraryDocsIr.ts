@@ -211,6 +211,8 @@ export interface CppTypedefIr {
     typeInfo: CppTypeInfo | undefined;
     templateParams: CppTemplateParamIr[];
     docstring: CppDocstringIr | undefined;
+    /** `using X = T;` (true) or `typedef T X;` (false); absent from older parsers. */
+    isUsingAlias?: boolean | undefined;
 }
 
 export interface CppVariableIr {
@@ -276,6 +278,10 @@ export interface CppClassIr {
     isAbstract: boolean;
     isFinal: boolean;
     includeHeader: string | undefined;
+    /** `typedef struct X {...} X;` alias folded into this record by the parser. */
+    typedefAlias?: string | undefined;
+    /** No tag (`typedef struct { ... } X;`); `typedefAlias` is the only name. */
+    isAnonymous?: boolean | undefined;
     methods: CppFunctionIr[];
     staticMethods: CppFunctionIr[];
     friendFunctions: CppFunctionIr[];
@@ -333,4 +339,20 @@ export interface CppLibraryDocsIr {
     metadata: IrMetadata;
     rootNamespace: CppNamespaceIr;
     groups: CppGroupIr[];
+    /** Source headers and the symbols each declares (absent in IRs from older parsers). */
+    files?: CppFileIr[] | undefined;
+}
+
+/** A source header and the qualified paths of the symbols it declares. */
+export interface CppFileIr {
+    name: string;
+    path: string;
+    docstring?: CppDocstringIr | undefined;
+    includes: string[];
+    classes: string[];
+    functions: string[];
+    enums: string[];
+    typedefs: string[];
+    variables: string[];
+    macros: string[];
 }

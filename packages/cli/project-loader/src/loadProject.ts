@@ -15,7 +15,7 @@ import {
     SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext } from "@fern-api/task-context";
 import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
@@ -57,7 +57,8 @@ export async function loadProject({ context, nameOverride, ...args }: loadProjec
     const fernDirectory = await getFernDirectory(nameOverride);
     if (fernDirectory == null) {
         return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`, undefined, {
-            code: CliError.Code.ConfigError
+            code: CliError.Code.ConfigError,
+            instructionsTopic: InstructionsTopic.NewSite
         });
     }
 

@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern docs export` to download your live Fern-hosted docs as a static site (`--format html`),
+    Markdown (`--format md`) or one PDF (`--format pdf`).
+  type: feat

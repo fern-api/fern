@@ -8,6 +8,7 @@ import {
 
 import type { FernSdkGenApiPayload } from "./fernSdkGenApi.js";
 import type { FernSdkGenApiSourceArchive, FernSdkGenApiSourceManifestEntry } from "./fernSdkGenApiSourceArchive.js";
+import { toSdkGenApiTarget } from "./sdkConfigWireOutput.js";
 
 type SdkConfigSourceType = "openapi" | "asyncapi" | "graphql";
 
@@ -68,10 +69,12 @@ export function prepareFernSdkGenApiSdkConfigPayload({
         source: sdkConfigSourceFromArchive(sourceArchive)
     });
     // The injected mapper validates this as an SdkConfigV1Document. Serialize that sparse document
-    // directly because parsing it again would materialize schema defaults before transport.
+    // directly because parsing it again would materialize schema defaults before transport. A hosted
+    // MCP target is deployed by the CLI, so sdk-gen-api is sent a download for it.
+    const sdkConfig = { ...mapped.sdkConfig, targets: mapped.sdkConfig.targets.map(toSdkGenApiTarget) };
     return {
         payloadKind: "sdk-config-v1",
-        body: Buffer.from(JSON.stringify(mapped.sdkConfig), "utf8"),
+        body: Buffer.from(JSON.stringify(sdkConfig), "utf8"),
         diagnostics: mapped.diagnostics
     };
 }

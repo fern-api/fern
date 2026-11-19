@@ -1,12 +1,7 @@
 import axios from "axios";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import {
-    downloadSnippetsJson,
-    isSdkGenSnippetsEnabled,
-    parseSdkSnippetsJson,
-    SDK_GEN_SNIPPETS_ENV_VAR
-} from "../sdkGenSnippets.js";
+import { downloadSnippetsJson, parseSdkSnippetsJson } from "../sdkGenSnippets.js";
 
 vi.mock("axios");
 
@@ -15,27 +10,6 @@ const SNIPPETS_JSON = JSON.stringify({
         "/pet": { post: "client.pet.create()", put: "client.pet.update()" },
         "/pet/{petId}": { get: "client.pet.get()" }
     }
-});
-
-afterEach(() => {
-    delete process.env[SDK_GEN_SNIPPETS_ENV_VAR];
-});
-
-describe("isSdkGenSnippetsEnabled", () => {
-    it.each([
-        ["true", true],
-        [" TRUE ", true],
-        ["false", false],
-        ["1", false],
-        ["", false]
-    ])("reads %j as %s", (value, expected) => {
-        process.env[SDK_GEN_SNIPPETS_ENV_VAR] = value;
-        expect(isSdkGenSnippetsEnabled()).toBe(expected);
-    });
-
-    it("is off when the variable is unset", () => {
-        expect(isSdkGenSnippetsEnabled()).toBe(false);
-    });
 });
 
 describe("parseSdkSnippetsJson", () => {

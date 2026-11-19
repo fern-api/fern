@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate --guest` no longer prints "Authentication required. Please run 'fern login'..." after a
+    successful run. The end-of-run generator upgrade check asked sdk-gen-api for newer versions with an account
+    token; without an account it now stays quiet instead.
+  type: fix

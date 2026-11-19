@@ -118,7 +118,7 @@ Fern's CLI generator produces a standalone command-line interface for your API.
 
 | Generator ID                   | Latest Version                                                                             | Changelog                                              |
 | ------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `fernapi/fern-cli-generator`   | ![CLI Generator Version](https://img.shields.io/docker/v/fernapi/fern-cli-generator)      | [versions.yml](./generators/cli/versions.yml)          |
+| `fernapi/fern-cli-generator`   | ![CLI Generator Version](https://img.shields.io/docker/v/fernapi/fern-cli-generator)      | [Docker Hub](https://hub.docker.com/u/fernapi)          |
 
 ### Spec Generators
 
@@ -128,7 +128,7 @@ Fern's spec generators can output an OpenAPI spec.
 
 | Generator ID           | Latest Version                                                                     | Changelog                                              |
 | ---------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `fernapi/fern-openapi` | ![OpenAPI Generator Version](https://img.shields.io/docker/v/fernapi/fern-openapi) | [versions.yml](./generators/openapi/versions.yml)      |
+| `fernapi/fern-openapi` | ![OpenAPI Generator Version](https://img.shields.io/docker/v/fernapi/fern-openapi) | [Docker Hub](https://hub.docker.com/u/fernapi)      |
 
 ## 🌿 CLI Commands
 

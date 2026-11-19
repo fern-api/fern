@@ -2,9 +2,10 @@ import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { describeGuestRejection, FernToken, isGuestRejection, readGuestRejection } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
@@ -15,6 +16,7 @@ import urlJoin from "url-join";
 import { promisify } from "util";
 import { gzip } from "zlib";
 import { migrateIntermediateRepresentationForInvocation } from "./migrateIntermediateRepresentationForInvocation.js";
+import { computeGenerationProvenanceInputs } from "./provenanceInputs.js";
 import { retryWithRateLimit, TooManyRequestsError } from "./retryWithRateLimit.js";
 
 const gzipAsync = promisify(gzip);
@@ -137,7 +139,8 @@ export async function createAndStartJob({
         context,
         generatorInvocation,
         irVersionOverride,
-        specsTarGzBuffer
+        specsTarGzBuffer,
+        generatorsConfiguration: workspace.generatorsConfiguration
     });
     return job;
 }
@@ -300,14 +303,14 @@ async function createJob({
                     return context.failAndThrow(
                         describeGuestRejection({ statusCode: 403, code: undefined, message: undefined }),
                         undefined,
-                        { code: CliError.Code.AuthError }
+                        { code: CliError.Code.AuthError, instructionsTopic: InstructionsTopic.NewSite }
                     );
                 }
                 return context.failAndThrow(
                     `You do not have permission to run this generator for organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
                         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
                     undefined,
-                    { code: CliError.Code.AuthError }
+                    { code: CliError.Code.AuthError, instructionsTopic: InstructionsTopic.AccessTeam }
                 );
             },
             orgNotConfiguredForWhitelabel: () => {
@@ -335,7 +338,8 @@ async function createJob({
                     const rejection = readGuestRejection(content);
                     if (isGuestRejection(rejection)) {
                         return context.failAndThrow(describeGuestRejection(rejection), undefined, {
-                            code: CliError.Code.AuthError
+                            code: CliError.Code.AuthError,
+                            instructionsTopic: InstructionsTopic.NewSite
                         });
                     }
                 }
@@ -399,7 +403,8 @@ async function startJob({
     job,
     context,
     irVersionOverride,
-    specsTarGzBuffer
+    specsTarGzBuffer,
+    generatorsConfiguration
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -407,6 +412,7 @@ async function startJob({
     context: TaskContext;
     irVersionOverride: string | undefined;
     specsTarGzBuffer: Buffer | undefined;
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
 }): Promise<void> {
     const migratedIntermediateRepresentation = await migrateIntermediateRepresentationForInvocation({
         intermediateRepresentation,
@@ -433,6 +439,20 @@ async function startJob({
     if (specsTarGzBuffer != null) {
         formData.append("specs", specsTarGzBuffer, { filename: "specs.tar.gz", contentType: "application/gzip" });
         context.logger.debug(`Appended specs tar.gz (${specsTarGzBuffer.length} bytes)`);
+    }
+
+    try {
+        const provenanceInputs = await computeGenerationProvenanceInputs({
+            generatorsConfiguration,
+            generatorInvocation
+        });
+        formData.append("provenance", JSON.stringify(provenanceInputs), {
+            filename: "provenance.json",
+            contentType: "application/json"
+        });
+        context.logger.debug(`Appended provenance inputs for ${provenanceInputs.specs.length} spec file(s)`);
+    } catch (error) {
+        context.logger.debug(`Skipping provenance inputs: ${errorMessageOrString(error)}`);
     }
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);

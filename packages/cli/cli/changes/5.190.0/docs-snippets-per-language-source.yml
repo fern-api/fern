@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Docs can now show SDK snippets from sdk-gen for some languages and from Fern's dynamic IR for the others in
+    the same publish. A language whose snippets were read from sdk-gen no longer gets a dynamic IR built, uploaded
+    or warned about, and the publish log names the source of each language. The warning for a `snippets:` entry
+    that matched nothing no longer claims sdk-config.yml SDKs have no snippets.
+  type: feat

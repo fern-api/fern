@@ -1,7 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Fix a compile error in multipart upload requests whose property names don't round-trip
-    through the old snake_case conversion (for example `file_0` or `URLPath`). `to_multipart()`
-    now uses the same field name as the request struct instead of deriving its own.
-  type: fix

@@ -6,6 +6,7 @@ import {
     SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CODING_AGENT_SKILLS_HINT } from "@fern-api/login";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir } from "fs/promises";
@@ -13,14 +14,17 @@ import fs from "fs-extra";
 import path from "path";
 
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization.js";
+import { createProtoWorkspace } from "./createProtoWorkspace.js";
 import {
     createDefaultOpenAPIWorkspace,
     createFernWorkspace,
+    createGrpcWorkspace,
     createOpenAPIWorkspace,
     getOpenAPIFileName
 } from "./createWorkspace.js";
 import { preserveDocsSpecs, repointRelocatedSpecs } from "./docsYmlSync.js";
 import { initializeDocs } from "./initializeDocs.js";
+import { SAMPLE_GRPC_PROTO_ROOT } from "./sampleGrpcApi.js";
 
 export async function initializeAPI({
     organization,
@@ -30,6 +34,8 @@ export async function initializeAPI({
     useFernDefinition,
     useSdkConfig,
     includeDocs,
+    useGrpc = false,
+    protoPath,
     context
 }: {
     organization: string | undefined;
@@ -40,8 +46,19 @@ export async function initializeAPI({
     useSdkConfig: boolean;
     /** Whether to also initialize the docs. Only applies with `useSdkConfig`. */
     includeDocs: boolean;
+    /** Initialize a gRPC API: a sample proto service and a C# SDK. Not supported with `useSdkConfig`. */
+    useGrpc?: boolean;
+    /** A `.proto` file or directory of them to initialize a gRPC API from. Not supported with `useSdkConfig`. */
+    protoPath?: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<void> {
+    if ((useGrpc || protoPath != null) && useSdkConfig) {
+        context.failAndThrow(
+            "gRPC initialization is not supported by this version of fern init. Run `fern init --grpc` or `fern init --proto <path>` without SDK Config enabled.",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
     if (useSdkConfig && useFernDefinition) {
         context.failAndThrow(
             "Fern Definition initialization is not supported by this version of fern init. Run `fern init` to use the sample OpenAPI definition, or `fern init --openapi <path-or-url>` to use your own OpenAPI specification.",
@@ -66,7 +83,20 @@ export async function initializeAPI({
         await preserveDocsSpecs({ absolutePathToFernDirectory, taskContext: context });
     }
     const sdkName = directoryOfWorkspace === absolutePathToFernDirectory ? "api" : path.basename(directoryOfWorkspace);
-    if (relocatedOpenApiPath != null || openApiUrl != null) {
+    if (useGrpc || protoPath != null) {
+        if (protoPath != null) {
+            await createProtoWorkspace({ directoryOfWorkspace, protoPath, cliVersion: versionOfCli, context });
+        } else {
+            await createGrpcWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli, context });
+        }
+
+        context.logger.info(
+            chalk.green("Created new gRPC API: ./" + path.relative(process.cwd(), directoryOfWorkspace))
+        );
+        context.logger.info(
+            "Generate the C# SDK with `fern generate`. The proto is compiled locally with buf, which the CLI downloads on first use."
+        );
+    } else if (relocatedOpenApiPath != null || openApiUrl != null) {
         await createOpenAPIWorkspace({
             directoryOfWorkspace,
             openAPIFilePath: relocatedOpenApiPath,
@@ -96,6 +126,7 @@ export async function initializeAPI({
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
     }
 
+    let docsInitialized = false;
     // The docs cannot read an SDK Config API, so they are given its spec instead.
     if (useSdkConfig) {
         await repointRelocatedSpecs({ absolutePathToFernDirectory, taskContext: context });
@@ -107,7 +138,12 @@ export async function initializeAPI({
                 useSdkConfig,
                 openApi: openApiUrl ?? getSpecPathOfNewApi({ directoryOfWorkspace, relocatedOpenApiPath })
             });
+            docsInitialized = true;
         }
+    }
+    // initializeDocs ends with the same hint.
+    if (!docsInitialized) {
+        context.logger.info(CODING_AGENT_SKILLS_HINT);
     }
 }
 
@@ -178,7 +214,9 @@ async function getDirectoryOfNewAPIWorkspace({
             GENERATORS_CONFIGURATION_FILENAME,
             SDK_CONFIG_FILENAME,
             "openapi.yml",
-            "openapi.json"
+            "openapi.json",
+            // The proto root of a gRPC API; its generators.yml refers to it by a path relative to the workspace.
+            SAMPLE_GRPC_PROTO_ROOT
         ]) {
             const movedFile = await moveWorkspaceFileIfPresent({
                 filename,

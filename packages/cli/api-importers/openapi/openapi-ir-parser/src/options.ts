@@ -184,6 +184,13 @@ export interface ParseOpenAPIOptions {
     shouldInferDiscriminatedUnionBaseProperties: boolean;
 
     /**
+     * If true, a named object schema keeps its `example`/`examples` (or one assembled from its
+     * property-level examples) as type examples, which reach the Fern definition and the IR.
+     * Off by default so SDK and definition output do not change; the docs type pages turn it on.
+     */
+    objectSchemaExamples: boolean;
+
+    /**
      * If true, disambiguate generated request wrapper names that collide with
      * component schema names by replacing the "Request" suffix with "Body".
      * If false, keep the original "Request" suffix regardless of collisions.
@@ -291,6 +298,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     coerceConstsTo: "enums-coerceable-to-literals",
     respectByteFormat: false,
     shouldInferDiscriminatedUnionBaseProperties: false,
+    objectSchemaExamples: false,
     disambiguateRequestNames: true,
     ignoreTags: false,
     respectParameterContent: false,

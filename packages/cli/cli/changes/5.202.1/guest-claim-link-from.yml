@@ -1,0 +1,3 @@
+- summary: |
+    The claim link `fern generate --guest` prints says what the run made (`from=sdk` for an SDK run, `from=docs` for a docs publish), so claiming it lands on that page of the organization — the SDKs after an SDK run even when the organization already has docs.
+  type: fix

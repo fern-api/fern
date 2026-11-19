@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedEnum.Test/SeedEnum.Test.csproj" />
-  <Project Path="src/SeedEnum/SeedEnum.csproj" />
-</Solution>

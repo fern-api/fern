@@ -1,4 +1,0 @@
-- summary: |
-    Add `serdeLayer` config option as a positive alternative to the `noSerdeLayer` double negative.
-    When both are specified, `serdeLayer` takes precedence.
-  type: feat

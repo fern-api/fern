@@ -104,6 +104,14 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         lines.push(renderBareCodeBlock(`#include <${prefix}${cls.includeHeader}>`, "cpp"));
         lines.push("");
     }
+    // Only the C idioms `typedef struct X {...} X;` and `typedef struct {...} X;` set an alias; templates never carry one
+    if (cls.typedefAlias && !cls.name.includes("<")) {
+        const declaration = cls.isAnonymous
+            ? `typedef ${cls.kind} { ... } ${cls.typedefAlias};`
+            : `typedef ${cls.kind} ${cls.name} ${cls.typedefAlias};`;
+        lines.push(renderBareCodeBlock(declaration, "c"));
+        lines.push("");
+    }
 
     // 4. Callouts
     // Deprecated

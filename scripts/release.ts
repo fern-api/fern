@@ -485,7 +485,7 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     moveUnreleasedFiles(fullUnreleasedDir, versionDir, changes);
     console.log(`   ✅ Files moved to ${getChangelogFolder(config)}/${nextVersion}/\n`);
 
-    // Propagate changelog entries to downstream dependents (e.g. rust → cli-generator)
+    // Propagate changelog entries to downstream dependents (see `propagatesTo` in release-config.json)
     const propagatedPaths = propagateToDownstream(softwareName, nextVersion, config, changes);
 
     // Commit changes

@@ -4,7 +4,7 @@ import { replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { normalizeRepoUrlToHttps } from "@fern-api/remote-workspace-runner";
-import { CliError, TaskContext, TaskResult } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext, TaskResult } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { mkdtemp, rm } from "fs/promises";
 import { tmpdir } from "os";
@@ -94,7 +94,7 @@ export async function deployFernHostedOutputs({
         return context.failAndThrow(
             "Deploying to Fern's hosted MCP platform requires authentication. Run `fern login` or set FERN_TOKEN.",
             undefined,
-            { code: CliError.Code.AuthError }
+            { code: CliError.Code.AuthError, instructionsTopic: InstructionsTopic.NewSite }
         );
     }
     const ciSource = detectCISource();

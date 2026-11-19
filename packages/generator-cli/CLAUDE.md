@@ -21,7 +21,7 @@ pnpm turbo run dist:cli --filter @fern-api/generator-cli  # Bundle CLI
 
 generator-cli is consumed in **two ways**:
 
-1. **Inside generators** (via `generators/base`): `generators/base/package.json` depends on `"@fern-api/generator-cli": "catalog:"`. Every TypeScript-based generator that extends `AbstractGeneratorAgent` bundles generator-cli into its Docker image. The `GeneratorAgentClient` in `generators/base/src/GeneratorAgentClient.ts` imports `generateReadme`, `generateReference`, `githubPr`, and `githubPush` directly from `@fern-api/generator-cli`. This means both local and remote (Fiddle) generation flows use generator-cli — it's baked into the generator Docker images, Fiddle doesn't have its own implementation.
+1. **Inside generators** (outside this repo): the shared generator base package depends on `"@fern-api/generator-cli": "catalog:"`. Every TypeScript-based generator that extends `AbstractGeneratorAgent` bundles generator-cli into its Docker image. The `GeneratorAgentClient` in `generators/base/src/GeneratorAgentClient.ts` imports `generateReadme`, `generateReference`, `githubPr`, and `githubPush` directly from `@fern-api/generator-cli`. This means both local and remote (Fiddle) generation flows use generator-cli — it's baked into the generator Docker images, Fiddle doesn't have its own implementation.
 
 2. **Inside the Fern CLI** (for local gen with self-hosted GitHub): `packages/cli/generation/local-generation/local-workspace-runner/` imports `PostGenerationPipeline` directly via `"@fern-api/generator-cli": "workspace:*"`.
 

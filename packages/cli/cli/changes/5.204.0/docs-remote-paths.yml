@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `remote-paths` to `docs.yml`. Each entry reverse-proxies a path prefix on your docs domain
+    (for example `/ui`) to an HTTPS service you run, while Fern keeps serving the rest of the site.
+    `fern check` validates each path and destination with the new `valid-remote-paths` rule.
+  type: feat

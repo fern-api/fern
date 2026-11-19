@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vite
 
 import * as CppDocsGenerator from "../CppDocsGenerator.js";
 import * as LocalParserRunner from "../LocalParserRunner.js";
-import { runLibraryDocsGeneration, type StepWrapper } from "../orchestrate.js";
+import { renderSourceSelection, runLibraryDocsGeneration, type StepWrapper } from "../orchestrate.js";
 import * as PythonDocsGenerator from "../PythonDocsGenerator.js";
 
 vi.mock("../PythonDocsGenerator.js", async () => {
@@ -629,5 +629,31 @@ describe("runLibraryDocsGeneration", () => {
         expect(messages.some((m) => m.includes("starting generation"))).toBe(true);
         expect(messages.some((m) => m.includes("generating documentation"))).toBe(true);
         expect(messages.some((m) => m.includes("downloading generated IR"))).toBe(true);
+    });
+});
+
+describe("renderSourceSelection()", () => {
+    it("maps include/exclude/exclude-symbols to Doxyfile settings", () => {
+        expect(
+            renderSourceSelection({
+                include: ["include/pss_daemon.h", "include/pss_protocol.h"],
+                exclude: ["third_party", "*/internal/*", "*_test.h"],
+                excludeSymbols: ["PSS_DAEMON_*", "detail::*"]
+            }).split("\n")
+        ).toEqual([
+            "INPUT =",
+            'INPUT += "include/pss_daemon.h"',
+            'INPUT += "include/pss_protocol.h"',
+            'EXCLUDE += "third_party"',
+            'EXCLUDE_PATTERNS += "*/internal/*"',
+            'EXCLUDE_PATTERNS += "*_test.h"',
+            'EXCLUDE_SYMBOLS += "PSS_DAEMON_*"',
+            'EXCLUDE_SYMBOLS += "detail::*"'
+        ]);
+    });
+
+    it("renders nothing when no selection is configured", () => {
+        expect(renderSourceSelection(undefined)).toBe("");
+        expect(renderSourceSelection({ slugStyle: "compact" } as never)).toBe("");
     });
 });

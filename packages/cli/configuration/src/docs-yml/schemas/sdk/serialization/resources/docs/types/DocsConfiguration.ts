@@ -30,8 +30,10 @@ import { NavigationConfig } from "./NavigationConfig.js";
 import { PageActionsConfig } from "./PageActionsConfig.js";
 import { PageConfiguration } from "./PageConfiguration.js";
 import { ProductConfig } from "./ProductConfig.js";
+import { ProfileConfig } from "./ProfileConfig.js";
 import { ProgrammingLanguage } from "./ProgrammingLanguage.js";
 import { RedirectsConfiguration } from "./RedirectsConfiguration.js";
+import { RemotePathConfig } from "./RemotePathConfig.js";
 import { RoleId } from "./RoleId.js";
 import { TabConfig } from "./TabConfig.js";
 import { TabId } from "./TabId.js";
@@ -44,6 +46,8 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     FernDocsConfig.DocsConfiguration
 > = core.serialization.object({
     instances: core.serialization.list(DocsInstance),
+    profiles: core.serialization.record(core.serialization.string(), ProfileConfig).optional(),
+    profile: core.serialization.string().optional(),
     title: core.serialization.string().optional(),
     libraries: core.serialization.record(LibraryName, LibraryConfiguration).optional(),
     analytics: AnalyticsConfig.optional(),
@@ -69,6 +73,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: RedirectsConfiguration.optional(),
+    remotePaths: core.serialization.property("remote-paths", core.serialization.list(RemotePathConfig).optional()),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: core.serialization.string().optional(),
@@ -88,6 +93,8 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
 export declare namespace DocsConfiguration {
     export interface Raw {
         instances: DocsInstance.Raw[];
+        profiles?: Record<string, ProfileConfig.Raw> | null;
+        profile?: string | null;
         title?: string | null;
         libraries?: Record<LibraryName.Raw, LibraryConfiguration.Raw> | null;
         analytics?: AnalyticsConfig.Raw | null;
@@ -113,6 +120,7 @@ export declare namespace DocsConfiguration {
         agents?: AgentsConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectsConfiguration.Raw | null;
+        "remote-paths"?: RemotePathConfig.Raw[] | null;
         check?: CheckConfig.Raw | null;
         logo?: LogoConfiguration.Raw | null;
         favicon?: string | null;

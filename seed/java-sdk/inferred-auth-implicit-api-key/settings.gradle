@@ -1,3 +1,0 @@
-rootProject.name = 'inferred-auth-implicit-api-key'
-
-include 'sample-app'

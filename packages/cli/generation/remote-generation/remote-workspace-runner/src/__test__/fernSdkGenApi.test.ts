@@ -5,6 +5,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
 import FormData from "form-data";
+import { Transform } from "stream";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { gunzipSync, gzipSync } from "zlib";
 import {
@@ -15,6 +16,7 @@ import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
+    type FernSdkGenApiGithubOptions,
     type FernSdkGenApiPayload,
     FernSdkGenApiPreparationBatch,
     type FernSdkGenApiRequestedOutput,
@@ -47,6 +49,7 @@ import {
 } from "../runRemoteGenerationForAPIWorkspace.js";
 import { type GenerationConfigRoute, validateGeneratorConfigCompatibility } from "../sdk-gen-client/index.js";
 import { SDK_CONFIG_UNPINNED_GENERATOR_VERSION } from "../sdkConfigGeneratorVersion.js";
+import type { FernSdkGenApiProvenance } from "../sdkGenApiProvenance";
 
 const migrationMocks = vi.hoisted(() => ({
     getIrVersionForGenerator: vi.fn(),
@@ -73,6 +76,20 @@ vi.mock("@fern-api/core", async (importOriginal) => ({
     ...(await importOriginal<typeof import("@fern-api/core")>()),
     getIrVersionForGenerator: migrationMocks.getIrVersionForGenerator
 }));
+
+const zlibMocks = vi.hoisted(() => ({
+    createGunzip: vi.fn<typeof import("zlib").createGunzip>()
+}));
+
+vi.mock("zlib", async (importOriginal) => ({
+    ...(await importOriginal<typeof import("zlib")>()),
+    createGunzip: zlibMocks.createGunzip
+}));
+
+beforeEach(async () => {
+    const actualZlib = await vi.importActual<typeof import("zlib")>("zlib");
+    zlibMocks.createGunzip.mockReset().mockImplementation(actualZlib.createGunzip);
+});
 
 vi.mock("@fern-api/ir-migrations", () => ({
     migrateIntermediateRepresentationForGenerator: migrationMocks.migrateForGenerator,
@@ -134,6 +151,68 @@ const validRuntimeBundle = gzipSync(Buffer.from("runtime-bundle"));
 
 function runtimePayload(body: Buffer): FernSdkGenApiPayload {
     return { payloadKind: "fern-runtime-bundle", body };
+}
+
+/**
+ * A valid gzip stream of exactly `length` bytes that decodes to nothing, for compressed-size boundaries: an empty
+ * gzip member whose header carries a comment (FCOMMENT) padded to the requested length.
+ */
+function gzipWithExactLength(length: number): Buffer {
+    const empty = gzipSync(Buffer.alloc(0));
+    const headerBytes = 10;
+    const padded = Buffer.alloc(length, "a");
+    empty.copy(padded, 0, 0, headerBytes);
+    padded[3] = (padded[3] ?? 0) | 0x10;
+    padded[length - empty.length + headerBytes - 1] = 0;
+    empty.copy(padded, length - empty.length + headerBytes, headerBytes);
+    return padded;
+}
+
+const gzipOfOneMiBOfZeros = gzipSync(Buffer.alloc(1024 * 1024));
+// Inflating 512 MiB with real zlib takes about a second on a busy CI runner, against the 5 s default timeout.
+const REAL_ZLIB_512_MIB_DECODE_TIMEOUT_MS = 30_000;
+
+/**
+ * A gzip stream that decodes to `bytes` zero bytes. It concatenates gzip members, which gunzip decodes in order,
+ * so neither building nor decoding it holds the decoded bytes.
+ */
+function gzipOfZeros(bytes: number): Buffer {
+    const remainderBytes = bytes % (1024 * 1024);
+    return Buffer.concat([
+        ...Array.from({ length: Math.floor(bytes / (1024 * 1024)) }, () => gzipOfOneMiBOfZeros),
+        ...(remainderBytes > 0 ? [gzipSync(Buffer.alloc(remainderBytes))] : [])
+    ]);
+}
+
+const FAKE_GZIP_OF_ZEROS_PREFIX = "fake-gzip-of-zeros:";
+const zeroMiB = Buffer.alloc(1024 * 1024);
+
+/** Input for {@link decodeFakeGzipOfZeros}: stands for a gzip stream that decodes to `bytes` zero bytes. */
+function fakeGzipOfZeros(bytes: number): Buffer {
+    return Buffer.from(`${FAKE_GZIP_OF_ZEROS_PREFIX}${bytes}`);
+}
+
+/**
+ * Replaces gunzip for the multi-GiB decoded-total tests: it emits the zero bytes a {@link fakeGzipOfZeros} input
+ * stands for without inflating them, so the counter sees gigabytes of output for almost no CPU. Real zlib covers
+ * the per-bundle tests.
+ */
+function decodeFakeGzipOfZeros(): Transform {
+    return new Transform({
+        transform(chunk: Buffer, _encoding, callback) {
+            const text = chunk.toString();
+            if (!text.startsWith(FAKE_GZIP_OF_ZEROS_PREFIX)) {
+                callback(new Error("Expected a fake gzip of zeros"));
+                return;
+            }
+            for (let remainingBytes = Number(text.slice(FAKE_GZIP_OF_ZEROS_PREFIX.length)); remainingBytes > 0; ) {
+                const length = Math.min(remainingBytes, zeroMiB.length);
+                this.push(zeroMiB.subarray(0, length));
+                remainingBytes -= length;
+            }
+            callback();
+        }
+    });
 }
 
 function sdkConfigPayload(body: string): FernSdkGenApiPayload {
@@ -892,6 +971,31 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.error).toBeUndefined();
     });
 
+    it("routes legacy GitHub pull-request auto-merge through sdk-gen-api", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "3.999.999",
+                    outputMode: FernFiddle.OutputMode.githubV2(
+                        FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [] })
+                    ),
+                    raw: {
+                        name: "fernapi/fern-typescript-sdk",
+                        version: "3.999.999",
+                        github: { repository: "acme/sdk", mode: "pull-request", "auto-merge": true }
+                    }
+                })
+            ],
+            isSdkGenApiEnabled: () => true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route?.payloadKind).toBe("fern-runtime-bundle");
+        expect(result?.error).toBeUndefined();
+        expect(result?.fallbackReason).toBeUndefined();
+    });
+
     it("allows SDK Config GitHub verification through sdk-gen-api", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
@@ -921,7 +1025,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false,
-            autoMerge: true
+            skipIfNoDiff: true
         });
 
         expect(result?.error).toHaveProperty("message", expect.stringContaining("(unpinned)"));
@@ -942,8 +1046,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             }
         ],
         ["verification", { verify: true }],
-        ["skip-if-no-diff", { skipIfNoDiff: true }],
-        ["auto-merge", { autoMerge: true }]
+        ["skip-if-no-diff", { skipIfNoDiff: true }]
     ] as const)("rejects post-cutover %s before source preparation", (_name, options) => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [
@@ -956,8 +1059,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             requireEnvVars: true,
             isPreview: false,
             verify: "verify" in options ? options.verify : undefined,
-            skipIfNoDiff: "skipIfNoDiff" in options ? options.skipIfNoDiff : undefined,
-            autoMerge: "autoMerge" in options ? options.autoMerge : undefined
+            skipIfNoDiff: "skipIfNoDiff" in options ? options.skipIfNoDiff : undefined
         });
 
         expect(result?.route).toBeUndefined();
@@ -1067,12 +1169,12 @@ describe("isEligibleForFernSdkGenApi", () => {
             archive: Buffer.from("not-gzip"),
             message: "source archive is malformed gzip"
         }
-    ])("finishes local $name validation before remote mutation", ({ origin, archive, message }) => {
+    ])("finishes local $name validation before remote mutation", async ({ origin, archive, message }) => {
         const remoteMutation = vi.fn();
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", origin);
 
-        expect(() => {
-            preflightFernSdkGenApiBuild({
+        const preflightThenMutate = async () => {
+            await preflightFernSdkGenApiBuild({
                 apiName: "Petstore",
                 organization: "acme",
                 cliVersion: "0.0.0",
@@ -1085,7 +1187,9 @@ describe("isEligibleForFernSdkGenApi", () => {
                 context
             });
             remoteMutation();
-        }).toThrow(message);
+        };
+
+        await expect(preflightThenMutate()).rejects.toThrow(message);
         expect(remoteMutation).not.toHaveBeenCalled();
     });
 
@@ -1140,7 +1244,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         ).toBe(true);
     });
 
-    it("rejects non-SDK generators and unresolved SDK versions", () => {
+    it("rejects non-SDK generators and accepts omitted SDK versions", () => {
         expect(
             isEligibleForFernSdkGenApi({
                 generatorInvocation: invocation({
@@ -1156,7 +1260,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 sdkVersion: undefined,
                 specsTarGzBuffer: Buffer.from("archive")
             })
-        ).toBe(false);
+        ).toBe(true);
     });
 
     it("routes GitHub and registry output through sdk-gen-api", () => {
@@ -1282,6 +1386,126 @@ describe("isEligibleForFernSdkGenApi", () => {
                 expect(JSON.stringify(wire)).not.toContain("workflows");
             }
         });
+    });
+
+    describe("GitHub auto-merge", () => {
+        const pullRequest = FernFiddle.OutputMode.githubV2(
+            FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [] })
+        );
+        const push = FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk" }));
+        const release = FernFiddle.OutputMode.githubV2(
+            FernFiddle.GithubOutputModeV2.commitAndRelease({ owner: "acme", repo: "sdk" })
+        );
+
+        function requestFor(
+            outputMode: FernFiddle.OutputMode,
+            githubOptions?: FernSdkGenApiGithubOptions,
+            requestedOutput?: FernSdkGenApiRequestedOutput
+        ) {
+            return createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation({ outputMode }),
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive"),
+                payload: runtimePayload(validRuntimeBundle),
+                requestedOutput,
+                githubOptions
+            });
+        }
+
+        it.each([
+            ["pull-request", pullRequest, { autoMerge: true }],
+            ["push", push, {}],
+            ["release", release, {}]
+        ] as const)("sends autoMerge only with pull-request output (%s)", (mode, outputMode, autoMerge) => {
+            expect(requestFor(outputMode, { verify: true, autoMerge: true }).targets[0]?.requestedOutput).toStrictEqual(
+                {
+                    type: "github",
+                    repository: "acme/sdk",
+                    mode,
+                    verify: true,
+                    ...autoMerge
+                }
+            );
+        });
+
+        it.each([
+            ["download", FernFiddle.OutputMode.downloadFiles({})],
+            [
+                "registry publication",
+                FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "secret"
+                    })
+                )
+            ]
+        ])("never sends autoMerge with %s output", (_name, outputMode) => {
+            expect(requestFor(outputMode, { autoMerge: true })).toStrictEqual(requestFor(outputMode));
+        });
+
+        it("leaves requests without auto-merge unchanged on the wire", () => {
+            expect(requestFor(pullRequest, { verify: true, autoMerge: false })).toStrictEqual(
+                requestFor(pullRequest, { verify: true })
+            );
+            expect(requestFor(push, { verify: true, autoMerge: true })).toStrictEqual(
+                requestFor(push, { verify: true })
+            );
+            expect(requestFor(pullRequest, { autoMerge: true }).idempotencyKey).not.toBe(
+                requestFor(pullRequest).idempotencyKey
+            );
+        });
+
+        it("applies auto-merge to SDK Config pull-request output only", () => {
+            const sdkConfigOutput = (mode?: "pull-request" | "push") =>
+                requestFor(
+                    FernFiddle.OutputMode.downloadFiles({}),
+                    { autoMerge: true },
+                    { type: "github", repository: "acme/sdk", ...(mode != null ? { mode } : {}) }
+                ).targets[0]?.requestedOutput;
+
+            expect(sdkConfigOutput("pull-request")).toStrictEqual({
+                type: "github",
+                repository: "acme/sdk",
+                mode: "pull-request",
+                autoMerge: true
+            });
+            expect(sdkConfigOutput("push")).toStrictEqual({ type: "github", repository: "acme/sdk", mode: "push" });
+            expect(sdkConfigOutput()).toStrictEqual({ type: "github", repository: "acme/sdk" });
+        });
+    });
+
+    it.each([
+        ["basic", FernFiddle.GithubLicense.basic({ id: FernFiddle.GithubLicenseId.Mit })],
+        ["custom", FernFiddle.GithubLicense.custom({ contents: "ElevenLabs custom license" })]
+    ] as const)("includes a %s GitHub license in the sdk-gen-api wire request", (_kind, license) => {
+        const generatorInvocation = invocation({
+            outputMode: FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.pullRequest({
+                    owner: "acme",
+                    repo: "sdk",
+                    reviewers: [],
+                    license
+                })
+            )
+        });
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(validRuntimeBundle)
+        });
+
+        expect(mapFernSdkGenApiOutput(generatorInvocation).requestedOutput).toEqual(
+            expect.objectContaining({ license })
+        );
+        expect(request.targets[0]?.requestedOutput).toEqual(expect.objectContaining({ license }));
     });
 
     it.each([
@@ -1472,22 +1696,22 @@ describe("isEligibleForFernSdkGenApi", () => {
                 generatorInvocation: invocation(),
                 sdkVersion: "AUTO",
                 specsTarGzBuffer: Buffer.from("archive"),
-                sdkConfigRequestedOutput: { type: "github", repository: "acme/sdk" }
+                requestedOutput: { type: "github", repository: "acme/sdk" }
             })
         ).toBe(true);
     });
 
     it.each([
-        ["no SDK Config output", undefined],
+        ["no effective output", undefined],
         ["download output", { type: "download" }],
         ["direct registry output", { type: "publish", publish: { registry: "npm" } }]
-    ] as const)("rejects AUTO for %s, which would ship the placeholder version", (_case, sdkConfigRequestedOutput) => {
+    ] as const)("rejects AUTO for %s, which would ship the placeholder version", (_case, requestedOutput) => {
         expect(
             isEligibleForFernSdkGenApi({
                 generatorInvocation: invocation(),
                 sdkVersion: "AUTO",
                 specsTarGzBuffer: Buffer.from("archive"),
-                sdkConfigRequestedOutput
+                requestedOutput
             })
         ).toBe(false);
     });
@@ -1498,7 +1722,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 generatorInvocation: invocation(),
                 sdkVersion: "AUTO",
                 specsTarGzBuffer: Buffer.from("archive"),
-                sdkConfigRequestedOutput: { type: "github", repository: "acme/sdk" },
+                requestedOutput: { type: "github", repository: "acme/sdk" },
                 whitelabel: {
                     github: {
                         token: "token",
@@ -1797,6 +2021,35 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(JSON.stringify(request)).not.toContain("secret");
     });
 
+    it("sends the run's provenance with the request, outside the idempotency key", () => {
+        const generatorInvocation = invocation();
+        const build = (provenance?: FernSdkGenApiProvenance) =>
+            createFernSdkGenApiBatchRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                ...(provenance != null ? { provenance } : {}),
+                specsTarGzBuffer: Buffer.from("archive"),
+                targets: [
+                    {
+                        generatorInvocation,
+                        sdkVersion: "1.2.3",
+                        targetIdSeed: "0",
+                        payload: runtimePayload(Buffer.from("bundle-0"))
+                    }
+                ]
+            });
+        const provenance: FernSdkGenApiProvenance = {
+            git: { host: "github.com", owner: "acme", repo: "fern-config", branch: "main", commit: "abc1234" },
+            ci: { source: "github", runUrl: "https://github.com/acme/fern-config/actions/runs/42" },
+            invokedBy: "octocat"
+        };
+
+        expect(build(provenance).provenance).toEqual(provenance);
+        expect(build().provenance).toBeUndefined();
+        expect(build(provenance).idempotencyKey).toBe(build().idempotencyKey);
+    });
+
     it("maps all direct registry credential variants by target ID without leaking them into the request", () => {
         const generatorInvocations = [
             invocation({
@@ -2078,8 +2331,8 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(changedSource.idempotencyKey).not.toBe(original.idempotencyKey);
     });
 
-    it("gives every AUTO request a new idempotency key, because its result depends on the SDK repository", () => {
-        const createRequest = (sdkVersion: string) =>
+    it("gives every AUTO or omitted request a new idempotency key because its result depends on external state", () => {
+        const createRequest = (sdkVersion?: string) =>
             createFernSdkGenApiRequest({
                 apiName: "Petstore",
                 organization: "acme",
@@ -2092,6 +2345,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             });
 
         expect(createRequest("AUTO").idempotencyKey).not.toBe(createRequest("AUTO").idempotencyKey);
+        expect(createRequest().idempotencyKey).not.toBe(createRequest().idempotencyKey);
         expect(createRequest("1.2.3").idempotencyKey).toBe(createRequest("1.2.3").idempotencyKey);
     });
 
@@ -2347,6 +2601,25 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(bundle.config.output.snippetFilepath).toBeNull();
     });
 
+    it("includes the snippet file path for GitHub output without a readme block", async () => {
+        const compressed = await prepareFernSdkGenApiRuntimeBundle({
+            apiName: "Petstore",
+            organization: "acme",
+            generatorInvocation: invocation({
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "typescript-sdk" })
+                )
+            }),
+            sdkVersion: "1.2.3",
+            intermediateRepresentation: { apiName: "Petstore" } as never,
+            irVersionOverride: undefined,
+            context
+        });
+        const bundle = JSON.parse(gunzipSync(compressed).toString("utf8"));
+
+        expect(bundle.config.output.snippetFilepath).toBe("/tmp/fern-runtime/snippet.json");
+    });
+
     it("preserves trusted OIDC markers while omitting actual GitHub publish credentials", () => {
         for (const marker of ["OIDC", "<USE_OIDC>"] as const) {
             const npm = getGithubPublishConfig(
@@ -2409,7 +2682,20 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(pypiWithSecret?.type === "pypi" ? pypiWithSecret.passwordEnvironmentVariable : undefined).toBe("");
     });
 
-    it("omits credentials for registries without trusted-publishing markers", () => {
+    it("does not add a Maven signature when none is configured", () => {
+        const maven = getGithubPublishConfig(
+            FernFiddle.GithubPublishInfo.maven({
+                registryUrl: "https://central.sonatype.com/api/v1/publisher/upload",
+                coordinate: "com.acme:sdk",
+                credentials: { username: "user", password: "secret" }
+            }),
+            { omitPublishCredentials: true }
+        );
+
+        expect(maven?.type === "maven" ? maven.signature : undefined).toBeUndefined();
+    });
+
+    it("omits credentials but keeps an empty Maven signature for registries without trusted-publishing markers", () => {
         const options = { omitPublishCredentials: true };
         const maven = getGithubPublishConfig(
             FernFiddle.GithubPublishInfo.maven({
@@ -2441,7 +2727,11 @@ describe("isEligibleForFernSdkGenApi", () => {
             usernameEnvironmentVariable: "",
             passwordEnvironmentVariable: ""
         });
-        expect(maven?.type === "maven" ? maven.signature : undefined).toBeUndefined();
+        expect(maven?.type === "maven" ? maven.signature : undefined).toEqual({
+            keyIdEnvironmentVariable: "",
+            passwordEnvironmentVariable: "",
+            secretKeyEnvironmentVariable: ""
+        });
         expect(rubygems?.type === "rubygems" ? rubygems.apiKeyEnvironmentVariable : undefined).toBe("");
         expect(crates?.type === "crates" ? crates.tokenEnvironmentVariable : undefined).toBe("");
     });
@@ -2839,6 +3129,53 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(telemetry).not.toContain(credentialSecret);
         expect(telemetry).not.toContain(bearerSecret);
         expect(telemetry).not.toContain("Authorization");
+    });
+
+    it("explains an HTTP 413 from sdk-gen-api with the upload sizes the CLI computed", async () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const failures: Array<{ message: string; error: unknown; options: unknown }> = [];
+        const capturingContext = {
+            logger: { debug: vi.fn(), info: vi.fn() },
+            failAndThrow: (message: string, error: unknown, options: unknown) => {
+                failures.push({ message, error, options });
+                throw new Error(message);
+            }
+        } as never;
+        vi.spyOn(axios, "post").mockRejectedValue(
+            new AxiosError("Request failed with status code 413", "ERR_BAD_REQUEST", undefined, undefined, {
+                status: 413,
+                statusText: "Payload Too Large",
+                headers: {},
+                config: {} as never,
+                data: "<html><body>413 Request Entity Too Large</body></html>"
+            })
+        );
+
+        await expect(
+            runFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation(),
+                sdkVersion: "1.2.3",
+                token: { value: "token" } as never,
+                specsTarGzBuffer: validSourceArchive,
+                payload: runtimePayload(
+                    Buffer.concat([gzipWithExactLength(1024 * 1024), gzipOfZeros(3 * 1024 * 1024)])
+                ),
+                absolutePathToPreview: undefined,
+                context: capturingContext
+            })
+        ).rejects.toThrow("(HTTP 413)");
+
+        expect(failures).toHaveLength(1);
+        const captured = failures[0];
+        expect(captured?.message).toMatch(
+            /^Failed to submit sdk-gen-api build: the request exceeded the sdk-gen-api server's size limit \(HTTP 413\)\. Sizes computed by the CLI: multipart request 1\.\d\d MiB; source archive 0\.00 MiB; fern-runtime-bundle 0 1\.00 MiB compressed \(3\.00 MiB decoded\)\. Upgrade the Fern CLI \(`fern upgrade`\), or retry later: the server may not have rolled out larger limits yet\.$/
+        );
+        expect(captured?.message).not.toContain("<html>");
+        expect(captured?.error).toMatchObject({ name: "FernSdkGenApiSubmissionError", status: 413 });
+        expect(captured?.options).toEqual({ code: CliError.Code.ConfigError });
     });
 
     it("removes credentials, bearer tokens, and Axios request state from polling errors", async () => {
@@ -3266,11 +3603,22 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects a bundle larger than 5 MiB before submission", async () => {
+    it("accepts a bundle exactly 64 MiB compressed", async () => {
+        const bundle = gzipWithExactLength(64 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(Buffer.alloc(5 * 1024 * 1024 + 1))]
+            payloads: [runtimePayload(bundle)]
         });
-        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 5.00 MiB upload limit");
+
+        expect(bundle.length).toBe(64 * 1024 * 1024);
+        await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+
+    it("rejects a bundle one byte over 64 MiB compressed before submission", async () => {
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(Buffer.alloc(64 * 1024 * 1024 + 1))]
+        });
+        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 64.00 MiB upload limit");
         expect(post).not.toHaveBeenCalled();
     });
 
@@ -3286,58 +3634,106 @@ describe("isEligibleForFernSdkGenApi", () => {
     it("rejects a source archive larger than 25 MiB decompressed before submission", async () => {
         const { builds, post } = createPreflightBatch({
             payloads: [runtimePayload(validRuntimeBundle)],
-            specsTarGzBuffer: gzipSync(Buffer.alloc(25 * 1024 * 1024 + 1))
+            specsTarGzBuffer: gzipOfZeros(25 * 1024 * 1024 + 1)
         });
         await expect(Promise.all(builds)).rejects.toThrow("source archive is 25.00 MiB decompressed");
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("accepts a bundle exactly 100 MiB decompressed before submission", async () => {
+    it(
+        "accepts a bundle of exactly 512 MiB decompressed",
+        async () => {
+            const { builds, post } = createPreflightBatch({
+                payloads: [runtimePayload(gzipOfZeros(512 * 1024 * 1024))]
+            });
+            await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+            expect(post).toHaveBeenCalledTimes(1);
+        },
+        REAL_ZLIB_512_MIB_DECODE_TIMEOUT_MS
+    );
+
+    it(
+        "rejects a bundle one byte over 512 MiB decompressed before submission",
+        async () => {
+            const { builds, post } = createPreflightBatch({
+                payloads: [runtimePayload(gzipOfZeros(512 * 1024 * 1024 + 1))]
+            });
+            await expect(Promise.all(builds)).rejects.toThrow(
+                "fern-runtime-bundle 0 is 512.00 MiB decompressed, exceeding the 512.00 MiB decompressed limit"
+            );
+            expect(post).not.toHaveBeenCalled();
+        },
+        REAL_ZLIB_512_MIB_DECODE_TIMEOUT_MS
+    );
+
+    it(
+        "stops decoding a bundle once it passes 512 MiB decompressed",
+        async () => {
+            const { builds, post } = createPreflightBatch({
+                payloads: [runtimePayload(gzipOfZeros(16 * 1024 * 1024 * 1024))]
+            });
+            await expect(Promise.all(builds)).rejects.toThrow(
+                "fern-runtime-bundle 0 exceeds the 512.00 MiB decompressed limit"
+            );
+            expect(post).not.toHaveBeenCalled();
+        },
+        REAL_ZLIB_512_MIB_DECODE_TIMEOUT_MS
+    );
+
+    it("accepts exactly 2 GiB of decoded payloads", async () => {
+        zlibMocks.createGunzip.mockImplementation(() => decodeFakeGzipOfZeros() as never);
+        const bundle = fakeGzipOfZeros(512 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(gzipSync(Buffer.alloc(100 * 1024 * 1024)))]
+            payloads: Array.from({ length: 4 }, () => runtimePayload(bundle)),
+            specsTarGzBuffer: fakeGzipOfZeros(1024)
         });
         await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
         expect(post).toHaveBeenCalledTimes(1);
     });
 
-    it("rejects a bundle one byte over 100 MiB decompressed before submission", async () => {
+    it("accepts exactly 128 MiB of runtime bundle payloads", async () => {
+        const bundle = gzipWithExactLength(64 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(gzipSync(Buffer.alloc(100 * 1024 * 1024 + 1)))]
+            payloads: [runtimePayload(bundle), runtimePayload(bundle)]
+        });
+        await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+
+    it("rejects runtime bundle payloads one byte over 128 MiB before submission", async () => {
+        const bundle = gzipWithExactLength(64 * 1024 * 1024);
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(bundle), runtimePayload(bundle), runtimePayload(Buffer.alloc(1))]
         });
         await expect(Promise.all(builds)).rejects.toThrow(
-            "fern-runtime-bundle 0 is 100.00 MiB decompressed, exceeding the 100.00 MiB decompressed limit"
+            "runtime bundles total 128.00 MiB, exceeding the 128 MiB compressed limit"
         );
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects more than 25 MiB of runtime bundle payloads before submission", async () => {
-        const { builds, post } = createPreflightBatch({
-            payloads: Array.from({ length: 6 }, () => runtimePayload(Buffer.alloc(5 * 1024 * 1024)))
-        });
-        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 25 MiB compressed limit");
-        expect(post).not.toHaveBeenCalled();
-    });
-
-    it("accepts exactly 50 MiB of source and mixed target payload files", async () => {
+    it("accepts exactly 160 MiB of source and mixed target payload files", async () => {
         const sdkConfigPayloadBytes = 25 * 1024 * 1024;
+        const sdkConfigBody = Buffer.alloc(sdkConfigPayloadBytes);
         const remainingPayloadBytes =
-            50 * 1024 * 1024 - validSourceArchive.length - validRuntimeBundle.length - sdkConfigPayloadBytes;
+            160 * 1024 * 1024 - validSourceArchive.length - validRuntimeBundle.length - 6 * sdkConfigPayloadBytes;
         const { builds, post } = createPreflightBatch({
             payloads: [
                 runtimePayload(validRuntimeBundle),
+                ...Array.from(
+                    { length: 6 },
+                    (): FernSdkGenApiPayload => ({
+                        payloadKind: "sdk-config-v1",
+                        body: sdkConfigBody
+                    })
+                ),
                 {
                     payloadKind: "sdk-config-v1",
-                    body: Buffer.alloc(sdkConfigPayloadBytes)
-                },
-                {
-                    payloadKind: "sdk-config-v1",
-                    body: Buffer.alloc(remainingPayloadBytes)
+                    body: sdkConfigBody.subarray(0, remainingPayloadBytes)
                 }
             ],
             generatorInvocations: [
                 invocation({ version: "3.999.999" }),
-                invocation({ version: "4.0.0" }),
-                invocation({ version: "4.0.1" })
+                ...Array.from({ length: 7 }, (_, index) => invocation({ version: `4.0.${index}` }))
             ]
         });
 
@@ -3345,38 +3741,42 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).toHaveBeenCalledTimes(1);
     });
 
-    it("rejects source and mixed target payload files one byte over 50 MiB", async () => {
+    it("rejects source and mixed target payload files one byte over 160 MiB", async () => {
         const sdkConfigPayloadBytes = 25 * 1024 * 1024;
+        const sdkConfigBody = Buffer.alloc(sdkConfigPayloadBytes);
         const remainingPayloadBytes =
-            50 * 1024 * 1024 - validSourceArchive.length - validRuntimeBundle.length - sdkConfigPayloadBytes + 1;
+            160 * 1024 * 1024 - validSourceArchive.length - validRuntimeBundle.length - 6 * sdkConfigPayloadBytes + 1;
         const { builds, post } = createPreflightBatch({
             payloads: [
                 runtimePayload(validRuntimeBundle),
+                ...Array.from(
+                    { length: 6 },
+                    (): FernSdkGenApiPayload => ({
+                        payloadKind: "sdk-config-v1",
+                        body: sdkConfigBody
+                    })
+                ),
                 {
                     payloadKind: "sdk-config-v1",
-                    body: Buffer.alloc(sdkConfigPayloadBytes)
-                },
-                {
-                    payloadKind: "sdk-config-v1",
-                    body: Buffer.alloc(remainingPayloadBytes)
+                    body: sdkConfigBody.subarray(0, remainingPayloadBytes)
                 }
             ],
             generatorInvocations: [
                 invocation({ version: "3.999.999" }),
-                invocation({ version: "4.0.0" }),
-                invocation({ version: "4.0.1" })
+                ...Array.from({ length: 7 }, (_, index) => invocation({ version: `4.0.${index}` }))
             ]
         });
 
         await expect(Promise.all(builds)).rejects.toThrow(
-            "exceeding the 50 MiB in-memory upload limit; reduce the source archive size, target payload size, or number of targets"
+            "exceeding the 160 MiB in-memory upload limit; reduce the source archive size, target payload size, or number of targets"
         );
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("includes publish credentials in the 50 MiB aggregate upload limit", async () => {
-        const firstPayloadBytes = 25 * 1024 * 1024;
-        const secondPayloadBytes = 50 * 1024 * 1024 - validSourceArchive.length - firstPayloadBytes;
+    it("includes publish credentials in the 160 MiB aggregate upload limit", async () => {
+        const sdkConfigPayloadBytes = 25 * 1024 * 1024;
+        const sdkConfigBody = Buffer.alloc(sdkConfigPayloadBytes);
+        const remainingPayloadBytes = 160 * 1024 * 1024 - validSourceArchive.length - 6 * sdkConfigPayloadBytes;
         const directOutput = () =>
             FernFiddle.OutputMode.publishV2(
                 FernFiddle.PublishOutputModeV2.npmOverride({
@@ -3387,16 +3787,21 @@ describe("isEligibleForFernSdkGenApi", () => {
             );
         const { builds, post } = createPreflightBatch({
             payloads: [
-                { payloadKind: "sdk-config-v1", body: Buffer.alloc(firstPayloadBytes) },
+                ...Array.from(
+                    { length: 6 },
+                    (): FernSdkGenApiPayload => ({
+                        payloadKind: "sdk-config-v1",
+                        body: sdkConfigBody
+                    })
+                ),
                 {
                     payloadKind: "sdk-config-v1",
-                    body: Buffer.alloc(secondPayloadBytes)
+                    body: sdkConfigBody.subarray(0, remainingPayloadBytes)
                 }
             ],
-            generatorInvocations: [
-                invocation({ version: "4.0.0", outputMode: directOutput() }),
-                invocation({ version: "4.0.1", outputMode: directOutput() })
-            ]
+            generatorInvocations: Array.from({ length: 7 }, (_, index) =>
+                invocation({ version: `4.0.${index}`, outputMode: directOutput() })
+            )
         });
 
         await expect(Promise.all(builds)).rejects.toThrow(
@@ -3405,11 +3810,34 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects more than 100 MiB of decoded payloads before submission", async () => {
+    it("rejects decoded payloads one byte over 2 GiB before submission", async () => {
+        zlibMocks.createGunzip.mockImplementation(() => decodeFakeGzipOfZeros() as never);
+        const bundle = fakeGzipOfZeros(512 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
-            payloads: Array.from({ length: 5 }, () => runtimePayload(gzipSync(Buffer.alloc(21 * 1024 * 1024))))
+            payloads: [...Array.from({ length: 4 }, () => runtimePayload(bundle)), sdkConfigPayload("x")],
+            generatorInvocations: [...Array.from({ length: 4 }, () => invocation()), invocation({ version: "4.0.0" })],
+            specsTarGzBuffer: fakeGzipOfZeros(1024)
         });
-        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 100 MiB decoded limit");
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "target payloads total 2048.00 MiB, exceeding the 2048 MiB decoded limit"
+        );
+        expect(post).not.toHaveBeenCalled();
+    });
+
+    it("stops decoding a bundle once decoded payloads pass 2 GiB", async () => {
+        zlibMocks.createGunzip.mockImplementation(() => decodeFakeGzipOfZeros() as never);
+        const bundle = fakeGzipOfZeros(512 * 1024 * 1024);
+        const { builds, post } = createPreflightBatch({
+            payloads: [
+                ...Array.from({ length: 4 }, () => runtimePayload(bundle)),
+                runtimePayload(fakeGzipOfZeros(16 * 1024 * 1024 * 1024))
+            ],
+            specsTarGzBuffer: fakeGzipOfZeros(1024)
+        });
+        // The count stops one 1 MiB chunk past the exhausted budget, not at the 512 MiB per-bundle limit.
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "target payloads total 2049.00 MiB, exceeding the 2048 MiB decoded limit"
+        );
         expect(post).not.toHaveBeenCalled();
     });
 
@@ -3428,6 +3856,45 @@ describe("isEligibleForFernSdkGenApi", () => {
         });
         await expect(Promise.all(builds)).rejects.toThrow("fern-runtime-bundle 0 is malformed gzip");
         expect(post).not.toHaveBeenCalled();
+    });
+
+    it("fails closed when a gzip stream closes before it ends or errors", async () => {
+        // Destroying without an error emits only `close`, never `end` or `error`.
+        zlibMocks.createGunzip.mockImplementationOnce(
+            () =>
+                new Transform({
+                    transform(_chunk, _encoding, callback) {
+                        this.destroy();
+                        callback();
+                    }
+                }) as never
+        );
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const failures: Array<{ message: string; error: unknown }> = [];
+        const capturingContext = {
+            logger: contextLogger,
+            failAndThrow: (message: string, error: unknown) => {
+                failures.push({ message, error });
+                throw new Error(message);
+            }
+        } as never;
+
+        await expect(
+            preflightFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation(),
+                sdkVersion: "1.2.3",
+                token: { value: "token" } as never,
+                specsTarGzBuffer: validSourceArchive,
+                payload: runtimePayload(validRuntimeBundle),
+                absolutePathToPreview: undefined,
+                context: capturingContext
+            })
+        ).rejects.toThrow("sdk-gen-api source archive is malformed gzip; regenerate it and retry");
+        expect(failures).toHaveLength(1);
+        expect(failures[0]?.error).toMatchObject({ message: "gzip stream closed before decoding finished" });
     });
 
     it("accepts a serialized UTF-8 request field of exactly 1 MiB", async () => {
@@ -3456,12 +3923,26 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects a multipart body larger than 60 MiB before submission", async () => {
-        vi.spyOn(FormData.prototype, "getLengthSync").mockReturnValue(60 * 1024 * 1024 + 1);
+    it("submits a multipart body of exactly 170 MiB with a 170 MiB body cap and a 180 second timeout", async () => {
+        vi.spyOn(FormData.prototype, "getLengthSync").mockReturnValue(170 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
             payloads: [runtimePayload(validRuntimeBundle)]
         });
-        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 60 MiB limit");
+        await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+        expect(post).toHaveBeenCalledWith(
+            "https://sdk-gen-api.test/v1/fern/build",
+            expect.any(FormData),
+            expect.objectContaining({ maxBodyLength: 170 * 1024 * 1024, timeout: 180_000 })
+        );
+    });
+
+    it("rejects a multipart body one byte over 170 MiB before submission", async () => {
+        vi.spyOn(FormData.prototype, "getLengthSync").mockReturnValue(170 * 1024 * 1024 + 1);
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(validRuntimeBundle)]
+        });
+        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 170 MiB limit");
         expect(post).not.toHaveBeenCalled();
     });
 });
@@ -3689,6 +4170,20 @@ describe("fernapi/fern-mcp-server target", () => {
         expect(target?.requestedOutput).toEqual({ type: "download" });
     });
 
+    it("omits sdk.version so sdk-gen-api can resolve it server-side", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: mcpInvocation(),
+            sdkVersion: undefined,
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: sdkConfigPayload("{}")
+        });
+
+        expect(request.targets[0]?.sdk).toEqual({ name: "Petstore" });
+    });
+
     it("omits an unpinned SDK Config generator version from the wire request", () => {
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [mcpInvocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
@@ -3805,19 +4300,19 @@ describe("describeFernSdkGenApiIneligibility", () => {
     it.each([
         [
             "whitelabel before AUTO",
-            { sdkConfigRequestedOutput: github, whitelabel },
+            { requestedOutput: github, whitelabel },
             { isSdkConfigTarget: true, isPreview: false },
             "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
         ],
         [
             "AUTO for an SDK Config target without GitHub output",
-            { sdkConfigRequestedOutput: { type: "download" } },
+            { requestedOutput: { type: "download" } },
             { isSdkConfigTarget: true, isPreview: false },
             "automatic SDK versioning (--version AUTO) through sdk-gen-api requires GitHub output"
         ],
         [
             "AUTO in preview",
-            { sdkConfigRequestedOutput: { type: "download" } },
+            { requestedOutput: { type: "download" } },
             { isSdkConfigTarget: true, isPreview: true },
             "preview generation only downloads files, so it cannot use --version AUTO"
         ],
@@ -3825,7 +4320,7 @@ describe("describeFernSdkGenApiIneligibility", () => {
             "AUTO for a generators.yml group",
             {},
             { isSdkConfigTarget: false, isPreview: false },
-            "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline"
+            "automatic SDK versioning (--version AUTO) through sdk-gen-api requires GitHub output in generators.yml"
         ]
     ] as const)("explains %s", (_case, candidate, options, expected) => {
         expect(
@@ -3839,20 +4334,6 @@ describe("describeFernSdkGenApiIneligibility", () => {
                 ...options
             })
         ).toBe(expected);
-    });
-
-    it("tells the user to pass --version when the SDK version is unresolved", () => {
-        expect(
-            describeFernSdkGenApiIneligibility({
-                candidate: {
-                    generatorInvocation: invocation(),
-                    sdkVersion: undefined,
-                    specsTarGzBuffer: Buffer.from("archive")
-                },
-                isSdkConfigTarget: false,
-                isPreview: false
-            })
-        ).toBe("the SDK version could not be resolved. Pass one with --version (for example, --version 1.0.0)");
     });
 });
 
@@ -3869,7 +4350,17 @@ describe("GitHub delivery result", () => {
 
     async function runWithPublication(
         publication: Record<string, unknown> | undefined,
-        { sdkVersion = "1.2.3", actualVersion = "1.2.3" }: { sdkVersion?: string; actualVersion?: string | null } = {}
+        {
+            sdkVersion = "1.2.3",
+            actualVersion = "1.2.3",
+            autoVersionPreview = false,
+            artifactUrl = true
+        }: {
+            sdkVersion?: string;
+            actualVersion?: string | null;
+            autoVersionPreview?: boolean;
+            artifactUrl?: boolean;
+        } = {}
     ) {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
         const generatorInvocation = githubInvocation();
@@ -3893,7 +4384,7 @@ describe("GitHub delivery result", () => {
                         status: "succeeded",
                         logs: [],
                         result: {
-                            artifactUrl: "https://example.test/artifact.zip",
+                            ...(artifactUrl ? { artifactUrl: "https://example.test/artifact.zip" } : {}),
                             ...(actualVersion == null ? {} : { actualVersion })
                         },
                         ...(publication == null ? {} : { publication })
@@ -3910,6 +4401,16 @@ describe("GitHub delivery result", () => {
             token: { value: "token" } as never,
             specsTarGzBuffer: validSourceArchive,
             payload: runtimePayload(validRuntimeBundle),
+            ...(autoVersionPreview
+                ? {
+                      requestedOutput: { type: "download" } as const,
+                      autoVersionPreviewOutput: {
+                          type: "github" as const,
+                          repository: "acme/sdk",
+                          mode: "pull-request" as const
+                      }
+                  }
+                : {}),
             absolutePathToPreview: undefined,
             context
         });
@@ -3956,6 +4457,20 @@ describe("GitHub delivery result", () => {
         expect(result.actualVersion).toBeUndefined();
         expect(result.noChangesDetected).toBe(true);
         expect(contextLogger.info).not.toHaveBeenCalledWith(expect.stringContaining("new version"));
+    });
+
+    it("completes an AUTO preview with no artifact when semantic analysis finds no changes", async () => {
+        const result = await runWithPublication(githubPublication({ noChangesDetected: true }), {
+            sdkVersion: "AUTO",
+            actualVersion: null,
+            autoVersionPreview: true,
+            artifactUrl: false
+        });
+
+        expect(result.actualVersion).toBeUndefined();
+        expect(result.noChangesDetected).toBe(true);
+        expect(result.publishTarget).toBeUndefined();
+        expect(contextLogger.info).toHaveBeenCalledWith("No changes detected; there is no SDK preview to download.");
     });
 
     it("reports a skip for no changes explicitly instead of as a created pull request", async () => {
@@ -4040,8 +4555,16 @@ describe("sdk-gen-api build status polling", () => {
             }
         } as never;
         const pollTimes: number[] = [];
-        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
-        vi.spyOn(axios, "get").mockImplementation((() => {
+        // Local gzip checks finish on real I/O, so tests advance fake time only after submission.
+        let markSubmitted: () => void = () => undefined;
+        const submitted = new Promise<void>((resolve) => {
+            markSubmitted = resolve;
+        });
+        const post = vi.spyOn(axios, "post").mockImplementation((() => {
+            markSubmitted();
+            return Promise.resolve({ data: { buildId: "build-1" } });
+        }) as never);
+        const get = vi.spyOn(axios, "get").mockImplementation((() => {
             const now = Date.now();
             pollTimes.push(now);
             const target =
@@ -4060,7 +4583,7 @@ describe("sdk-gen-api build status polling", () => {
             absolutePathToPreview: undefined,
             context: capturingContext
         }).catch((error: unknown) => error);
-        return { outcome, failures, pollTimes };
+        return { outcome, failures, pollTimes, submitted, post, get };
     }
 
     beforeEach(() => {
@@ -4073,12 +4596,13 @@ describe("sdk-gen-api build status polling", () => {
     });
 
     it("finishes normally when the final poll after the deadline is terminal", async () => {
-        const { outcome, failures, pollTimes } = startBuild({
+        const { outcome, failures, pollTimes, submitted } = startBuild({
             status: "succeeded",
             logs: [],
             result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.4" }
         });
 
+        await submitted;
         await vi.advanceTimersByTimeAsync(pollTimeoutMs);
 
         await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
@@ -4086,15 +4610,254 @@ describe("sdk-gen-api build status polling", () => {
         expect(pollTimes.filter((time) => time >= pollTimeoutMs)).toEqual([pollTimeoutMs]);
     });
 
-    it("fails with a non-network error when the final poll after the deadline is not terminal", async () => {
-        const { outcome, failures, pollTimes } = startBuild({ status: "running", logs: [] });
+    it("times out each status poll after 60 seconds and the submission after 180 seconds", async () => {
+        const { outcome, submitted, post, get } = startBuild({
+            status: "succeeded",
+            logs: [],
+            result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.4" }
+        });
 
+        await submitted;
+        await vi.advanceTimersByTimeAsync(pollTimeoutMs);
+        await outcome;
+
+        expect(post).toHaveBeenCalledWith(
+            "https://sdk-gen-api.test/v1/fern/build",
+            expect.any(FormData),
+            expect.objectContaining({ timeout: 180_000 })
+        );
+        expect(get.mock.calls.length).toBeGreaterThan(1);
+        for (const [url, config] of get.mock.calls) {
+            expect(url).toBe("https://sdk-gen-api.test/v1/fern/build/build-1");
+            expect(config).toMatchObject({ timeout: 60_000 });
+        }
+    });
+
+    it("fails with a non-network error when the final poll after the deadline is not terminal", async () => {
+        const { outcome, failures, pollTimes, submitted } = startBuild({ status: "running", logs: [] });
+
+        await submitted;
         await vi.advanceTimersByTimeAsync(pollTimeoutMs);
 
         const message = "Timed out waiting for sdk-gen-api build build-1 after 18 minutes";
         await expect(outcome).resolves.toMatchObject({ message });
         expect(failures).toEqual([{ message, code: CliError.Code.InternalError }]);
         expect(pollTimes.filter((time) => time >= pollTimeoutMs)).toEqual([pollTimeoutMs]);
+    });
+});
+
+describe("sdk-gen-api build submission rate limiting", () => {
+    function rateLimited(retryAfter: string | undefined, message = "Rate limit exceeded"): AxiosError {
+        const headers = retryAfter != null ? { "retry-after": retryAfter } : {};
+        return new AxiosError("Request failed with status code 429", "ERR_BAD_REQUEST", undefined, undefined, {
+            status: 429,
+            statusText: "Too Many Requests",
+            headers,
+            config: {} as never,
+            data: { statusCode: 429, message }
+        });
+    }
+
+    function startBuild() {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "succeeded",
+                targets: [
+                    {
+                        targetId,
+                        status: "succeeded",
+                        logs: [],
+                        result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.4" }
+                    }
+                ]
+            }
+        } as never);
+        return runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context
+        }).catch((error: unknown) => error);
+    }
+
+    // Local gzip checks finish on real I/O, so tests advance fake time only after the first submission.
+    async function firstSubmission(post: { mock: { calls: unknown[] } }): Promise<void> {
+        while (post.mock.calls.length === 0) {
+            await new Promise<void>((resolve) => setImmediate(resolve));
+        }
+    }
+
+    beforeEach(() => {
+        vi.useFakeTimers({ toFake: ["setTimeout", "Date"] });
+        vi.setSystemTime(0);
+        vi.spyOn(Math, "random").mockReturnValue(0);
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    it("retries a 429 after Retry-After with a fresh multipart body and then succeeds", async () => {
+        const post = vi
+            .spyOn(axios, "post")
+            .mockRejectedValueOnce(rateLimited("60"))
+            .mockRejectedValueOnce(rateLimited("2"))
+            .mockResolvedValue({ data: { buildId: "build-1" } } as never);
+
+        const outcome = startBuild();
+        await firstSubmission(post);
+        await vi.advanceTimersByTimeAsync(59_999);
+        expect(post).toHaveBeenCalledTimes(1);
+        await vi.advanceTimersByTimeAsync(1);
+        expect(post).toHaveBeenCalledTimes(2);
+        await vi.advanceTimersByTimeAsync(2_000);
+
+        await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
+        expect(post).toHaveBeenCalledTimes(3);
+        const forms = post.mock.calls.map((call) => call[1]);
+        expect(new Set(forms).size).toBe(3);
+        expect(contextLogger.warn).toHaveBeenCalledWith(
+            "sdk-gen-api is rate limiting build submissions (429). Retrying in 60s (attempt 2/20)..."
+        );
+    });
+
+    it("backs off exponentially when a 429 has no Retry-After", async () => {
+        const post = vi
+            .spyOn(axios, "post")
+            .mockRejectedValueOnce(rateLimited(undefined))
+            .mockRejectedValueOnce(rateLimited(undefined))
+            .mockResolvedValue({ data: { buildId: "build-1" } } as never);
+
+        const outcome = startBuild();
+        await firstSubmission(post);
+        await vi.advanceTimersByTimeAsync(2_000);
+        expect(post).toHaveBeenCalledTimes(2);
+        await vi.advanceTimersByTimeAsync(3_999);
+        expect(post).toHaveBeenCalledTimes(2);
+        await vi.advanceTimersByTimeAsync(1);
+
+        await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
+        expect(post).toHaveBeenCalledTimes(3);
+    });
+
+    it("fails without waiting when Retry-After exceeds the retry budget", async () => {
+        const message = "SDK generation is temporarily unavailable. Please try again in about 10 minutes.";
+        const post = vi.spyOn(axios, "post").mockRejectedValue(rateLimited("601", message));
+
+        const outcome = await startBuild();
+
+        expect(outcome).toBeInstanceOf(Error);
+        expect((outcome as Error).message).toContain(`Failed to submit sdk-gen-api build: ${message}`);
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not retry errors other than 429", async () => {
+        const error = rateLimited("1");
+        if (error.response != null) {
+            error.response.status = 503;
+        }
+        const post = vi.spyOn(axios, "post").mockRejectedValue(error);
+
+        const outcome = await startBuild();
+
+        expect((outcome as Error).message).toContain("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe("sdk-gen-api build telemetry", () => {
+    function startBuild(instrumentPostHogEvent: ReturnType<typeof vi.fn>) {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "failed",
+                targets: [{ targetId, status: "failed", logs: [], error: { message: "Generator crashed" } }]
+            }
+        } as never);
+        const outcome = runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context: {
+                logger: contextLogger,
+                failAndThrow: (message: string) => {
+                    throw new Error(message);
+                },
+                instrumentPostHogEvent
+            } as never
+        });
+        return { outcome, targetId };
+    }
+
+    it("records the build and target IDs for each target, even when the build fails", async () => {
+        const instrumentPostHogEvent = vi.fn();
+        const { outcome, targetId } = startBuild(instrumentPostHogEvent);
+
+        await expect(outcome).rejects.toMatchObject({ message: "Generator crashed" });
+        expect(instrumentPostHogEvent).toHaveBeenCalledExactlyOnceWith({
+            orgId: "acme",
+            command: "sdk-gen-api build submitted",
+            properties: {
+                sdkGenApiBuildId: "build-1",
+                sdkGenApiTargetId: targetId,
+                sdkGenApiTargetCount: 1,
+                sdkGenApiHost: "sdk-gen-api.test",
+                apiName: "Petstore",
+                generatorName: "fernapi/fern-typescript-sdk",
+                generatorVersion: "3.86.0",
+                language: "typescript",
+                payloadKind: "fern-runtime-bundle",
+                outputMode: "download",
+                sdkName: "Petstore",
+                sdkVersion: "1.2.3"
+            }
+        });
+    });
+
+    it("does not fail the build when telemetry throws", async () => {
+        const instrumentPostHogEvent = vi.fn(() => {
+            throw new Error("posthog unavailable");
+        });
+        const { outcome } = startBuild(instrumentPostHogEvent);
+
+        await expect(outcome).rejects.toMatchObject({ message: "Generator crashed" });
+        expect(instrumentPostHogEvent).toHaveBeenCalledOnce();
     });
 });
 

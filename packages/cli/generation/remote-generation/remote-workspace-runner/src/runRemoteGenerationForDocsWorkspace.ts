@@ -8,7 +8,6 @@ import { stripCustomDomainProtocol, validateBasepathAlignment } from "./customDo
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { fetchGuestDocsSite, getFdrOrigin } from "./guestDocsSite.js";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
-import { checkCustomDomainsNotOnVercel } from "./vercelDomainCheck.js";
 
 const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
     1 * 60 * 1000, // 1 minute
@@ -30,7 +29,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     organization,
     apiWorkspaces,
     ossWorkspaces,
-    usesSdkConfig,
     sdkNames,
     docsWorkspace,
     context,
@@ -44,13 +42,12 @@ export async function runRemoteGenerationForDocsWorkspace({
     ciSource,
     deployerAuthor,
     loginCommand,
-    docsVisibility
+    docsVisibility,
+    uploadSource = false
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
-    /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
-    usesSdkConfig?: boolean;
     /** The `sdkName` of each language's SDK in the sdk-config.yml, used to find its build for the SDK snippets. */
     sdkNames?: Record<string, string[]>;
     docsWorkspace: DocsWorkspace;
@@ -71,6 +68,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     loginCommand?: string;
     /** Which `x-twilio.docsVisibility` tiers to publish; defaults to `public`. */
     docsVisibility?: VisibilityFilter;
+    /** With a guest token: send the `fern/` folder with the publish (`--guest`, unless `--no-source`). */
+    uploadSource?: boolean;
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -158,7 +157,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     }
 
     validateBasepathAlignment(publishUrl, customDomains, context);
-    await checkCustomDomainsNotOnVercel({ customDomains, context });
 
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${publishUrl}`);
     context.logger.debug(
@@ -178,7 +176,6 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context,
                 apiWorkspaces,
                 ossWorkspaces,
-                usesSdkConfig,
                 sdkNames,
                 preview,
                 previewId,
@@ -197,6 +194,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 deployerAuthor,
                 loginCommand,
                 multiSource: maybeInstance.multiSource ?? false,
+                uploadSource: uploadSource && publishesToGuestDropSite,
                 docsVisibility
             });
 

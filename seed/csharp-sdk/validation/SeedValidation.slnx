@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedValidation.Test/SeedValidation.Test.csproj" />
-  <Project Path="src/SeedValidation/SeedValidation.csproj" />
-</Solution>

@@ -11,6 +11,7 @@ import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks }
 import {
     assertNever,
     extractErrorMessage,
+    getProfileVarNames,
     isNonNullish,
     replaceEnvVariables,
     visitDiscriminatedUnion
@@ -70,24 +71,27 @@ interface DocsTranslationsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.DocsConfig includes the translations and embedding fields.
+// DocsV1Write.DocsConfig includes the translations, embedding and remotePaths fields.
 interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
     embedding: { allowedOrigins: string[] } | undefined;
+    remotePaths: docsYml.RemotePathConfig[] | undefined;
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.AIChatConfig includes the maskPii and disclaimer fields.
+// DocsV1Write.AIChatConfig includes the maskPii, disclaimer and buttonText fields.
 type AIChatConfigWithUnpublishedFields = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
     maskPii?: boolean;
     disclaimer?: string;
+    buttonText?: string;
 };
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
-import { appendRequiredScopesToEndpointDocs } from "./utils/appendRequiredScopesToEndpointDocs.js";
+import { type ProfileVarsScope } from "./ProfileVarsScope.js";
 import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
+import { collectInlineTypeIds } from "./utils/collectInlineTypeIds.js";
 import { collectMdxComponentFiles } from "./utils/collectMdxComponentFiles.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
@@ -98,6 +102,25 @@ import { mapWithConcurrency } from "./utils/mapWithConcurrency.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 import { wrapWithHttps } from "./wrapWithHttps.js";
+
+// Variant selector fields from fern-platform's `VariantedNode`. Remove once the
+// published @fern-api/fdr-sdk includes them.
+type VariantMenuEntry =
+    | { type: "variant"; variantId: FernNavigation.V1.VariantId }
+    | {
+          type: "link";
+          title: string;
+          icon: string | undefined;
+          url: FernNavigation.V1.Url;
+          target: FernNavigation.V1.LinkTarget | undefined;
+      };
+type VariantMenuItem = VariantMenuEntry | { type: "group"; title: string; children: VariantMenuEntry[] };
+export interface VariantedNodeWithMenu extends FernNavigation.V1.VariantedNode {
+    location?: "tab";
+    columnHeight?: number;
+    interactOnClickOnly?: boolean;
+    menu?: VariantMenuItem[];
+}
 
 dayjs.extend(utc);
 
@@ -124,6 +147,8 @@ export type RegisterApiFn = (opts: {
     workspace?: FernWorkspace;
     graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+    /** Include each endpoint's required scopes in its auth requirements (`show-scopes` in docs.yml). */
+    showScopes?: boolean;
 }) => AsyncOrSync<string>;
 
 /** Called as each API's IR is built during navigation, before its deferred registration. */
@@ -148,6 +173,7 @@ export interface TranslatedApiSpec {
     apiName?: string;
     graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+    showScopes?: boolean;
     /**
      * The base API's Fern workspace, reused as-is when registering the translated
      * definition for production publishing (it carries the generators.yml config and
@@ -223,6 +249,53 @@ export interface DocsDefinitionResolverArgs {
     cliVersion?: string;
     /** CLI name, used only in workspace-loading diagnostics. Defaults to "fern". */
     cliName?: string;
+}
+
+/** `${NAME}` or `\\$\\{NAME\\}`: every form the renderer treats as a reference. */
+const PROFILE_VAR_REFERENCE = /\$\\?\{(\w+)\\?\}/g;
+
+/** Maps every docs.yml navigation item to its innermost `profile:` (its own, else its parent's). */
+function indexProfiles(roots: unknown[], siteProfile: string | undefined): WeakMap<object, string | undefined> {
+    const index = new WeakMap<object, string | undefined>();
+    const walk = (value: unknown, inherited: string | undefined): void => {
+        if (Array.isArray(value)) {
+            for (const child of value) {
+                walk(child, inherited);
+            }
+            return;
+        }
+        if (value == null || typeof value !== "object" || index.has(value)) {
+            return;
+        }
+        const profile = "profile" in value && typeof value.profile === "string" ? value.profile : inherited;
+        index.set(value, profile);
+        for (const child of Object.values(value)) {
+            walk(child, profile);
+        }
+    };
+    for (const root of roots) {
+        walk(root, siteProfile);
+    }
+    return index;
+}
+
+function collectStrings(value: unknown): string[] {
+    if (typeof value === "string") {
+        return [value];
+    }
+    if (Array.isArray(value)) {
+        return value.flatMap(collectStrings);
+    }
+    return value != null && typeof value === "object" ? Object.values(value).flatMap(collectStrings) : [];
+}
+
+function namesUsed(sources: (string | undefined)[]): Set<string> {
+    return new Set(
+        sources
+            .filter(isNonNullish)
+            .flatMap((text) => Array.from(text.matchAll(PROFILE_VAR_REFERENCE), (match) => match[1]))
+            .filter(isNonNullish)
+    );
 }
 
 export class DocsDefinitionResolver {
@@ -488,6 +561,7 @@ export class DocsDefinitionResolver {
         workspace?: FernWorkspace;
         graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
         graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+        showScopes?: boolean;
         tempApiDefinitionId: string;
         apiReferenceNode: FernNavigation.V1.ApiReferenceNode;
         /**
@@ -757,7 +831,8 @@ export class DocsDefinitionResolver {
                             apiName: pending.apiName,
                             workspace: sourceFiles,
                             graphqlOperations: pending.graphqlOperations,
-                            graphqlTypes: pending.graphqlTypes
+                            graphqlTypes: pending.graphqlTypes,
+                            showScopes: pending.showScopes
                         })
                     )
                     .digest("hex");
@@ -780,7 +855,8 @@ export class DocsDefinitionResolver {
                         apiName: pending.apiName,
                         workspace: pending.workspace,
                         graphqlOperations: pending.graphqlOperations,
-                        graphqlTypes: pending.graphqlTypes
+                        graphqlTypes: pending.graphqlTypes,
+                        showScopes: pending.showScopes
                     })
             );
             const apiDefinitionIdsByRegistration = new Map(
@@ -818,6 +894,7 @@ export class DocsDefinitionResolver {
                             apiName: pending.apiName,
                             graphqlOperations: pending.graphqlOperations,
                             graphqlTypes: pending.graphqlTypes,
+                            showScopes: pending.showScopes,
                             workspace: pending.workspace
                         });
                     }
@@ -872,7 +949,15 @@ export class DocsDefinitionResolver {
 
         this.taskContext.logger.debug("Converting docs configuration...");
         const configStart = performance.now();
-        const config = await this.convertDocsConfiguration(root);
+        // The root carries the site profile's values for navbar, announcement, footer and other site strings.
+        const { root: configRoot, ...siteConfig } = await this.convertDocsConfiguration(root);
+        const siteProfileVars = this.profileScope(this.parsedDocsConfig.profile).forNode({
+            texts: [...collectStrings(siteConfig), configRoot?.title]
+        });
+        const config: DocsV1Write.DocsConfig = {
+            ...siteConfig,
+            root: configRoot != null ? { ...configRoot, ...siteProfileVars } : configRoot
+        };
         const configTime = performance.now() - configStart;
         this.taskContext.logger.debug(`Converted docs configuration in ${configTime.toFixed(0)}ms`);
 
@@ -1119,7 +1204,8 @@ export class DocsDefinitionResolver {
                               title: ds.title
                           })),
                           maskPii: this.parsedDocsConfig.aiChatConfig.maskPii,
-                          disclaimer: this.parsedDocsConfig.aiChatConfig.disclaimer
+                          disclaimer: this.parsedDocsConfig.aiChatConfig.disclaimer,
+                          buttonText: this.parsedDocsConfig.aiChatConfig.buttonText
                       } as AIChatConfigWithUnpublishedFields as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
@@ -1181,6 +1267,7 @@ export class DocsDefinitionResolver {
                     : undefined,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
+            remotePaths: this.parsedDocsConfig.remotePaths,
             integrations,
             footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
                 ...footerLink,
@@ -1471,7 +1558,7 @@ export class DocsDefinitionResolver {
                                 generateV1Examples: false,
                                 logWarnings: false
                             },
-                            { docsVisibility: this.docsVisibility }
+                            { docsVisibility: this.docsVisibility, objectSchemaExamples: item.types === true }
                         );
                     } catch (error) {
                         this.taskContext.logger.warn(
@@ -1644,6 +1731,76 @@ export class DocsDefinitionResolver {
         });
     }
 
+    #profileIndex: WeakMap<object, string | undefined> | undefined;
+
+    /** The innermost `profile:` above a docs.yml item: page, section, tab variant, tab, version, product, site. */
+    private profileOf(item: object): string | undefined {
+        this.#profileIndex ??= indexProfiles(
+            [this.parsedDocsConfig.navigation, this.parsedDocsConfig.landingPage],
+            this.parsedDocsConfig.profile
+        );
+        if (!this.#profileIndex.has(item)) {
+            throw new Error("Internal error: docs.yml item missing from the profile index (copied before lookup?)");
+        }
+        return this.#profileIndex.get(item);
+    }
+
+    /** Profile values for nodes under one profile, limited per node to the names it uses. */
+    private profileScope(profile: string | undefined): ProfileVarsScope {
+        return {
+            forNode: ({ texts = [], absolutePath, pageProfile }) => {
+                const scopeVars = this.scopeProfileVars(pageProfile ?? profile);
+                // Translations share the page's nav node, so their references count too.
+                const relativePath = absolutePath != null ? this.toRelativeFilepath(absolutePath) : undefined;
+                const pageSources =
+                    relativePath != null
+                        ? [
+                              this.parsedDocsConfig.pages[relativePath],
+                              ...Object.values(this.parsedDocsConfig.translationPages ?? {}).map(
+                                  (pages) => pages[relativePath]
+                              )
+                          ]
+                        : [];
+                const used = namesUsed([...texts, ...pageSources]);
+                const vars = Object.entries(scopeVars).filter(([varName]) => used.has(varName));
+                return vars.length > 0 ? { profileVars: Object.fromEntries(vars) } : {};
+            }
+        };
+    }
+
+    /** Profile values for a docs.yml item's nav node: names in `texts` or in the page at `absolutePath`. */
+    private profileVarsOf(
+        item: object,
+        args: { texts?: (string | undefined)[]; absolutePath?: AbsoluteFilePath }
+    ): { profileVars?: Record<string, string> } {
+        return this.profileScope(this.profileOf(item)).forNode(args);
+    }
+
+    /**
+     * Values of profile-owned names for one profile: its vars, then CI for names it lacks.
+     * Publish skips every profile-owned name, so CI fills them here, even with no profile in scope.
+     */
+    private scopeProfileVars(name: string | undefined): Record<string, string> {
+        const profile = name != null ? this.parsedDocsConfig.profiles?.[name] : undefined;
+        if (name != null && profile == null) {
+            return this.taskContext.failAndThrow(
+                `Profile "${name}" is not defined in profiles: in docs.yml.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        const vars: Record<string, string> = { ...profile?.vars };
+        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+            for (const varName of getProfileVarNames(this.parsedDocsConfig.profiles)) {
+                const ciValue = process.env[varName];
+                if (vars[varName] == null && ciValue != null) {
+                    vars[varName] = ciValue;
+                }
+            }
+        }
+        return vars;
+    }
+
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
         const slug = FernNavigation.V1.SlugGenerator.init(FernNavigation.slugjoin(this.getDocsBasePath()));
         const id = this.#idgen.get("root");
@@ -1723,7 +1880,11 @@ export class DocsDefinitionResolver {
             pageId,
             authed: undefined,
             noindex: landingPageConfig.noindex || this.markdownFilesToNoIndex.get(landingPageConfig.absolutePath),
-            featureFlags: landingPageConfig.featureFlags
+            featureFlags: landingPageConfig.featureFlags,
+            ...this.profileVarsOf(landingPageConfig, {
+                texts: [landingPageConfig.title],
+                absolutePath: landingPageConfig.absolutePath
+            })
         };
     }
 
@@ -1879,7 +2040,10 @@ export class DocsDefinitionResolver {
                 viewers: product.viewers,
                 orphaned: product.orphaned,
                 featureFlags: product.featureFlags,
-                announcement: product.announcement != null ? { text: product.announcement.message } : undefined
+                announcement: product.announcement != null ? { text: product.announcement.message } : undefined,
+                ...this.profileVarsOf(product, {
+                    texts: [product.product, product.subtitle, product.announcement?.message]
+                })
             };
         } else {
             return {
@@ -1897,7 +2061,8 @@ export class DocsDefinitionResolver {
                 icon: this.resolveIconFileId(product.icon),
                 image: product.image != null ? this.getFileId(product.image) : undefined,
                 viewers: product.viewers,
-                orphaned: product.orphaned
+                orphaned: product.orphaned,
+                ...this.profileVarsOf(product, { texts: [product.product, product.subtitle] })
             };
         }
     }
@@ -1932,7 +2097,8 @@ export class DocsDefinitionResolver {
             icon: undefined,
             pointsTo: undefined,
             featureFlags: version.featureFlags,
-            announcement: version.announcement != null ? { text: version.announcement.message } : undefined
+            announcement: version.announcement != null ? { text: version.announcement.message } : undefined,
+            ...this.profileVarsOf(version, { texts: [version.version, version.announcement?.message] })
         };
     }
 
@@ -1990,25 +2156,103 @@ export class DocsDefinitionResolver {
 
     private async toSidebarRootNodeWithVariants(
         prefix: string,
-        items: docsYml.TabVariant[],
+        tabTitle: string,
+        { variants, location, columnHeight, menu }: docsYml.TabbedNavigationChild.Variants,
         parentSlug: FernNavigation.V1.SlugGenerator,
         contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
+        const varianted = await this.toVariantedNode({
+            id,
+            label: `Tab "${tabTitle}"`,
+            variants,
+            location,
+            columnHeight,
+            menu,
+            parentSlug,
+            contentSource
+        });
         return {
             type: "sidebarRoot",
             id,
             collapsed: undefined,
-            children: [
-                {
-                    type: "varianted",
-                    id,
-                    collapsed: undefined,
-                    children: await Promise.all(
-                        items.map((item) => this.toVariantNode(item, id, parentSlug, contentSource))
-                    )
+            children: [varianted]
+        };
+    }
+
+    private async toVariantedNode({
+        id,
+        label,
+        variants,
+        location,
+        columnHeight,
+        menu,
+        parentSlug,
+        contentSource,
+        variantIdPrefix
+    }: {
+        id: FernNavigation.V1.NodeId;
+        label: string;
+        variants: docsYml.TabVariant[];
+        location: docsYml.VariantsLocation;
+        columnHeight: docsYml.VariantsColumnHeight | undefined;
+        menu: docsYml.TabVariantMenuItem[] | undefined;
+        parentSlug: FernNavigation.V1.SlugGenerator;
+        contentSource: docsYml.VersionContentSource | undefined;
+        /** Keeps variant IDs unique when several tab-menu tabs have variants with the same title. */
+        variantIdPrefix?: string;
+    }): Promise<VariantedNodeWithMenu> {
+        const variantNodes = await Promise.all(
+            variants.map((item) => this.toVariantNode(item, id, parentSlug, contentSource, variantIdPrefix))
+        );
+        const layout = this.parsedDocsConfig.layout;
+        const settings = docsYml.resolveVariantsSettings({
+            location,
+            columnHeight,
+            layout: this.parsedDocsConfig.variantsLayout,
+            hasHeaderTabs: layout?.tabsPlacement === "HEADER" && layout.disableHeader !== true
+        });
+        if (settings.fellBackToSidebar) {
+            this.taskContext.logger.warn(
+                `${label} has a tab-menu, but header tabs are off (set \`layout.tabs-placement: header\`). Showing its tabs in the sidebar instead.`
+            );
+        }
+        // Keyed by object identity: parseDocsConfiguration builds `variants` from the same TabVariant
+        // objects it puts in `menu`, so each menu entry finds its variant here.
+        const variantIdByVariant = new Map(variants.map((variant, i) => [variant, variantNodes[i]?.variantId]));
+        const toMenuEntry = (entry: docsYml.TabVariantMenuEntry): VariantMenuEntry[] => {
+            switch (entry.type) {
+                case "variant": {
+                    const variantId = variantIdByVariant.get(entry.variant);
+                    return variantId != null ? [{ type: "variant", variantId }] : [];
                 }
-            ]
+                case "link":
+                    return [
+                        {
+                            type: "link",
+                            title: entry.title,
+                            icon: this.resolveIconFileId(entry.icon),
+                            url: FernNavigation.V1.Url(entry.href),
+                            target: entry.target
+                        }
+                    ];
+                default:
+                    assertNever(entry);
+            }
+        };
+        return {
+            type: "varianted",
+            id,
+            collapsed: undefined,
+            children: variantNodes,
+            location: settings.location === "tab" ? "tab" : undefined,
+            columnHeight: settings.columnHeight,
+            interactOnClickOnly: settings.interactOnClickOnly,
+            menu: menu?.flatMap((item): VariantMenuItem[] =>
+                item.type === "group"
+                    ? [{ type: "group", title: item.title, children: item.children.flatMap(toMenuEntry) }]
+                    : toMenuEntry(item)
+            )
         };
     }
 
@@ -2016,9 +2260,11 @@ export class DocsDefinitionResolver {
         item: docsYml.TabVariant,
         prefix: string,
         parentSlug: FernNavigation.V1.SlugGenerator,
-        contentSource?: docsYml.VersionContentSource
+        contentSource?: docsYml.VersionContentSource,
+        variantIdPrefix?: string
     ): Promise<FernNavigation.V1.VariantNode> {
-        const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
+        const id = this.#idgen.get(`${prefix}/variant/${item.tabId ?? item.slug ?? kebabCase(item.title)}`);
+        const ownVariantId = item.tabId ?? item.title;
         const variantSlug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
             skipUrlSlug: item.skipUrlSlug
@@ -2027,16 +2273,33 @@ export class DocsDefinitionResolver {
             item.layout.map((item) => this.toVariantChild(item, id, variantSlug, contentSource))
         );
         const children = childrenWithNulls.filter((child): child is FernNavigation.V1.VariantChild => child != null);
+        if (item.nestedVariants != null) {
+            const nested = await this.toVariantedNode({
+                id: this.#idgen.get(`${id}/varianted`),
+                label: `Tab-menu tab "${item.title}"`,
+                variants: item.nestedVariants.variants,
+                location: "sidebar",
+                columnHeight: item.nestedVariants.columnHeight,
+                menu: item.nestedVariants.menu,
+                parentSlug: variantSlug,
+                contentSource,
+                variantIdPrefix: ownVariantId
+            });
+            children.push(nested);
+        }
         return {
             type: "variant",
             id,
             collapsed: undefined,
-            variantId: FernNavigation.V1.VariantId(item.title),
-            subtitle: item.subtitle ?? "",
+            variantId: FernNavigation.V1.VariantId(
+                variantIdPrefix != null ? `${variantIdPrefix}/${ownVariantId}` : ownVariantId
+            ),
             default: item.default ?? false,
             image: undefined,
             children,
             title: item.title,
+            subtitle: item.subtitle ?? "",
+            ...this.profileVarsOf(item, { texts: [item.title, item.subtitle] }),
             slug: variantSlug.get(),
             icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
@@ -2145,7 +2408,7 @@ export class DocsDefinitionResolver {
                         logWarnings: false,
                         cacheResult: true
                     },
-                    { docsVisibility: this.docsVisibility }
+                    { docsVisibility: this.docsVisibility, objectSchemaExamples: item.types === true }
                 );
             } catch (error) {
                 openapiError = error;
@@ -2224,12 +2487,8 @@ export class DocsDefinitionResolver {
                             { code: CliError.Code.EnvironmentError }
                         )
                 },
-                { substituteAsEmpty: false }
+                { substituteAsEmpty: false, keep: getProfileVarNames(this.parsedDocsConfig.profiles) }
             );
-        }
-
-        if (item.showScopes) {
-            appendRequiredScopesToEndpointDocs(ir);
         }
 
         // Resolve the OSS workspace for GraphQL extraction and translated API builds: prefer the
@@ -2282,7 +2541,9 @@ export class DocsDefinitionResolver {
             parentAvailability ?? item.availability,
             openApiTags,
             graphqlData.namespacesByOperationId,
-            graphqlData.typeCategories
+            graphqlData.typeCategories,
+            item.types ? collectInlineTypeIds(ir) : undefined,
+            this.profileScope(this.profileOf(item))
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
@@ -2303,7 +2564,7 @@ export class DocsDefinitionResolver {
                                 `Error in tag description environment variable substitution: ${e}`
                             )
                     },
-                    { substituteAsEmpty: false }
+                    { substituteAsEmpty: false, keep: getProfileVarNames(this.parsedDocsConfig.profiles) }
                 );
             }
 
@@ -2319,11 +2580,6 @@ export class DocsDefinitionResolver {
         let translatedIrsByLocale: Map<string, IntermediateRepresentation> | undefined;
         if (this.buildTranslatedApiDefinitions && resolvedOssWorkspace != null) {
             translatedIrsByLocale = await this.buildTranslatedApiIrs(item, resolvedOssWorkspace);
-            if (item.showScopes && translatedIrsByLocale != null) {
-                for (const translatedIr of translatedIrsByLocale.values()) {
-                    appendRequiredScopesToEndpointDocs(translatedIr);
-                }
-            }
         }
 
         // Store pending registration for deferred processing after markdownFilesToPathName is available
@@ -2335,6 +2591,7 @@ export class DocsDefinitionResolver {
             workspace,
             graphqlOperations: graphqlData.operations,
             graphqlTypes: graphqlData.types,
+            showScopes: item.showScopes,
             tempApiDefinitionId,
             apiReferenceNode,
             translatedIrsByLocale
@@ -2401,7 +2658,12 @@ export class DocsDefinitionResolver {
             this.collectedFileIds,
             undefined,
             hideChildren,
-            parentAvailability ?? item.availability
+            parentAvailability ?? item.availability,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            this.profileScope(this.profileOf(item))
         ).get();
     }
 
@@ -2416,7 +2678,8 @@ export class DocsDefinitionResolver {
             this.markdownFilesToTags,
             item.changelog,
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.profileScope(this.profileOf(item))
         );
 
         return changelogResolver.toChangelogNode({
@@ -2437,7 +2700,8 @@ export class DocsDefinitionResolver {
             title: item.text,
             url: FernNavigation.V1.Url(item.url),
             icon: this.resolveIconFileId(item.icon),
-            target: item.target
+            target: item.target,
+            ...this.profileVarsOf(item, { texts: [item.text] })
         };
     }
 
@@ -2876,7 +3140,8 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability),
+            ...this.profileVarsOf(item, { texts: [item.title], absolutePath: item.absolutePath })
         };
     }
 
@@ -2981,7 +3246,8 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability),
+            ...this.profileVarsOf(item, { texts: [item.title], absolutePath: item.overviewAbsolutePath })
         };
     }
 
@@ -3010,7 +3276,7 @@ export class DocsDefinitionResolver {
             link: ({ href, target }) => this.toTabLinkNode(item, href, target),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug, contentSource),
             changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
-            variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug, contentSource)
+            variants: (child) => this.toTabNodeWithVariants(prefix, item, child, parentSlug, contentSource)
         });
     }
 
@@ -3025,7 +3291,8 @@ export class DocsDefinitionResolver {
             this.markdownFilesToTags,
             changelog,
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.profileScope(this.profileOf(item))
         );
         return changelogResolver.toChangelogNode({
             parentSlug,
@@ -3049,7 +3316,8 @@ export class DocsDefinitionResolver {
             title: item.title,
             url: FernNavigation.V1.Url(href),
             target: target,
-            icon: this.resolveIconFileId(item.icon)
+            icon: this.resolveIconFileId(item.icon),
+            ...this.profileVarsOf(item, { texts: [item.title] })
         };
     }
 
@@ -3078,14 +3346,15 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pointsTo: undefined,
             child: await this.toSidebarRootNode(id, layout, slug, contentSource),
-            featureFlags: item.featureFlags
+            featureFlags: item.featureFlags,
+            ...this.profileVarsOf(item, { texts: [item.title] })
         };
     }
 
     private async toTabNodeWithVariants(
         prefix: string,
         item: docsYml.TabbedNavigation,
-        variants: docsYml.TabVariant[],
+        variants: docsYml.TabbedNavigationChild.Variants,
         parentSlug: FernNavigation.V1.SlugGenerator,
         contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.TabNode> {
@@ -3106,8 +3375,9 @@ export class DocsDefinitionResolver {
             viewers: item.viewers,
             orphaned: item.orphaned,
             pointsTo: undefined,
-            child: await this.toSidebarRootNodeWithVariants(id, variants, slug, contentSource),
-            featureFlags: item.featureFlags
+            child: await this.toSidebarRootNodeWithVariants(id, item.title, variants, slug, contentSource),
+            featureFlags: item.featureFlags,
+            ...this.profileVarsOf(item, { texts: [item.title] })
         };
     }
 
@@ -3197,6 +3467,7 @@ export class DocsDefinitionResolver {
                 claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
                 ...(!this.parsedDocsConfig.pageActions.options.mcp ? { mcp: false } : {}),
+                ...(this.parsedDocsConfig.pageActions.options.mcpAuth ? { mcpAuth: true } : {}),
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,
                     subtitle: customAction.subtitle,

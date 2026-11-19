@@ -264,6 +264,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "error": "string",
+          "specific": true,
+        },
+      ],
       "name": "TestOperationRequestBadRequestError",
       "shape": {
         "extends": [],
@@ -307,6 +313,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "error": "string",
+          "wildcard": true,
+        },
+      ],
       "name": "TestOperationRequestClientRequestError",
       "shape": {
         "extends": [],
@@ -350,6 +362,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "error": "string",
+          "server_specific": true,
+        },
+      ],
       "name": "TestOperationRequestInternalServerError",
       "shape": {
         "extends": [],
@@ -393,6 +411,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "error": "string",
+          "server_wildcard": true,
+        },
+      ],
       "name": "TestOperationRequestServerError",
       "shape": {
         "extends": [],
@@ -436,6 +460,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "message": "string",
+        },
+      ],
       "name": "testOperation_Response_200",
       "shape": {
         "extends": [],

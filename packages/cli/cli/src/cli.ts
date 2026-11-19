@@ -3,6 +3,8 @@ import { spawnSync } from "node:child_process";
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { getToken } from "@fern-api/auth";
+import { logErrorMessage } from "@fern-api/cli-logger";
 import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
 import type { OutputFormat } from "@fern-api/cli-v2";
 import {
@@ -34,6 +36,7 @@ import {
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { formatBootstrapSummary, replayForget, replayInit, replayResolve, replayStatus } from "@fern-api/generator-cli";
 import {
+    getDefaultOrganizationName,
     initializeAPI,
     initializeDocs,
     initializeWithMintlify,
@@ -50,7 +53,7 @@ import {
     registerDynamicIrWorkerEntrypoint,
     runDynamicIrWorkerThread
 } from "@fern-api/remote-workspace-runner";
-import { CliError } from "@fern-api/task-context";
+import { CliError, InstructionsTopic } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
 import { Argv } from "yargs";
@@ -68,7 +71,9 @@ import { claimGuestSession } from "./commands/claim/claimGuestSession.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { parseDocsDevDuration } from "./commands/docs-dev/parseDocsDevDuration.js";
+import { DEFAULT_DOCS_DEV_PORT, runDocsDevStop } from "./commands/docs-dev/stopDocsDevServer.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
+import { exportDocs } from "./commands/docs-export/exportDocs.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
@@ -91,6 +96,7 @@ import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/g
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
+import { instructions } from "./commands/instructions/instructions.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { installMcpServer } from "./commands/mcp/installMcpServer.js";
 import { MCP_CLIENTS, McpClient } from "./commands/mcp/mcpConfig.js";
@@ -107,6 +113,7 @@ import { createOrgToken, listOrgTokens, revokeOrgToken } from "./commands/org/or
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
+import { addCustomTool, addHook } from "./commands/sdk-add-custom/addMcpCustomCode.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import { sdkMigrate } from "./commands/sdk-migrate/sdkMigrate.js";
 import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
@@ -123,12 +130,18 @@ import { whoami } from "./commands/whoami/whoami.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
+import {
+    ALLOW_OLD_CLI_VERSION_FLAG,
+    hasOldCliVersionConsent,
+    isOlderThanMinimumIsolatedCliVersion,
+    MINIMUM_ISOLATED_CLI_VERSION
+} from "./oldCliVersionGate.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
 import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
-import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
+import { getInvokedCommandName, isVersionQuery, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -221,8 +234,21 @@ async function runCli() {
             await tryRunCli(cliContext);
         } else {
             const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-            if (cliContext.environment.packageVersion === versionOfCliToRun) {
+            // Older CLIs upgrade through an unisolated npx, so upgrade away from them with this CLI
+            // unless the user opted into running the older CLI.
+            const isUpgradeFromOldCli =
+                getInvokedCommandName(process.argv) === "upgrade" &&
+                isOlderThanMinimumIsolatedCliVersion(versionOfCliToRun) &&
+                !hasOldCliVersionConsent(process.argv.slice(2));
+            // Printing the version doesn't need the older CLI, so answer here instead of running it.
+            const isVersionQueryForOldCli =
+                isVersionQuery(process.argv) &&
+                isOlderThanMinimumIsolatedCliVersion(versionOfCliToRun) &&
+                !hasOldCliVersionConsent(process.argv.slice(2));
+            if (cliContext.environment.packageVersion === versionOfCliToRun || isUpgradeFromOldCli) {
                 await tryRunCli(cliContext);
+            } else if (isVersionQueryForOldCli) {
+                cliContext.logger.info(versionOfCliToRun);
             } else {
                 await rerunFernCliAtVersion({
                     version: versionOfCliToRun,
@@ -256,7 +282,12 @@ async function tryRunCli(cliContext: CliContext) {
             // if error is null, it's a yargs validation error
             if (error == null) {
                 argv.showHelp();
-                cliContext.logger.error(message);
+                logErrorMessage({
+                    message,
+                    error: undefined,
+                    logger: cliContext.logger,
+                    instructionsTopic: InstructionsTopic.Index
+                });
             }
         })
         .strict()
@@ -284,6 +315,10 @@ async function tryRunCli(cliContext: CliContext) {
             default: LogLevel.Info,
             choices: LOG_LEVELS
         })
+        .option(ALLOW_OLD_CLI_VERSION_FLAG.slice(2), {
+            boolean: true,
+            description: `Run the CLI version pinned in fern.config.json even if it is older than ${MINIMUM_ISOLATED_CLI_VERSION}, which can run executables from the project directory`
+        })
         .demandCommand()
         .recommendCommands();
 
@@ -305,6 +340,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLogoutCommand(cli, cliContext);
     addClaimCommand(cli, cliContext);
     addWhoamiCommand(cli, cliContext);
+    addInstructionsCommand(cli, cliContext);
     addMcpCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
@@ -346,7 +382,12 @@ async function tryRunCli(cliContext: CliContext) {
         // write to stdout. At this point argv._ is yargs' resolved command path, and aliases have
         // already populated argv.output.
         const isSdkMigrateStdout = argv._[0] === "sdk" && argv._[1] === "migrate" && argv.output === "-";
-        if ((argv as Record<string, unknown>).json === true || isSdkMigrateStdout) {
+        const isDocsLinkCheckMachineOutput =
+            argv._[0] === "docs" &&
+            argv._[1] === "link" &&
+            argv._[2] === "check" &&
+            (argv.output === "json" || argv.output === "csv");
+        if ((argv as Record<string, unknown>).json === true || isSdkMigrateStdout || isDocsLinkCheckMachineOutput) {
             cliContext.enableJsonMode();
         }
         cliContext.logFernVersionDebug();
@@ -433,6 +474,16 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     boolean: true,
                     description: "Initialize with a sample Fern Definition instead of an OpenAPI spec"
                 })
+                .option("grpc", {
+                    boolean: true,
+                    description:
+                        "Initialize with a sample gRPC (.proto) API and a C# SDK, the only language with native gRPC output"
+                })
+                .option("proto", {
+                    type: "string",
+                    description:
+                        "Filepath to an existing .proto file, or a directory of them, to initialize a gRPC API with a C# SDK"
+                })
                 .option("mintlify", {
                     type: "string",
                     description: "Migrate docs from Mintlify provided a path to a mint.json file"
@@ -446,13 +497,22 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 const projectConfig = await getOrganization(cliContext);
                 if (projectConfig != null) {
                     argv.organization = projectConfig;
-                } else {
+                } else if (cliContext.isInteractive) {
                     argv.organization = await cliContext.getInput({
                         message: "Please enter your organization",
                         nonInteractiveError:
                             "--organization is required in non-interactive mode (stdin is not a TTY or CI is set). Example: fern init --organization acme"
                     });
+                } else if ((await getToken()) == null) {
+                    // Nothing to name the organization after (no prompt, no login), so an agent or script without an
+                    // account can still get a project it can publish with `fern generate --guest`.
+                    argv.organization = getDefaultOrganizationName(cwd());
+                    cliContext.logger.info(
+                        `No --organization given and no Fern login found; using ${chalk.bold(argv.organization)} from the directory name. Pass --organization to choose another.`
+                    );
                 }
+                // Otherwise `createFernDirectoryAndWorkspace` (@fern-api/init) reads the organization from the login or
+                // FERN_TOKEN.
             }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
@@ -469,6 +529,25 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             } else if (argv.openapi != null && argv["fern-definition"] === true) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --openapi and --fern-definition. Please choose one.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            } else if (argv.grpc === true && argv.proto != null) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --grpc and --proto. Use --grpc for a sample API, or --proto to use your own.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            } else if (
+                (argv.grpc === true || argv.proto != null) &&
+                (argv.openapi != null ||
+                    argv["fern-definition"] === true ||
+                    argv.docs != null ||
+                    argv.mintlify != null ||
+                    argv.readme != null)
+            ) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot combine --grpc or --proto with --openapi, --fern-definition, --docs, --mintlify or --readme. Please choose one.",
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
@@ -502,9 +581,27 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 });
             } else {
                 const useFernDefinition = argv["fern-definition"] === true;
-                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition;
+                const useGrpc = argv.grpc === true || argv.proto != null;
+                // gRPC init only scaffolds generators.yml, so it always uses the generators.yml flow.
+                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition && !useGrpc;
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 let openApiUrl: string | undefined = undefined;
+                let absoluteProtoPath: AbsoluteFilePath | undefined = undefined;
+                if (argv.proto != null) {
+                    if (isURL(argv.proto)) {
+                        cliContext.failAndThrow(
+                            "--proto does not support URLs. Download the .proto files and pass their path.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
+                    absoluteProtoPath = AbsoluteFilePath.of(resolve(cwd(), argv.proto));
+                    if (!(await doesPathExist(absoluteProtoPath))) {
+                        cliContext.failAndThrow(`${absoluteProtoPath} does not exist`, undefined, {
+                            code: CliError.Code.ConfigError
+                        });
+                    }
+                }
                 if (argv.openapi != null) {
                     if (isURL(argv.openapi)) {
                         openApiUrl = argv.openapi;
@@ -537,7 +634,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         openApiUrl,
                         useFernDefinition,
                         useSdkConfig,
-                        includeDocs: argv.api == null
+                        includeDocs: argv.api == null && argv.grpc !== true && argv.proto == null,
+                        useGrpc: argv.grpc === true,
+                        protoPath: absoluteProtoPath
                     });
                 });
             }
@@ -908,9 +1007,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("retry-rate-limited", {
                     boolean: true,
-                    default: false,
+                    default: true,
                     description:
-                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses. Disable with --no-retry-rate-limited"
                 })
                 .option("require-env-vars", {
                     boolean: true,
@@ -971,7 +1070,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description:
-                        "Run without a Fern account: start (or reuse) a temporary guest session and generate under its guest organization. Claim the session from the printed link to keep the output. Cannot be combined with FERN_TOKEN or a saved login."
+                        "Run without a Fern account: start (or reuse) a temporary guest session and generate under its guest organization. SDKs are written to their output paths (download only, with a 7-day build link; generated code keeps the fern.config.json organization's names); --docs publishes a temporary site. Claim the session from the printed link (or fern claim) to move the work into an organization, where SDKs can be published to GitHub from the dashboard. Cannot be combined with FERN_TOKEN or a saved login."
+                })
+                .option("source", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Only with --guest --docs (ignored otherwise): upload the fern/ folder with the site, so connecting a GitHub repo after claiming adds it there. Pass --no-source to publish without it."
                 })
                 .option("new-session", {
                     boolean: true,
@@ -1198,7 +1303,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     skipUpload: argv.skipUpload,
                     includePrivate: argv.private,
                     guest: argv.guest,
-                    newSession: argv.newSession
+                    newSession: argv.newSession,
+                    uploadSource: argv.source
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1847,15 +1953,51 @@ function addClaimCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "claim",
         "Claim this repo's guest session (from `fern generate --guest`) into your Fern organization",
         (yargs) =>
-            yargs.option("org", {
-                alias: "organization",
-                string: true,
-                description:
-                    "Move the guest session's work into an organization you administer. Defaults to turning the guest organization into your own."
-            }),
+            yargs
+                .option("org", {
+                    alias: "organization",
+                    string: true,
+                    description:
+                        "Move the guest session's docs sites and SDK builds into an organization you administer. Defaults to turning the guest organization into your own."
+                })
+                .option("docs-url", {
+                    string: true,
+                    description:
+                        "Give the claimed docs site this address (<name>.docs.buildwithfern.com, or just <name>) instead of its drop-<id> address."
+                })
+                .option("sdk-name", {
+                    string: true,
+                    description:
+                        "Name the claimed SDK builds' SDK in the organization. Defaults to the name they were built with."
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern claim" });
-            await claimGuestSession({ cliContext, organization: argv.org });
+            await claimGuestSession({
+                cliContext,
+                organization: argv.org,
+                docsUrl: argv.docsUrl,
+                sdkName: argv.sdkName
+            });
+        }
+    );
+}
+
+function addInstructionsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "instructions [topic..]",
+        "Print task-scoped instructions for coding agents working in a Fern project. Run without a topic to list topics",
+        (yargs) =>
+            yargs
+                .positional("topic", {
+                    type: "string",
+                    array: true,
+                    description: "Topic to print, for example `docs publish domain`"
+                })
+                .example("$0 instructions", "List topics and when to use each one")
+                .example("$0 instructions docs publish domain", "Set up a custom domain"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern instructions" });
+            await instructions({ cliContext, topic: argv.topic ?? [] });
         }
     );
 }
@@ -2151,6 +2293,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
+        addDocsExportCommand(yargs, cliContext);
         addDocsThemeCommand(yargs, cliContext);
         return yargs;
     });
@@ -2346,6 +2489,69 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 library: argv.library,
                 local: !argv.remote,
                 keepLogs: argv.keepLogs
+            });
+        }
+    );
+}
+
+function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "export",
+        "Download a copy of your live Fern-hosted docs site as static HTML, a folder of Markdown, or one PDF",
+        (yargs) =>
+            yargs
+                .option("format", {
+                    choices: ["html", "md", "pdf"] as const,
+                    default: "html" as const,
+                    description:
+                        "html: the full site, including each page's .md copy, served with any static file server. md: only the per-page Markdown and llms.txt. pdf: one PDF of the site"
+                })
+                .option("output", {
+                    type: "string",
+                    description:
+                        "Folder to write the export into, by default named after the site and format (docs-acme-com-html). Emptied first (except .git); must not contain the current folder. For pdf, the file to write (.pdf is added if missing)"
+                })
+                .option("instance", {
+                    type: "string",
+                    description: "The docs.yml instance url to export. Required when docs.yml has more than one"
+                })
+                .option("cover", {
+                    type: "boolean",
+                    description: "pdf: include the cover page (default). Use --no-cover to leave it out"
+                })
+                .option("toc", {
+                    type: "boolean",
+                    description: "pdf: include the table of contents (default). Use --no-toc to leave it out"
+                })
+                .option("cover-title", { type: "string", description: "pdf: title on the cover page" })
+                .option("cover-subtitle", { type: "string", description: "pdf: subtitle on the cover page" })
+                .option("header-left", {
+                    type: "string",
+                    description: "pdf: text at the top left of each page. Supports {pageIndex} and {totalPages}"
+                })
+                .option("header-right", { type: "string", description: "pdf: text at the top right of each page" })
+                .option("footer-left", { type: "string", description: "pdf: text at the bottom left of each page" })
+                .option("footer-right", { type: "string", description: "pdf: text at the bottom right of each page" }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern docs export",
+                properties: { format: argv.format }
+            });
+            await exportDocs({
+                cliContext,
+                format: argv.format,
+                output: argv.output,
+                instance: argv.instance,
+                pdf: {
+                    cover: argv.cover,
+                    toc: argv.toc,
+                    coverTitle: argv.coverTitle,
+                    coverSubtitle: argv.coverSubtitle,
+                    headerLeft: argv.headerLeft,
+                    headerRight: argv.headerRight,
+                    footerLeft: argv.footerLeft,
+                    footerRight: argv.footerRight
+                }
             });
         }
     );
@@ -2560,7 +2766,33 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description:
                         "Write ready/reload/stopped events to stdout as one JSON object per line; logs go to stderr."
-                }),
+                })
+                .command(
+                    "stop",
+                    "Cleanly stop the local docs development server on a port",
+                    (yargs) =>
+                        yargs
+                            .option("port", {
+                                number: true,
+                                description: `Port of the server to stop (default: ${DEFAULT_DOCS_DEV_PORT}). Use the port from the "ready on" log line or the --json ready event.`
+                            })
+                            .option("json", {
+                                boolean: true,
+                                default: false,
+                                description: "Write the result to stdout as JSON; logs go to stderr."
+                            }),
+                    async (argv) => {
+                        const port = argv.port ?? DEFAULT_DOCS_DEV_PORT;
+                        if (!Number.isInteger(port) || port < 1 || port > 65535) {
+                            throw new CliError({
+                                message: `--port must be a whole number between 1 and 65535, got ${argv.port}.`,
+                                code: CliError.Code.ConfigError
+                            });
+                        }
+                        cliContext.instrumentPostHogEvent({ command: "fern docs dev stop" });
+                        await runDocsDevStop({ cliContext, port });
+                    }
+                ),
         async (argv) => {
             if (argv.beta) {
                 cliContext.logger.warn(
@@ -2730,7 +2962,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 });
 
                 if (argv.output === "json" || argv.output === "csv") {
-                    await writeAndDrain(process.stdout, output + "\n");
+                    await cliContext.withRealStdout(() => writeAndDrain(process.stdout, output + "\n"));
                 } else {
                     await writeAndDrain(process.stderr, output + "\n");
                 }
@@ -3077,8 +3309,59 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("sdk", "Configure and generate SDKs", (yargs) => {
         addSdkMigrateCommand(yargs, cliContext);
         addSdkPreviewCommand(yargs, cliContext);
+        addSdkAddToolCommand(yargs, cliContext);
+        addSdkAddHookCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
+}
+
+function addSdkAddToolCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+    cli.command(
+        "add-tool <name>",
+        "Scaffold an MCP custom tool module and register it in sdk-config.yml",
+        (yargs) =>
+            yargs
+                .positional("name", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Tool name (letters, digits, and underscores; starts with a letter)"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "API workspace to target when the project has more than one sdk-config.yml"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Overwrite the tool file and config entry if they already exist"
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern sdk add-tool" });
+            await addCustomTool({ name: argv.name, api: argv.api, force: argv.force, cliContext });
+        }
+    );
+}
+
+function addSdkAddHookCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+    cli.command(
+        "add-hook",
+        "Scaffold the MCP hooks module and register it in sdk-config.yml",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    type: "string",
+                    description: "API workspace to target when the project has more than one sdk-config.yml"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Overwrite the hooks file and config entry if they already exist"
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern sdk add-hook" });
+            await addHook({ api: argv.api, force: argv.force, cliContext });
+        }
+    );
 }
 
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {

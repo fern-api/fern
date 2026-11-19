@@ -1,3 +1,0 @@
-rootProject.name = 'java-optional-nullable-query-params'
-
-include 'sample-app'

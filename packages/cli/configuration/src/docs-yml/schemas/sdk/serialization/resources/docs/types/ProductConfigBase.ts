@@ -19,6 +19,7 @@ export const ProductConfigBase: core.serialization.ObjectSchema<
         image: core.serialization.string().optional(),
         versions: core.serialization.list(VersionConfig).optional(),
         audiences: Audience.optional(),
+        profile: core.serialization.string().optional(),
     })
     .extend(WithPermissions)
     .extend(WithFeatureFlags);
@@ -31,5 +32,6 @@ export declare namespace ProductConfigBase {
         image?: string | null;
         versions?: VersionConfig.Raw[] | null;
         audiences?: Audience.Raw | null;
+        profile?: string | null;
     }
 }

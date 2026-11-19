@@ -5,6 +5,7 @@ import { createFdrService } from "@fern-api/core";
 import {
     asyncPool,
     errorMessageOrString,
+    getProfileVarNames,
     MediaType,
     replaceEnvVariables,
     sanitizePreviewId
@@ -17,6 +18,7 @@ import {
     findIncompatibleTranslatedApiIds,
     getApiRegistrationConcurrency,
     getTranslatedAnnouncement,
+    getTranslatedSettings,
     markUntranslatedNavNodesNoindex,
     type RegisterApiFn,
     replaceImagePathsAndUrls,
@@ -49,7 +51,7 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { logViolations } from "@fern-api/api-workspace-validator";
-import { stitchGlobalTheme } from "@fern-api/docs-resolver";
+import { fetchGlobalTheme, stitchGlobalTheme } from "@fern-api/docs-resolver";
 import { validateMissingRedirects } from "@fern-api/docs-validator";
 import {
     AbsoluteFilePath,
@@ -62,7 +64,7 @@ import {
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
@@ -72,12 +74,23 @@ import { camelCase, chunk } from "lodash-es";
 import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
-import { attachSdkGenSnippets } from "./attachSdkGenSnippets.js";
+import {
+    attachSdkGenSnippets,
+    describeSdkSnippetsReadFailures,
+    describeSnippetSources,
+    omitSdkLanguages,
+    readSdkGenSnippets,
+    type SdkGenSnippets
+} from "./attachSdkGenSnippets.js";
+import { shouldMergeThemeServerSide } from "./compileGlobalTheme.js";
+import { findCustomDomainBlockedMessage, formatCustomDomainRoutingNotice } from "./customDomainRoutingNotice.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
+import { buildDocsSourceArchive, findFernRoot } from "./docsSourceArchive.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
+import { logFdrWarnings } from "./fdrWarnings.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
-import { getFdrOrigin } from "./guestDocsSite.js";
+import { getFdrOrigin, readGuestPublishOutcome } from "./guestDocsSite.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
@@ -197,7 +210,6 @@ export async function publishDocs({
     customDomains,
     apiWorkspaces,
     ossWorkspaces,
-    usesSdkConfig = false,
     sdkNames = {},
     context,
     preview,
@@ -213,7 +225,8 @@ export async function publishDocs({
     ciSource,
     deployerAuthor,
     loginCommand = "fern login",
-    multiSource = false
+    multiSource = false,
+    uploadSource = false
 }: {
     token: FernToken;
     organization: string;
@@ -222,8 +235,6 @@ export async function publishDocs({
     customDomains: string[];
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
-    /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
-    usesSdkConfig?: boolean;
     /** The `sdkName` of each language's SDK in the sdk-config.yml, used to find its build for the SDK snippets. */
     sdkNames?: Record<string, string[]>;
     context: TaskContext;
@@ -246,7 +257,10 @@ export async function publishDocs({
      */
     loginCommand?: string;
     multiSource?: boolean;
+    /** Send the `fern/` folder with the publish, so a claimed guest site can be written to a repo. */
+    uploadSource?: boolean;
 }): Promise<string> {
+    const publishStartedAt = new Date().toISOString();
     const fdrOrigin = getFdrOrigin();
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
@@ -321,13 +335,32 @@ export async function publishDocs({
 
     let dynamicIrWorkerPool: DynamicIrWorkerPool | undefined;
     try {
-        const effectiveWorkspace = await stitchGlobalTheme({
-            docsWorkspace,
-            organization,
-            fdrOrigin,
-            token: token.value,
-            taskContext: context
-        });
+        const globalThemeName = docsWorkspace.config.globalTheme;
+        const fetchedTheme =
+            globalThemeName != null
+                ? await fetchGlobalTheme({
+                      themeName: globalThemeName,
+                      organization,
+                      fdrOrigin,
+                      token: token.value,
+                      taskContext: context
+                  })
+                : undefined;
+        const mergeThemeServerSide = shouldMergeThemeServerSide({ deployMode, theme: fetchedTheme });
+        const effectiveWorkspace = mergeThemeServerSide
+            ? docsWorkspace
+            : await stitchGlobalTheme({
+                  docsWorkspace,
+                  organization,
+                  fdrOrigin,
+                  token: token.value,
+                  taskContext: context,
+                  theme: fetchedTheme
+              });
+        const ledgerGlobalTheme = mergeThemeServerSide ? globalThemeName : undefined;
+        if (ledgerGlobalTheme != null) {
+            context.logger.debug(`Global theme "${ledgerGlobalTheme}" will be merged by FDR at publish`);
+        }
 
         // Translated API definitions are registered to FDR after the base definition
         // resolves; the per-locale nav tree is then repointed at them (see below), which
@@ -388,14 +421,46 @@ export async function publishDocs({
             ? undefined
             : DynamicIrWorkerPool.create({ registrationConcurrency: getApiRegistrationConcurrency(), context });
 
+        // The snippets sdk-gen serves are read once per snippets config: the dynamic IRs need to know which languages
+        // they can skip before registration, and registration (and each locale) adds the same snippets to its definition.
+        const sdkGenSnippetsByConfig = new Map<string, Promise<SdkGenSnippets>>();
+        const loadSdkGenSnippets = (snippetsConfig: SnippetsConfig): Promise<SdkGenSnippets> => {
+            const key = JSON.stringify(snippetsConfig);
+            const existing = sdkGenSnippetsByConfig.get(key);
+            if (existing != null) {
+                return existing;
+            }
+            // A snippet problem must never fail the docs publish, so the cached promise always resolves.
+            const snippets = readSdkGenSnippets({
+                token: token.value,
+                organization,
+                snippetsConfig,
+                sdkNames,
+                logger: context.logger
+            }).catch((error: unknown): SdkGenSnippets => {
+                for (const line of describeSdkSnippetsReadFailures({ snippetsConfig, sdkNames, error })) {
+                    context.logger.warn(line);
+                }
+                return new Map();
+            });
+            sdkGenSnippetsByConfig.set(key, snippets);
+            return snippets;
+        };
+
         /** Fetches existing SDK dynamic IRs and generates the rest; the returned loader builds the record. */
         const prepareDynamicIRs = async ({
             workspace,
-            snippetsConfig
+            snippetsConfig: fullSnippetsConfig
         }: {
             workspace: FernWorkspace | undefined;
             snippetsConfig: SnippetsConfig;
         }): Promise<() => Record<string, DynamicIr> | undefined> => {
+            // A language whose snippets sdk-gen serves needs no dynamic IR; the others keep using Fern's.
+            const sdkGenLanguages = [...(await loadSdkGenSnippets(fullSnippetsConfig)).keys()];
+            const snippetsConfig = omitSdkLanguages(fullSnippetsConfig, sdkGenLanguages);
+            if (sdkGenLanguages.length > 0) {
+                context.logger.debug(`Skipping dynamic IR for ${sdkGenLanguages.join(", ")} (served by sdk-gen)`);
+            }
             let existingDynamicIRs: Record<string, DynamicIr> | undefined;
             let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
             const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
@@ -421,7 +486,6 @@ export async function publishDocs({
                 organization,
                 context,
                 snippetsConfig,
-                usesSdkConfig,
                 skipLanguages: languagesWithExistingSdkDynamicIr,
                 pool: dynamicIrWorkerPool
             });
@@ -489,28 +553,27 @@ export async function publishDocs({
             apiName,
             workspace,
             graphqlOperations,
-            graphqlTypes
+            graphqlTypes,
+            showScopes
         }) => {
             // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
             // reference APIs by their folder name in docs components.
-            // Only adds anything when FERN_UPLOAD_SDK_GEN_SNIPPETS=true: the snippets sdk-gen saved with the builds of the
-            // SDKs docs.yml names become code samples in the definition, which both deploy modes publish.
-            const apiDefinition = await attachSdkGenSnippets({
-                token: token.value,
-                organization,
-                apiDefinition: convertIrToFdrApi({
+            // The snippets sdk-gen saved with the builds of the SDKs docs.yml names become code samples in the
+            // definition, which both deploy modes publish.
+            const sdkGenSnippets = await loadSdkGenSnippets(snippetsConfig);
+            const apiDefinition = attachSdkGenSnippets(
+                convertIrToFdrApi({
                     ir,
                     snippetsConfig,
                     playgroundConfig,
                     graphqlOperations,
                     graphqlTypes,
                     context,
-                    apiNameOverride: apiName
+                    apiNameOverride: apiName,
+                    showScopes
                 }),
-                snippetsConfig,
-                sdkNames,
-                logger: context.logger
-            });
+                sdkGenSnippets
+            );
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
@@ -519,6 +582,13 @@ export async function publishDocs({
             } else if (!disableDynamicSnippets) {
                 const loadDynamicIRs = await takeDynamicIRs({ workspace, snippetsConfig });
                 dynamicIRsByLanguage = loadDynamicIRs();
+            }
+            const snippetSources = describeSnippetSources({
+                sdkGenLanguages: sdkGenSnippets.keys(),
+                dynamicIrLanguages: Object.keys(dynamicIRsByLanguage ?? {})
+            });
+            if (snippetSources != null) {
+                context.logger.info(snippetSources);
             }
 
             const effectiveApiName = apiName ?? getOriginalName(ir.apiName);
@@ -817,6 +887,7 @@ export async function publishDocs({
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
+                    logFdrWarnings(startDocsRegisterResponse, context);
                     context.logger.debug(`Received production registration ID: ${docsRegistrationId}`);
 
                     const skippedCount = startDocsRegisterResponse.skippedFiles?.length || 0;
@@ -892,7 +963,7 @@ export async function publishDocs({
             const substitutedDocs = replaceEnvVariables(
                 docsWithoutJsFiles,
                 { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
-                { substituteAsEmpty: false }
+                { substituteAsEmpty: false, keep: getProfileVarNames(docsWorkspace.config.profiles) }
             );
             docsDefinition = { ...substitutedDocs, jsFiles };
         }
@@ -907,13 +978,19 @@ export async function publishDocs({
             `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
         );
 
-        const missingRedirects = await validateMissingRedirects({
-            workspace: docsWorkspace,
-            docsDefinition,
-            instanceUrl: domain,
-            token: token.value,
-            logger: context.logger
-        });
+        // A guest token cannot read the drop site's published pages from FDR (it only gets
+        // the publish routes), so the comparison would always be skipped with a confusing
+        // "FDR returned 403" warning. A drop site is throwaway, so there is nothing to protect.
+        const missingRedirects =
+            token.type === "guest"
+                ? []
+                : await validateMissingRedirects({
+                      workspace: docsWorkspace,
+                      docsDefinition,
+                      instanceUrl: domain,
+                      token: token.value,
+                      logger: context.logger
+                  });
         logViolations({
             context,
             violations: missingRedirects,
@@ -979,15 +1056,18 @@ export async function publishDocs({
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
                     editThisPage,
-                    resolver
+                    resolver,
+                    globalTheme: ledgerGlobalTheme
                 });
                 if (deployMode === "ledger") {
                     urlToOutput = previewResult.previewUrl;
                 }
                 context.logger.debug(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
             } else {
+                const source = uploadSource ? await readDocsSource(docsWorkspace, context) : undefined;
                 const ledgerResult = await publishDocsViaLedger({
                     docsDefinition,
+                    publishStartedAt,
                     organization,
                     domain,
                     basepath: basePath,
@@ -1004,11 +1084,23 @@ export async function publishDocs({
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
                     editThisPage,
-                    resolver
+                    resolver,
+                    source,
+                    globalTheme: ledgerGlobalTheme
                 });
                 context.logger.debug(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
                 );
+                if (token.type === "guest") {
+                    const outcome = readGuestPublishOutcome(ledgerResult);
+                    if (outcome.claimUrl != null) {
+                        const expiry =
+                            outcome.expiresAt != null ? ` (expires ${outcome.expiresAt.toLocaleString()})` : "";
+                        context.logger.info(
+                            `Claim only this docs site (opens its banner's Claim): ${outcome.claimUrl}${expiry}`
+                        );
+                    }
+                }
             }
         };
 
@@ -1020,6 +1112,7 @@ export async function publishDocs({
             try {
                 await runLedgerPublish();
             } catch (error) {
+                throwIfCustomDomainBlocked(error, context);
                 const detail = formatLedgerError(error);
                 return context.failAndThrow("Failed to publish docs via ledger to " + domain + ": " + detail, error, {
                     code: CliError.Code.NetworkError
@@ -1311,7 +1404,8 @@ export async function publishDocs({
                                 ...docsDefinition.config,
                                 root: updatedRoot,
                                 announcement: translatedAnnouncement,
-                                navbarLinks: translatedNavbarLinks
+                                navbarLinks: translatedNavbarLinks,
+                                settings: getTranslatedSettings(docsDefinition.config.settings, localeNavOverlay)
                             }
                         };
                         const pageCount = Object.keys(localePages).length;
@@ -1492,11 +1586,14 @@ async function startDocsRegisterFailed(
         throw new DocsPublishConflictError();
     }
 
+    throwIfCustomDomainBlocked(error, context);
+
     if (tokenType === "guest") {
         const rejection = readGuestRejection(error);
         if (isGuestRejection(rejection)) {
             return context.failAndThrow(describeGuestRejection(rejection), undefined, {
-                code: CliError.Code.AuthError
+                code: CliError.Code.AuthError,
+                instructionsTopic: InstructionsTopic.NewSite
             });
         }
     }
@@ -2142,7 +2239,6 @@ async function generateLanguageSpecificDynamicIRs({
     organization,
     context,
     snippetsConfig,
-    usesSdkConfig,
     skipLanguages = new Set(),
     pool
 }: {
@@ -2151,7 +2247,6 @@ async function generateLanguageSpecificDynamicIRs({
     organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
-    usesSdkConfig: boolean;
     skipLanguages?: Set<string>;
     pool?: DynamicIrWorkerPool;
 }): Promise<(() => Record<string, DynamicIr>) | undefined> {
@@ -2260,17 +2355,14 @@ async function generateLanguageSpecificDynamicIRs({
 
     for (const [language, packageName] of Object.entries(snippetConfiguration)) {
         if (language && packageName && !languagesWithDynamicIr.has(language) && !skipLanguages.has(language)) {
-            context.logger.warn();
-            for (const line of getUnknownSnippetPackageWarningLines({
-                language,
-                packageName,
-                workspaceName: workspace.workspaceName,
-                otherApiWorkspaceCount: apiWorkspaces.length,
-                usesSdkConfig
-            })) {
-                context.logger.warn(line);
-            }
-            context.logger.warn();
+            context.logger.warn(
+                getUnknownSnippetPackageWarning({
+                    language,
+                    packageName,
+                    workspaceName: workspace.workspaceName,
+                    otherApiWorkspaceCount: apiWorkspaces.length
+                })
+            );
         }
     }
 
@@ -2289,33 +2381,21 @@ async function generateLanguageSpecificDynamicIRs({
 }
 
 /**
- * Warning lines for a docs `snippets:` entry that no generator resolved to. Docs publishing only
- * reads generators.yml for SDK packages, so for SDKs configured in sdk-config.yml (where `fern sdk migrate`
- * moves the generators into sdk-config.yml) the package is not found and the snippets are dropped.
+ * The warning for a docs `snippets:` entry that no sdk-gen build and no generator resolved to, so the docs have no
+ * SDK snippets for that language.
  */
-export function getUnknownSnippetPackageWarningLines({
+export function getUnknownSnippetPackageWarning({
     language,
     packageName,
     workspaceName,
-    otherApiWorkspaceCount,
-    usesSdkConfig
+    otherApiWorkspaceCount
 }: {
     language: string;
     packageName: string;
     workspaceName: string | undefined;
     otherApiWorkspaceCount: number;
-    usesSdkConfig: boolean;
-}): string[] {
-    const lines = [
-        `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`,
-        `Please make sure a generators.yml in this fern folder (checked ${workspaceName ? `${workspaceName}/` : ""}generators.yml and the other ${otherApiWorkspaceCount} API workspace(s)) has a generator that publishes a ${packageName} package.`
-    ];
-    if (usesSdkConfig) {
-        lines.push(
-            "SDK snippets are not supported for SDKs configured in sdk-config.yml yet. The package name is only read from generators.yml, so migrated SDKs have no snippets in these docs."
-        );
-    }
-    return lines;
+}): string {
+    return `No ${language} SDK snippets for package \`${packageName}\`: no sdk-gen build was found, and no generator in the generators.yml of this fern folder (checked ${workspaceName ? `${workspaceName}/` : ""}generators.yml and the other ${otherApiWorkspaceCount} API workspace(s)) publishes that package.`;
 }
 
 /**
@@ -2434,6 +2514,15 @@ function isTransientError(error: unknown): boolean {
     return status === 429 || status >= 500;
 }
 
+function throwIfCustomDomainBlocked(error: unknown, context: TaskContext): void {
+    const blocked = findCustomDomainBlockedMessage(error);
+    if (blocked != null) {
+        context.failAndThrow(formatCustomDomainRoutingNotice(blocked, "blocked"), undefined, {
+            code: CliError.Code.ConfigError
+        });
+    }
+}
+
 /**
  * Extracts detailed error information from an FDR SDK error response.
  * This helps debug network/fetch failures by providing structured error details
@@ -2454,4 +2543,28 @@ function extractErrorDetails(error: unknown): Record<string, unknown> {
         // Include the raw error for complete debugging if needed
         rawError: error
     };
+}
+
+async function readDocsSource(docsWorkspace: DocsWorkspace, context: TaskContext): Promise<Buffer | undefined> {
+    try {
+        const archive = await buildDocsSourceArchive({ fernRoot: await findFernRoot(docsWorkspace.absoluteFilePath) });
+        if (archive.type === "skipped") {
+            context.logger.warn(
+                `Not uploading your fern/ folder with the site: ${archive.reason}. Claiming still works, but connecting a GitHub repo won't add the folder to it.`
+            );
+            return undefined;
+        }
+        if (archive.unreadable.length > 0) {
+            context.logger.warn(
+                `Leaving ${archive.unreadable.length} unreadable file(s) out of the uploaded fern/ folder: ${archive.unreadable.slice(0, 5).join(", ")}`
+            );
+        }
+        context.logger.info(
+            `Uploading your fern/ folder (${archive.fileCount} files) with the site, so connecting a GitHub repo after claiming adds it there. Pass --no-source to skip.`
+        );
+        return archive.buffer;
+    } catch (error) {
+        context.logger.warn(`Not uploading your fern/ folder with the site: ${errorMessageOrString(error)}`);
+        return undefined;
+    }
 }

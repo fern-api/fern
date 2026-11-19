@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Raise the sdk-gen-api upload limits so large APIs can generate remotely: runtime bundles may now be
+    64 MiB compressed each (128 MiB across a build) and 512 MiB decoded each (2 GiB across a build), uploads
+    may total 160 MiB in a 170 MiB request, and the request timeout is 180 seconds. When sdk-gen-api
+    rejects a build as too large (HTTP 413), the CLI now reports the upload sizes it computed and suggests
+    upgrading the Fern CLI or retrying later.
+  type: fix

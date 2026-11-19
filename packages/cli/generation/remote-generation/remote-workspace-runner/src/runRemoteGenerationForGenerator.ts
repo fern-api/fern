@@ -35,6 +35,7 @@ import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
+import { collectMcpCustomCode, extractMcpCustomCodeFromSdkConfigBody } from "./collectMcpCustomCode.js";
 import { createAndStartJob } from "./createAndStartJob.js";
 import { discoverLatestSdkGenApiGeneratorVersions } from "./discoverSdkGenApiGeneratorVersions.js";
 import {
@@ -43,12 +44,15 @@ import {
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
     type FernSdkGenApiGithubOptions,
+    type FernSdkGenApiGithubRequestedOutput,
     FernSdkGenApiPreparationBatch,
     type FernSdkGenApiRequestedOutput,
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
+    getGeneratorConfigCompatibilityInstructionsTopic,
     isEligibleForFernSdkGenApi,
+    mapFernSdkGenApiOutput,
     resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
     synthesizesSdkConfig
@@ -70,6 +74,7 @@ import {
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
 import { createSdkConfigTargetPayload, resolveSdkConfigTarget } from "./sdkConfigTarget.js";
+import { detectSdkGenApiProvenance } from "./sdkGenApiProvenance";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -173,6 +178,8 @@ export async function runRemoteGenerationForGenerator({
      */
     generateFullProject?: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
+    // Generated code is named after the organization the person configured, not a guest run's throwaway org.
+    const sdkOrganization = projectConfig.sdkOrganization ?? organization;
     const requiresFdrRegistration = sdkGenApiRoute?.payloadKind !== "sdk-config-v1";
     const fdr = createFdrService({ token: token.value });
 
@@ -225,8 +232,12 @@ export async function runRemoteGenerationForGenerator({
             ? resolveSdkConfigTarget(sdkConfigV1, sdkGenApiTargetIdSeed)
             : undefined;
     const configuredSdkVersion = sdkConfigTarget?.sdkVersion ?? sdkConfigV1?.sdkVersion;
+    // sdk-gen-api owns omitted-version resolution. Legacy/local routes retain the client lookup
+    // until they are retired, while explicit CLI and SDK Config versions remain authoritative.
     const resolvedVersion =
-        version ?? configuredSdkVersion ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+        version ??
+        configuredSdkVersion ??
+        (sdkGenApiRoute == null ? await computeSemanticVersion({ packageName, generatorInvocation }) : undefined);
 
     // Snippet-upload-only version candidate for generators whose package name is known
     // only from generator config (no publish target). Never sent to Fiddle or embedded in
@@ -261,7 +272,8 @@ export async function runRemoteGenerationForGenerator({
     // (e.g. Python "0.0.0.dev0") to match the version in the publishing config, which is
     // the one AutoVersionStep replaces.
     const effectiveIrVersion =
-        resolvedVersion != null && isAutoVersion(resolvedVersion)
+        (resolvedVersion != null && isAutoVersion(resolvedVersion)) ||
+        (resolvedVersion == null && sdkGenApiRoute != null)
             ? mapMagicVersionForLanguage(
                   MAGIC_VERSION,
                   generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name)
@@ -287,7 +299,7 @@ export async function runRemoteGenerationForGenerator({
         userAgentTemplate,
         idempotencyKeyGeneration,
         webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, interactiveTaskContext),
-        organization,
+        organization: sdkOrganization,
         version: effectiveIrVersion,
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
@@ -308,7 +320,7 @@ export async function runRemoteGenerationForGenerator({
     let sdkGenApiCandidate:
         | {
               generatorInvocation: generatorsYml.GeneratorInvocation;
-              sdkVersion: string;
+              sdkVersion: string | undefined;
               specsTarGzBuffer: Buffer;
           }
         | undefined;
@@ -319,6 +331,20 @@ export async function runRemoteGenerationForGenerator({
     const previewRequestedOutput: FernSdkGenApiRequestedOutput | undefined = isDryRunPreview
         ? { type: "download" }
         : undefined;
+    const githubOptions = getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, autoMerge, noReplay });
+    const legacyRequestedOutput =
+        sdkGenApiRoute != null && sdkConfigTarget == null
+            ? mapFernSdkGenApiOutput(generatorInvocation, githubOptions).requestedOutput
+            : undefined;
+    // Omitted versions intentionally keep download-only semantics: sdk-gen-api resolves them to the
+    // deterministic initial version without consulting registry or GitHub state. Only explicit AUTO
+    // previews need the configured GitHub destination for semantic version analysis.
+    const configuredAutoVersionPreviewOutput =
+        sdkGenApiRoute != null && isDryRunPreview && resolvedVersion != null && isAutoVersion(resolvedVersion)
+            ? (sdkConfigTarget?.autoVersionPreviewOutput ?? sdkConfigTarget?.requestedOutput ?? legacyRequestedOutput)
+            : undefined;
+    const autoVersionPreviewOutput: FernSdkGenApiGithubRequestedOutput | undefined =
+        configuredAutoVersionPreviewOutput?.type === "github" ? configuredAutoVersionPreviewOutput : undefined;
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
     if (sdkGenApiRoute != null) {
         // Preview must never retain a publishing destination from SDK Config.
@@ -331,7 +357,7 @@ export async function runRemoteGenerationForGenerator({
             sdkVersion: resolvedVersion,
             specsTarGzBuffer,
             whitelabel,
-            sdkConfigRequestedOutput
+            requestedOutput: autoVersionPreviewOutput ?? sdkConfigRequestedOutput ?? legacyRequestedOutput
         };
         if (!isEligibleForFernSdkGenApi(candidate)) {
             const reason = describeFernSdkGenApiIneligibility({
@@ -363,10 +389,11 @@ export async function runRemoteGenerationForGenerator({
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
                     payload: createSdkConfigTargetPayload(sdkConfigTarget),
                     requestedOutput: sdkConfigRequestedOutput,
+                    autoVersionPreviewOutput,
                     ...(!isPreview && sdkConfigTarget.publishCredential != null
                         ? { publishCredential: sdkConfigTarget.publishCredential }
                         : {}),
-                    githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
+                    githubOptions,
                     absolutePathToLocalOutputArchive: sdkConfigTarget.absolutePathToLocalOutputArchive,
                     absolutePathToPreview,
                     context: interactiveTaskContext,
@@ -430,18 +457,23 @@ export async function runRemoteGenerationForGenerator({
                     cliVersion: workspace.cliVersion,
                     generatorInvocation: candidate.generatorInvocation,
                     sdkGenApiRoute,
+                    sdkName: guestSdkName({
+                        apiName: getOriginalName(ir.apiName),
+                        workspaceName: workspace.workspaceName
+                    }),
                     sdkVersion: candidate.sdkVersion,
                     apiVersion: ir.specVersion,
                     token,
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
                     payload: { payloadKind: "sdk-config-v1", body: synthesized.body },
                     requestedOutput: previewRequestedOutput,
+                    autoVersionPreviewOutput,
                     absolutePathToPreview,
                     context: interactiveTaskContext,
                     targetIdSeed: sdkGenApiTargetIdSeed,
                     sourceSpecIndexes: sdkGenApiSourceArchive.specIndexes,
                     audiences: audiences.type === "select" ? audiences.audiences : undefined,
-                    githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
+                    githubOptions,
                     skipFernignore
                 };
             } else {
@@ -450,6 +482,20 @@ export async function runRemoteGenerationForGenerator({
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
+            }
+        }
+        if (sdkConfigBuildParameters != null) {
+            // MCP targets: zip the customer-authored custom-tool/hook modules referenced by the SDK
+            // Config and attach them, so the build uploads them as the `customCode` part (sdk-gen-api
+            // routes it to the target's hooks source). Reading from the serialized SDK Config payload
+            // covers both the explicit `sdk-config.yml` and synthesized `generators.yml` paths. No-op
+            // when none are declared.
+            const mcpCustomCode = await collectMcpCustomCode(
+                extractMcpCustomCodeFromSdkConfigBody(sdkConfigBuildParameters.payload.body),
+                workspace.absoluteFilePath
+            );
+            if (mcpCustomCode != null) {
+                sdkConfigBuildParameters.mcpCustomCode = mcpCustomCode;
             }
         }
         if (sdkGenApiTargetIdSeed == null) {
@@ -636,7 +682,8 @@ export async function runRemoteGenerationForGenerator({
                     throw error;
                 }
                 interactiveTaskContext.failAndThrow(formatGeneratorConfigCompatibilityError(error), undefined, {
-                    code: CliError.Code.ConfigError
+                    code: CliError.Code.ConfigError,
+                    instructionsTopic: getGeneratorConfigCompatibilityInstructionsTopic(error)
                 });
             }
         }
@@ -672,6 +719,10 @@ export async function runRemoteGenerationForGenerator({
                       generatorInvocation: sdkGenApiCandidate.generatorInvocation,
                       resolvedGeneratorVersion: resolvedRuntimeGeneratorVersion,
                       sdkGenApiRoute,
+                      sdkName: guestSdkName({
+                          apiName: getOriginalName(ir.apiName),
+                          workspaceName: workspace.workspaceName
+                      }),
                       sdkVersion: sdkGenApiCandidate.sdkVersion,
                       apiVersion: ir.specVersion,
                       token,
@@ -680,9 +731,17 @@ export async function runRemoteGenerationForGenerator({
                           payloadKind: "fern-runtime-bundle",
                           body: await prepareFernSdkGenApiRuntimeBundle({
                               apiName: getOriginalName(ir.apiName),
-                              organization,
+                              organization: sdkOrganization,
                               generatorInvocation: runtimeGeneratorInvocation,
-                              sdkVersion: sdkGenApiCandidate.sdkVersion,
+                              // Keep the runtime bundle self-consistent with the IR. The request
+                              // retains AUTO so sdk-gen-api/Fiddle can compute the real version.
+                              sdkVersion:
+                                  effectiveIrVersion ??
+                                  mapMagicVersionForLanguage(
+                                      MAGIC_VERSION,
+                                      runtimeGeneratorInvocation.language ??
+                                          extractLanguageFromGeneratorName(runtimeGeneratorInvocation.name)
+                                  ),
                               intermediateRepresentation: runtimeIntermediateRepresentation,
                               irVersionOverride,
                               generateOauthClients,
@@ -691,15 +750,23 @@ export async function runRemoteGenerationForGenerator({
                           })
                       },
                       requestedOutput: previewRequestedOutput,
+                      autoVersionPreviewOutput,
                       absolutePathToPreview,
                       context: interactiveTaskContext,
                       targetIdSeed: sdkGenApiTargetIdSeed,
                       sourceSpecIndexes: sdkGenApiSourceArchive?.specIndexes,
                       audiences: audiences.type === "select" ? audiences.audiences : undefined,
-                      githubOptions: getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay }),
+                      githubOptions,
                       skipFernignore
                   };
-        result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));
+        const provenance = detectSdkGenApiProvenance({
+            absolutePathToFernDirectory: workspace.absoluteFilePath,
+            absolutePathToGeneratorsYml: workspace.generatorsConfiguration?.absolutePathToConfiguration
+        });
+        const parametersWithProvenance: FernSdkGenApiBuildParameters =
+            provenance != null ? { ...parameters, provenance } : parameters;
+        result = await (sdkGenApiBatch?.run(parametersWithProvenance) ??
+            runFernSdkGenApiBuild(parametersWithProvenance));
     } else {
         const job = await createAndStartJob({
             projectConfig,
@@ -883,11 +950,13 @@ function getFernSdkGenApiGithubOptions({
     replay,
     verify,
     skipIfNoDiff,
+    autoMerge,
     noReplay
 }: {
     replay: generatorsYml.ReplayConfigSchema | undefined;
     verify?: boolean;
     skipIfNoDiff?: boolean;
+    autoMerge?: boolean;
     noReplay?: boolean;
 }): FernSdkGenApiGithubOptions | undefined {
     const effectiveReplay =
@@ -895,7 +964,8 @@ function getFernSdkGenApiGithubOptions({
     const options: FernSdkGenApiGithubOptions = {
         ...(effectiveReplay != null ? { replay: effectiveReplay } : {}),
         ...(verify === true ? { verify: true } : {}),
-        ...(skipIfNoDiff === true ? { skipIfNoDiff: true } : {})
+        ...(skipIfNoDiff === true ? { skipIfNoDiff: true } : {}),
+        ...(autoMerge === true ? { autoMerge: true } : {})
     };
     return Object.keys(options).length > 0 ? options : undefined;
 }
@@ -1126,4 +1196,19 @@ export function resolveVersionFallback(resolvedVersion: string | undefined): str
         return undefined;
     }
     return resolvedVersion;
+}
+
+/**
+ * The name sdk-gen-api files a generators.yml build under. Every OpenAPI workspace's definition is
+ * named "api", so without this each API of an organization would fold into one SDK; the workspace
+ * name (`fern/apis/<name>`) tells them apart, and a single-API `fern/generators.yml` stays "api".
+ */
+export function guestSdkName({
+    apiName,
+    workspaceName
+}: {
+    apiName: string;
+    workspaceName: string | undefined;
+}): string {
+    return apiName === "api" && workspaceName != null && workspaceName !== "" ? workspaceName : apiName;
 }

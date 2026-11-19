@@ -403,8 +403,11 @@ export async function visitDocsConfigFileYamlAst({
         },
         check: noop,
         redirects: noop,
+        remotePaths: noop,
         _absoluteFilepathsToRedirectsFiles: noop,
         _redirectsFileErrors: noop,
+        _absoluteFilepathsToProfileVarsFiles: noop,
+        _profileVarsFileErrors: noop,
         tabs: noop,
         title: noop,
         typography: async (typography) => {
@@ -462,6 +465,8 @@ export async function visitDocsConfigFileYamlAst({
             );
         },
         roles: noop,
+        profiles: noop,
+        profile: noop,
         languages: noop,
         translations: noop,
         theme: noop,

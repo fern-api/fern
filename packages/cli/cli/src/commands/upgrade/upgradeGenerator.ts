@@ -7,7 +7,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
-import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
+import { isFernSdkGenApiEnabled, isPostCutoverGeneratorVersion } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import chalk from "chalk";
@@ -61,6 +61,32 @@ interface SkippedAutoreleaseDisabled {
     version: string;
 }
 
+export interface SdkConfigMigrationRequired {
+    generatorName: string;
+    groupName: string;
+    currentVersion: string;
+    sdkConfigVersion: string;
+}
+
+/**
+ * Whether moving from `currentVersion` to `candidateVersion` crosses the generator's SDK Config cutover.
+ * Post-cutover versions are configured from sdk-config.yml, so they cannot be written into generators.yml.
+ */
+function crossesSdkConfigCutover({
+    generatorId,
+    currentVersion,
+    candidateVersion
+}: {
+    generatorId: string;
+    currentVersion: string;
+    candidateVersion: string;
+}): boolean {
+    return (
+        isPostCutoverGeneratorVersion({ generatorName: generatorId, version: candidateVersion }) &&
+        !isPostCutoverGeneratorVersion({ generatorName: generatorId, version: currentVersion })
+    );
+}
+
 export async function loadAndUpdateGenerators({
     absolutePathToWorkspace,
     context,
@@ -90,6 +116,7 @@ export async function loadAndUpdateGenerators({
     alreadyUpToDate: AlreadyUpToDate[];
     staleCandidates: StaleCandidate[];
     skippedAutoreleaseDisabled: SkippedAutoreleaseDisabled[];
+    sdkConfigMigrationRequired: SdkConfigMigrationRequired[];
 }> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
 
@@ -101,7 +128,8 @@ export async function loadAndUpdateGenerators({
             appliedUpgrades: [],
             alreadyUpToDate: [],
             staleCandidates: [],
-            skippedAutoreleaseDisabled: []
+            skippedAutoreleaseDisabled: [],
+            sdkConfigMigrationRequired: []
         };
     }
     const contents = await readFile(filepath);
@@ -119,7 +147,8 @@ export async function loadAndUpdateGenerators({
             appliedUpgrades: [],
             alreadyUpToDate: [],
             staleCandidates: [],
-            skippedAutoreleaseDisabled: []
+            skippedAutoreleaseDisabled: [],
+            sdkConfigMigrationRequired: []
         };
     }
     if (!YAML.isMap(generatorGroups)) {
@@ -132,7 +161,8 @@ export async function loadAndUpdateGenerators({
             appliedUpgrades: [],
             alreadyUpToDate: [],
             staleCandidates: [],
-            skippedAutoreleaseDisabled: []
+            skippedAutoreleaseDisabled: [],
+            sdkConfigMigrationRequired: []
         };
     }
     context.logger.debug(`Groups found: ${generatorGroups.toString()}`);
@@ -142,6 +172,7 @@ export async function loadAndUpdateGenerators({
     const alreadyUpToDate: AlreadyUpToDate[] = [];
     const staleCandidates: StaleCandidate[] = [];
     const skippedAutoreleaseDisabled: SkippedAutoreleaseDisabled[] = [];
+    const sdkConfigMigrationRequired: SdkConfigMigrationRequired[] = [];
 
     for (const groupBlock of generatorGroups.items) {
         // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
@@ -241,31 +272,73 @@ export async function loadAndUpdateGenerators({
             if (useSdkGenApi && getSdkGenApiToken == null) {
                 throw new Error("SDK Gen API generator version discovery requires authentication");
             }
-            let sdkGenApiVersions: Awaited<ReturnType<typeof getSdkGenApiGeneratorVersions>> | undefined;
-            if (useSdkGenApi && getSdkGenApiToken != null) {
-                sdkGenApiVersions = await getSdkGenApiGeneratorVersions({
-                    // SDK Gen API preserves legacy generator identities that FDR normalizes to a shared generator.
-                    generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
-                    currentVersion: currentGeneratorVersion,
-                    includeMajor,
-                    channel,
-                    organization,
-                    getToken: getSdkGenApiToken,
-                    context
-                });
-            }
-            const latestVersion = tracksLatest
-                ? currentGeneratorVersion
-                : useSdkGenApi
-                  ? sdkGenApiVersions?.compatibleVersion
-                  : await getLatestGeneratorVersion({
+            // SDK Gen API preserves legacy generator identities that FDR normalizes to a shared generator.
+            const generatorId = addDefaultDockerOrgIfNotPresent(generatorName);
+            const resolveCandidateVersion = async (
+                allowMajor: boolean
+            ): Promise<{
+                version: string | undefined;
+                sdkGenApiVersions?: Awaited<ReturnType<typeof getSdkGenApiGeneratorVersions>>;
+            }> => {
+                if (tracksLatest) {
+                    return { version: currentGeneratorVersion };
+                }
+                if (useSdkGenApi && getSdkGenApiToken != null) {
+                    const sdkGenApiVersions = await getSdkGenApiGeneratorVersions({
+                        generatorId,
+                        currentVersion: currentGeneratorVersion,
+                        includeMajor: allowMajor,
+                        channel,
+                        organization,
+                        getToken: getSdkGenApiToken,
+                        context
+                    });
+                    return { version: sdkGenApiVersions.compatibleVersion, sdkGenApiVersions };
+                }
+                return {
+                    version: await getLatestGeneratorVersion({
                         generatorName: normalizedGeneratorName,
                         cliVersion,
                         currentGeneratorVersion,
                         channel,
-                        includeMajor,
+                        includeMajor: allowMajor,
                         context
-                    });
+                    })
+                };
+            };
+            const { version: candidateVersion, sdkGenApiVersions } = await resolveCandidateVersion(includeMajor);
+            let latestVersion = candidateVersion;
+            const crossingCandidate =
+                candidateVersion != null &&
+                crossesSdkConfigCutover({
+                    generatorId,
+                    currentVersion: currentGeneratorVersion,
+                    candidateVersion
+                })
+                    ? candidateVersion
+                    : undefined;
+            let migrationEntry: SdkConfigMigrationRequired | undefined;
+            if (crossingCandidate != null) {
+                // A post-cutover version is configured from sdk-config.yml, so writing it into
+                // generators.yml would leave a configuration that `fern generate` rejects.
+                migrationEntry = {
+                    generatorName,
+                    groupName,
+                    currentVersion: currentGeneratorVersion,
+                    sdkConfigVersion: crossingCandidate
+                };
+                sdkConfigMigrationRequired.push(migrationEntry);
+                const fallbackVersion = includeMajor ? (await resolveCandidateVersion(false)).version : undefined;
+                latestVersion =
+                    fallbackVersion != null &&
+                    !crossesSdkConfigCutover({
+                        generatorId,
+                        currentVersion: currentGeneratorVersion,
+                        candidateVersion: fallbackVersion
+                    })
+                        ? fallbackVersion
+                        : undefined;
+            }
 
             const versionComparison =
                 latestVersion == null
@@ -278,6 +351,10 @@ export async function loadAndUpdateGenerators({
             const upgradeAvailable = versionComparison === 1;
             const candidateIsOlder = versionComparison === -1;
             const versionToUse = upgradeAvailable && latestVersion != null ? latestVersion : currentGeneratorVersion;
+            if (migrationEntry != null) {
+                // Report the version left in generators.yml after any same-major fallback.
+                migrationEntry.currentVersion = versionToUse;
+            }
 
             if (latestVersion != null) {
                 if (upgradeAvailable) {
@@ -381,11 +458,30 @@ export async function loadAndUpdateGenerators({
                     const latestParsed = semver.parse(latestMajorVersion);
 
                     if (currentParsed != null && latestParsed != null && latestParsed.major > currentParsed.major) {
-                        skippedMajorUpgrades.push({
-                            generatorName,
-                            currentVersion: versionToUse,
-                            latestMajorVersion
-                        });
+                        if (
+                            !crossesSdkConfigCutover({
+                                generatorId,
+                                currentVersion: versionToUse,
+                                candidateVersion: latestMajorVersion
+                            })
+                        ) {
+                            skippedMajorUpgrades.push({
+                                generatorName,
+                                currentVersion: versionToUse,
+                                latestMajorVersion
+                            });
+                        } else if (migrationEntry == null) {
+                            // `--include-major` would cross the cutover, so point at migration instead.
+                            sdkConfigMigrationRequired.push({
+                                generatorName,
+                                groupName,
+                                currentVersion: versionToUse,
+                                sdkConfigVersion: latestMajorVersion
+                            });
+                        } else if (semver.gt(latestMajorVersion, migrationEntry.sdkConfigVersion)) {
+                            // Report the newest post-cutover version, not the first one discovered.
+                            migrationEntry.sdkConfigVersion = latestMajorVersion;
+                        }
                     }
                 }
             }
@@ -398,7 +494,8 @@ export async function loadAndUpdateGenerators({
         appliedUpgrades,
         alreadyUpToDate,
         staleCandidates,
-        skippedAutoreleaseDisabled
+        skippedAutoreleaseDisabled,
+        sdkConfigMigrationRequired
     };
 }
 
@@ -429,6 +526,10 @@ export async function upgradeGenerator({
     const allSkippedAutoreleaseDisabled: Array<{
         workspace: string | undefined;
         skipped: SkippedAutoreleaseDisabled[];
+    }> = [];
+    const allSdkConfigMigrationRequired: Array<{
+        workspace: string | undefined;
+        required: SdkConfigMigrationRequired[];
     }> = [];
 
     await Promise.all(
@@ -496,6 +597,12 @@ export async function upgradeGenerator({
                     allSkippedAutoreleaseDisabled.push({
                         workspace: workspace.workspaceName,
                         skipped: result.skippedAutoreleaseDisabled
+                    });
+                }
+                if (result.sdkConfigMigrationRequired.length > 0) {
+                    allSdkConfigMigrationRequired.push({
+                        workspace: workspace.workspaceName,
+                        required: result.sdkConfigMigrationRequired
                     });
                 }
             });
@@ -581,7 +688,12 @@ export async function upgradeGenerator({
         }
     }
 
-    if (allAppliedUpgrades.length === 0 && allAlreadyUpToDate.length === 0 && allStaleCandidates.length === 0) {
+    if (
+        allAppliedUpgrades.length === 0 &&
+        allAlreadyUpToDate.length === 0 &&
+        allStaleCandidates.length === 0 &&
+        allSdkConfigMigrationRequired.length === 0
+    ) {
         const filterMessage =
             group != null ? ` for group ${group}` : generator != null ? ` for generator ${generator}` : "";
         cliContext.logger.info("");
@@ -631,5 +743,22 @@ export async function upgradeGenerator({
                 cliContext.logger.info(chalk.yellow(`    Changelog: ${changelogUrl}`));
             }
         }
+    }
+
+    if (allSdkConfigMigrationRequired.length > 0) {
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.yellow("SDK Config migration required:"));
+        for (const { workspace, required } of allSdkConfigMigrationRequired) {
+            const workspacePrefix = workspace != null ? `[${workspace}] ` : "";
+            for (const item of required) {
+                cliContext.logger.info(
+                    chalk.yellow(
+                        `  - ${workspacePrefix}${item.generatorName}: ${item.currentVersion} → ${item.sdkConfigVersion} ` +
+                            "requires SDK Config, so generators.yml was not upgraded to the latest major"
+                    )
+                );
+            }
+        }
+        cliContext.logger.info(chalk.yellow("    Run: fern sdk migrate"));
     }
 }

@@ -976,6 +976,11 @@ types:
       additionalProperties: boolean
       minProperties: optional<integer>
       maxProperties: optional<integer>
+      examples:
+        docs: |
+          Validated examples of the whole object: the schema-level `example`/`examples` when present,
+          otherwise one assembled from the property-level examples. Empty when neither exists.
+        type: optional<list<example.FullExample>>
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.

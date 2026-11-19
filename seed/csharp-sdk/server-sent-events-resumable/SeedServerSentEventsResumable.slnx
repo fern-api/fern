@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedServerSentEventsResumable.Test/SeedServerSentEventsResumable.Test.csproj" />
-  <Project Path="src/SeedServerSentEventsResumable/SeedServerSentEventsResumable.csproj" />
-</Solution>

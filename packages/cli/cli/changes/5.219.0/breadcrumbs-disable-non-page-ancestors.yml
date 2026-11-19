@@ -1,0 +1,5 @@
+- summary: |
+    Add the `layout.breadcrumbs.disable-non-page-ancestors` docs.yml setting. When set to
+    true, breadcrumb ancestors that aren't pages (sections, API references and API packages
+    without an overview page) are shown as disabled, non-clickable items. Defaults to false.
+  type: feat

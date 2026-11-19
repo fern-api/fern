@@ -1,3 +1,0 @@
-rootProject.name = 'server-url-templating-single-url'
-
-include 'sample-app'

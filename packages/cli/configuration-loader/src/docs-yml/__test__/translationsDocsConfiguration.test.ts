@@ -555,6 +555,52 @@ describe("parseDocsConfiguration — translation navbar-links overrides", () => 
         expect(parsed.translationNavigationOverlays?.["fr"]?.navbarLinks).toBeUndefined();
     });
 
+    it("should parse settings.search-text from overlay docs.yml", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(path.join(frDir, "docs.yml"), "settings:\n  search-text: Rechercher dans la documentation\n");
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        expect(parsed.translationNavigationOverlays?.["fr"]?.searchText).toBe("Rechercher dans la documentation");
+    });
+
+    it("should leave searchText undefined when overlay does not specify settings.search-text", async () => {
+        const fernDir = tmpDir as AbsoluteFilePath;
+        const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;
+        await writeFile(configPath, "");
+
+        const frDir = path.join(tmpDir, "translations", "fr");
+        await mkdir(frDir, { recursive: true });
+        await writeFile(path.join(frDir, "docs.yml"), "announcement:\n  message: Bienvenue\n");
+
+        const config = makeMinimalRawConfig({
+            translations: [{ lang: "en", default: true }, { lang: "fr" }]
+        });
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration: config,
+            absolutePathToFernFolder: fernDir,
+            absoluteFilepathToDocsConfig: configPath,
+            context: createMockTaskContext()
+        });
+
+        expect(parsed.translationNavigationOverlays?.["fr"]?.searchText).toBeUndefined();
+    });
+
     it("should drop invalid navbar-link entries with a warning but keep valid ones", async () => {
         const fernDir = tmpDir as AbsoluteFilePath;
         const configPath = path.join(tmpDir, "docs.yml") as AbsoluteFilePath;

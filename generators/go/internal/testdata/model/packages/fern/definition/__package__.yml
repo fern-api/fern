@@ -1,5 +1,0 @@
-docs: "This is the top-level package."
-types:
-  Base:
-    properties:
-      name: string

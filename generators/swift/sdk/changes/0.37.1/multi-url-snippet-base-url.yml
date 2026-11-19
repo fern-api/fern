@@ -1,8 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Fix snippets and wire tests for APIs with multiple base URLs leaving out the `baseURL`
-    argument the client initializer requires, so they failed to compile. A custom base URL is now
-    passed through. Otherwise the snippet uses the first base URL of the requested (or default)
-    environment.
-  type: fix

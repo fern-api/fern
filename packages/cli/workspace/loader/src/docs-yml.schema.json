@@ -7,6 +7,31 @@
         "$ref": "#/definitions/docs.DocsInstance"
       }
     },
+    "profiles": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/docs.ProfileConfig"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Named sets of values. Set `profile: <name>` on the site, a product, version, tab, tab variant,\nsection or page, and `${NAME}` in its pages is filled from that profile when rendered.\nThe innermost `profile:` wins; profiles never merge. Names no profile defines keep\ntoday's publish-time substitution."
+    },
+    "profile": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
+    },
     "title": {
       "oneOf": [
         {
@@ -292,6 +317,20 @@
           "type": "null"
         }
       ]
+    },
+    "remote-paths": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.RemotePathConfig"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Path prefixes on your docs domain that Fern reverse-proxies to another HTTPS service\nyou run. Fern keeps serving the rest of the site."
     },
     "check": {
       "oneOf": [
@@ -604,6 +643,43 @@
       ],
       "additionalProperties": false
     },
+    "docs.ProfileVarsConfiguration": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Either an inline map of values, or one or more filepaths to YAML files containing\nonly a `vars` map. A name defined in two files is an error.\n\n```yaml\nvars: ./vars/enterprise.yml\n```\n\n```yaml\nvars:\n  - ./vars/common.yml\n  - ./vars/enterprise.yml\n```"
+    },
+    "docs.ProfileConfig": {
+      "type": "object",
+      "properties": {
+        "vars": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ProfileVarsConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Values for `${NAME}` in pages that use this profile. Profile values are committed to the repo; never put secrets here."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.GitLibraryInputSchema": {
       "type": "object",
       "properties": {
@@ -694,6 +770,13 @@
         "hyphenated"
       ]
     },
+    "docs.LibraryOrganizeBy": {
+      "type": "string",
+      "enum": [
+        "kind",
+        "header"
+      ]
+    },
     "docs.LibraryConfig": {
       "type": "object",
       "properties": {
@@ -729,6 +812,59 @@
             }
           ],
           "description": "How symbol names become page URLs. `compact` (default) drops underscores\n(`doca_pcc_dev_get_port_counter_id` -> `docapccdevgetportcounterid`);\n`hyphenated` keeps word boundaries (`doca-pcc-dev-get-port-counter-id`).\nChanging this renames every generated page. Only valid when lang is cpp."
+        },
+        "organize-by": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibraryOrganizeBy"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "`kind` (default) groups generated pages by symbol kind (functions/, structs/, ...).\n`header` additionally writes a `headers/` folder with one page per source header\nlisting everything it declares. Only valid when lang is cpp."
+        },
+        "include": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Files or directories to scan, relative to `input.path`. When set, only these are\nparsed (Doxygen `INPUT`). Only valid when lang is cpp."
+        },
+        "exclude": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Files, directories (relative to `input.path`) or glob patterns (containing `*`/`?`)\nto leave out of the scan (Doxygen `EXCLUDE` / `EXCLUDE_PATTERNS`). Only valid when lang is cpp."
+        },
+        "exclude-symbols": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Symbol names or patterns to leave out, e.g. `INTERNAL_*` or `detail::*`\n(Doxygen `EXCLUDE_SYMBOLS`). Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,
@@ -1042,6 +1178,209 @@
       "type": "string",
       "description": "The relative path to a folder containing markdown files broken down by date.\n\nExample:\n```\nchangelog: \"changelog\"\n```\n\nThis will look for markdown files in the `/fern/changelog` directory, which should contain files named like\n- `/fern/changelog/2024-04-29.mdx`.\n- `/fern/changelog/2023-01-02.mdx`."
     },
+    "docs.TabId": {
+      "type": "string"
+    },
+    "docs.TabMenuTab": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tab": {
+          "$ref": "#/definitions/docs.TabId"
+        },
+        "display-name": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "skip-slug": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tab",
+        "display-name"
+      ],
+      "additionalProperties": false,
+      "description": "A tab in a tab menu. Its pages come from the `- tab:` entry with the same id in `navigation`, which has either a\n`layout` (one sidebar) or `variants` (a selector at the top of its sidebar)."
+    },
+    "docs.LinkConfiguration": {
+      "type": "object",
+      "properties": {
+        "link": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string"
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "link",
+        "href"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TabMenuGroupItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabMenuTab"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.TabMenuGroup": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "Header shown above this group's tabs in the menu."
+        },
+        "tabs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TabMenuGroupItem"
+          }
+        }
+      },
+      "required": [
+        "group",
+        "tabs"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TabMenuEntry": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabMenuTab"
+        },
+        {
+          "$ref": "#/definitions/docs.TabMenuGroup"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.VariantsColumnHeightCount": {
+      "type": "integer"
+    },
+    "docs.VariantsColumnHeight": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.VariantsColumnHeightCount"
+        },
+        {
+          "const": "no-limit"
+        }
+      ]
+    },
     "docs.TabConfig": {
       "type": "object",
       "properties": {
@@ -1159,6 +1498,42 @@
               "type": "null"
             }
           ]
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
+        },
+        "tab-menu": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.TabMenuEntry"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Turns this tab into a menu of other tabs that opens from the header tab. Entries are tabs (defined here,\nwith their pages under their own `- tab:` entry in `navigation`), `group` entries with a header and `tabs`,\nand links. Without header tabs, the menu falls back to a selector at the top of the sidebar."
+        },
+        "tab-menu-column-height": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsColumnHeight"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Maximum number of items per column in this tab's header menu. `no-limit` keeps a single column.\nOverrides `layout.tab-menu.default-column-height`. Only applies when the tab has a `tab-menu`."
         }
       },
       "required": [
@@ -1214,6 +1589,17 @@
         },
         "display-name": {
           "type": "string"
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         },
         "path": {
           "oneOf": [
@@ -1367,6 +1753,17 @@
             }
           ]
         },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
+        },
         "viewers": {
           "oneOf": [
             {
@@ -1489,6 +1886,17 @@
               "type": "null"
             }
           ]
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         },
         "viewers": {
           "oneOf": [
@@ -1739,6 +2147,17 @@
               "type": "null"
             }
           ]
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         }
       },
       "required": [
@@ -1746,9 +2165,6 @@
         "path"
       ],
       "additionalProperties": false
-    },
-    "docs.TabId": {
-      "type": "string"
     },
     "docs.CollapsedStringValue": {
       "type": "string",
@@ -1819,6 +2235,17 @@
           "items": {
             "$ref": "#/definitions/docs.NavigationItem"
           }
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         },
         "collapsed": {
           "oneOf": [
@@ -2910,42 +3337,6 @@
       "additionalProperties": false,
       "description": "Defines a GraphQL-native schema for selecting operations (REST -> Endpoint === GraphQL -> Operation)"
     },
-    "docs.LinkConfiguration": {
-      "type": "object",
-      "properties": {
-        "link": {
-          "type": "string"
-        },
-        "href": {
-          "type": "string"
-        },
-        "icon": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "target": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Target"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "required": [
-        "link",
-        "href"
-      ],
-      "additionalProperties": false
-    },
     "docs.ApiReferenceLayoutItem": {
       "anyOf": [
         {
@@ -3260,7 +3651,18 @@
               "type": "null"
             }
           ],
-          "description": "If true, appends the scopes each endpoint requires (from its `security` requirements) to the endpoint description."
+          "description": "If true, lists the scopes each endpoint requires (from its `security` requirements) under each scheme in the endpoint's Authentication section."
+        },
+        "types": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `types` is set to true, every schema that no endpoint, webhook or WebSocket of the API references gets its own page, grouped under a `Types` section at the end of the API reference. Schemas an operation references are still documented inline on that operation's page."
         },
         "playground": {
           "oneOf": [
@@ -3745,6 +4147,17 @@
               "type": "null"
             }
           ]
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         }
       },
       "required": [
@@ -3752,6 +4165,49 @@
         "layout"
       ],
       "additionalProperties": false
+    },
+    "docs.TabVariantGroupItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabVariant"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.TabVariantGroup": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "Header shown above this group's items in the variant menu."
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TabVariantGroupItem"
+          }
+        }
+      },
+      "required": [
+        "group",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TabVariantItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabVariant"
+        },
+        {
+          "$ref": "#/definitions/docs.TabVariantGroup"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
     },
     "docs.TabbedNavigationItemWithVariants": {
       "type": "object",
@@ -3762,8 +4218,9 @@
         "variants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.TabVariant"
-          }
+            "$ref": "#/definitions/docs.TabVariantItem"
+          },
+          "description": "Variants shown in a selector at the top of the tab's sidebar."
         }
       },
       "required": [
@@ -4937,6 +5394,17 @@
           ],
           "description": "Controls whether the MCP server endpoint (`/_mcp/server`) is enabled for this docs site.\nWhen set to `false`, the endpoint returns 404, the MCP server URL is omitted from\n`llms.txt` and agent prompts, and the \"Connect to Claude Code\" / \"Connect to Cursor\"\nbuttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents\ndiscovering the endpoint would cause confusion.\n\n@default: true"
         },
+        "mcp-auth": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Lets MCP clients sign in to this docs site's MCP server (`/_mcp/server?sign_in=true`) through\nthe site's own password, JWT or OAuth2 login, so their results include the docs that user can\nread. Only applies to sites with one of those logins; WorkOS SSO sites offer MCP sign-in without\nthis flag. Clients that don't sign in still read the public docs.\n\n@default: false"
+        },
         "vscode": {
           "oneOf": [
             {
@@ -5350,6 +5818,17 @@
             }
           ],
           "description": "Overrides the disclaimer shown in the Ask Fern chat\n(default: \"Responses are generated using AI and may contain mistakes.\")."
+        },
+        "button-text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Overrides the \"Ask AI\" label on the header button and in the search dialog\n(default: \"Ask AI\", translated on localized sites)."
         }
       },
       "additionalProperties": false
@@ -5818,6 +6297,25 @@
         }
       ],
       "description": "Either an inline list of redirects, or one or more filepaths to YAML files containing\nonly a list of redirects.\n\n```yaml\nredirects: ./redirects.yml\n```\n\n```yaml\nredirects:\n  - ./redirects/a.yml\n  - ./redirects/b.yml\n```"
+    },
+    "docs.RemotePathConfig": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "The path prefix to proxy, relative to the site's basepath, for example `/ui`. Can't\noverlap a docs page or a path Fern reserves (such as `/api/fern-docs` or `/_fern-files`)."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The `https` URL to proxy to, for example `https://app.example.com/ui`. Must be a public\nhostname, not an IP address, a Fern-hosted domain, or this site's own domain."
+        }
+      },
+      "required": [
+        "path",
+        "destination"
+      ],
+      "additionalProperties": false,
+      "description": "Reverse-proxy a path prefix on your docs domain to another HTTPS service. The path matches\nitself and everything below it on whole segments (`/ui` matches `/ui` and `/ui/settings`,\nnot `/uix`). The rest of the request path and the query string are appended to `destination`.\n\n```yaml\nremote-paths:\n  - path: /ui\n    destination: https://app.example.com/ui\n```"
     },
     "docs.CheckRuleSeverity": {
       "type": "string",
@@ -6511,6 +7009,34 @@
         }
       ]
     },
+    "docs.TabMenuLayoutConfig": {
+      "type": "object",
+      "properties": {
+        "default-column-height": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsColumnHeight"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Column height for every header tab menu that doesn't set `tab-menu-column-height`."
+        },
+        "interact-on-click-only": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When true, header tab menus open and close on click only, with no open animation.\nBy default they open on hover and close when the pointer leaves the tab and menu."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.TabsPlacement": {
       "type": "string",
       "enum": [
@@ -6566,6 +7092,28 @@
             }
           ],
           "description": "If `current-page` is set to true, the current page is appended to the breadcrumb trail\nas a non-clickable item. Defaults to false."
+        },
+        "sticky": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `sticky` is set to true, the breadcrumb row stays pinned below the header\nwhile the page scrolls. Defaults to false."
+        },
+        "disable-non-page-ancestors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `disable-non-page-ancestors` is set to true, ancestors in the breadcrumb trail that\naren't pages (sections, API references and API packages without an overview page) are\nshown as disabled, non-clickable items. Defaults to false."
         }
       },
       "additionalProperties": false
@@ -6627,6 +7175,17 @@
             }
           ],
           "description": "Sets the placement of the searchbar\n\n@default: `sidebar`\n\nNote: this setting is ignored when `disable-header` is set to true."
+        },
+        "tab-menu": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabMenuLayoutConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Defaults for header tab menus."
         },
         "tabs-placement": {
           "oneOf": [
@@ -6809,6 +7368,17 @@
             }
           ],
           "description": "If set to true, the current product is automatically selected as a\nfacet filter, so only results from the current product are shown by\ndefault. Equivalent to the legacy `settings.default-search-filters`\nsetting, which is preserved as an alias for backwards compatibility.\n\n@default: false"
+        },
+        "popular-searches": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, the empty search box lists the site's most popular\nsearches from the last 30 days, before the reader types. Only\nsearches that return public results are shown.\n\n@default: false"
         }
       },
       "additionalProperties": false

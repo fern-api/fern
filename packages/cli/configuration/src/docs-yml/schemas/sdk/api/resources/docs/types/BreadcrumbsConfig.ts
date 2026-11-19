@@ -6,4 +6,15 @@ export interface BreadcrumbsConfig {
      * as a non-clickable item. Defaults to false.
      */
     currentPage?: boolean;
+    /**
+     * If `sticky` is set to true, the breadcrumb row stays pinned below the header
+     * while the page scrolls. Defaults to false.
+     */
+    sticky?: boolean;
+    /**
+     * If `disable-non-page-ancestors` is set to true, ancestors in the breadcrumb trail that
+     * aren't pages (sections, API references and API packages without an overview page) are
+     * shown as disabled, non-clickable items. Defaults to false.
+     */
+    disableNonPageAncestors?: boolean;
 }

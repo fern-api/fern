@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedWebhooks.Test/SeedWebhooks.Test.csproj" />
-  <Project Path="src/SeedWebhooks/SeedWebhooks.csproj" />
-</Solution>

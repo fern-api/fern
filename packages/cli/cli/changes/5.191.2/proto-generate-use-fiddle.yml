@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate` now builds SDKs for proto (gRPC) APIs in `generators.yml` on Fern's original
+    generation service, so `fern init --grpc` followed by `fern generate` works without setting
+    `FERN_USE_SDK_GEN_API=false`.
+  type: fix

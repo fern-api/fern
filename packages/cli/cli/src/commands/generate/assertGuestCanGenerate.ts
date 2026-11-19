@@ -1,4 +1,4 @@
-import { CliError } from "@fern-api/task-context";
+import { CliError, InstructionsTopic } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { type GenerationTelemetryInput, listRequestedGenerators } from "./buildGeneratePosthogProperties.js";
@@ -54,6 +54,6 @@ export function assertGuestCanGenerate({
             `These generators publish: ${list}. Re-run with --preview to write them locally, switch their output to local-file-system, ` +
             "or claim the session (fern claim) / run 'fern login' to publish.",
         undefined,
-        { code: CliError.Code.ConfigError }
+        { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
     );
 }

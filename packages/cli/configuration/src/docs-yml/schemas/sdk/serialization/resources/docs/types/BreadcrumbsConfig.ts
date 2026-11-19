@@ -9,10 +9,17 @@ export const BreadcrumbsConfig: core.serialization.ObjectSchema<
     FernDocsConfig.BreadcrumbsConfig
 > = core.serialization.object({
     currentPage: core.serialization.property("current-page", core.serialization.boolean().optional()),
+    sticky: core.serialization.boolean().optional(),
+    disableNonPageAncestors: core.serialization.property(
+        "disable-non-page-ancestors",
+        core.serialization.boolean().optional(),
+    ),
 });
 
 export declare namespace BreadcrumbsConfig {
     export interface Raw {
         "current-page"?: boolean | null;
+        sticky?: boolean | null;
+        "disable-non-page-ancestors"?: boolean | null;
     }
 }

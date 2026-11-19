@@ -1,5 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Upgrade the generator to consume IR v67.
-  type: chore

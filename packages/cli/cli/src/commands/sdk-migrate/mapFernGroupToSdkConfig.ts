@@ -72,7 +72,8 @@ export function mapFernGroupToSdkConfig({
             ...validated,
             targets: validated.targets.map((target, index) => {
                 const credentials = migrationCredentials[index]?.credentials;
-                if (target.output?.publish == null) {
+                // Hosted MCP output has no registry publication, so there is nothing to carry credentials for.
+                if (target.output == null || target.output.delivery === "hosted" || target.output.publish == null) {
                     return target;
                 }
                 const publish = sanitizeMigratedPublishIntent(target.output.publish);

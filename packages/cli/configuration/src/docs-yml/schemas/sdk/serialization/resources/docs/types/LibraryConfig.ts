@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { LibraryOrganizeBy } from "./LibraryOrganizeBy.js";
 import { LibrarySlugStyle } from "./LibrarySlugStyle.js";
 
 export const LibraryConfig: core.serialization.ObjectSchema<
@@ -15,6 +16,13 @@ export const LibraryConfig: core.serialization.ObjectSchema<
         core.serialization.boolean().optional(),
     ),
     slugStyle: core.serialization.property("slug-style", LibrarySlugStyle.optional()),
+    organizeBy: core.serialization.property("organize-by", LibraryOrganizeBy.optional()),
+    include: core.serialization.list(core.serialization.string()).optional(),
+    exclude: core.serialization.list(core.serialization.string()).optional(),
+    excludeSymbols: core.serialization.property(
+        "exclude-symbols",
+        core.serialization.list(core.serialization.string()).optional(),
+    ),
 });
 
 export declare namespace LibraryConfig {
@@ -22,5 +30,9 @@ export declare namespace LibraryConfig {
         doxyfile?: string | null;
         "include-undocumented-macros"?: boolean | null;
         "slug-style"?: LibrarySlugStyle.Raw | null;
+        "organize-by"?: LibraryOrganizeBy.Raw | null;
+        include?: string[] | null;
+        exclude?: string[] | null;
+        "exclude-symbols"?: string[] | null;
     }
 }

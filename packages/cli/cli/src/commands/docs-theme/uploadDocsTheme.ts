@@ -1,5 +1,13 @@
 import { FernToken } from "@fern-api/auth";
+import { errorMessageOrString } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
+import {
+    CompiledGlobalTheme,
+    canMergeThemeServerSide,
+    compileGlobalTheme,
+    themeReferencesRemoteAssets
+} from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -45,7 +53,8 @@ export async function uploadDocsTheme({
     }
 
     const orgId = org ?? project.config.organization;
-    const themeYmlPath = path.join(docsWorkspace.absoluteFilePath, "theme", "theme.yml");
+    const themeDirectory = AbsoluteFilePath.of(path.join(docsWorkspace.absoluteFilePath, "theme"));
+    const themeYmlPath = path.join(themeDirectory, "theme.yml");
 
     await cliContext.runTask(async (context) => {
         let rawYaml: unknown;
@@ -71,11 +80,47 @@ export async function uploadDocsTheme({
         context.logger.info(`Uploading theme "${name}" for org "${orgId}"...`);
         context.logger.debug(`FDR origin: ${FDR_ORIGIN}`);
 
+        const rawTheme = rawYaml as Record<string, unknown>;
         const processor = new ThemeConfigProcessor({ docsWorkspace, orgId, token: token.value, context });
-        const { config: processedConfig, filesUploaded } = await processor.process(rawYaml as Record<string, unknown>);
+        const { config: processedConfig, filesUploaded } = await processor.process(rawTheme);
 
         if (filesUploaded > 0) {
             context.logger.info(`Uploaded ${filesUploaded} file asset(s) to CAS`);
+        }
+
+        // FDR merges this ledger-shaped fragment into every site that publishes
+        // with `global-theme: <name>`, and re-merges them when it changes.
+        // Without it, publishes fall back to stitching the theme locally.
+        let compiled: CompiledGlobalTheme | undefined;
+        const hasRemoteAssets = themeReferencesRemoteAssets(rawTheme);
+        const mergeable = canMergeThemeServerSide(rawTheme);
+        if (hasRemoteAssets) {
+            context.logger.info(
+                "Theme references remote asset URLs, so sites using it will stitch it at publish instead of merging server-side."
+            );
+        } else if (!mergeable) {
+            context.logger.info(
+                "Theme sets header or footer components, so sites using it will stitch it at publish instead of merging server-side."
+            );
+        }
+        try {
+            compiled =
+                hasRemoteAssets || !mergeable
+                    ? undefined
+                    : await compileGlobalTheme({
+                          rawTheme,
+                          themeDirectory,
+                          taskContext: context,
+                          cliVersion: cliContext.environment.packageVersion
+                      });
+            if (compiled != null) {
+                await processor.uploadFiles(compiled.files.values());
+            }
+        } catch (err) {
+            compiled = undefined;
+            context.logger.warn(
+                `Could not compile theme for server-side merging; sites using it will stitch it at publish instead: ${errorMessageOrString(err)}`
+            );
         }
 
         const saveUrl = `${FDR_ORIGIN}/v2/registry/themes/${orgId}`;
@@ -86,7 +131,13 @@ export async function uploadDocsTheme({
             res = await fetch(saveUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${token.value}` },
-                body: JSON.stringify({ name, config: processedConfig })
+                body: JSON.stringify({
+                    name,
+                    config: processedConfig,
+                    ...(compiled != null && {
+                        ledger: { config: compiled.config, files: compiled.fileManifest }
+                    })
+                })
             });
         } catch (err) {
             context.failAndThrow(

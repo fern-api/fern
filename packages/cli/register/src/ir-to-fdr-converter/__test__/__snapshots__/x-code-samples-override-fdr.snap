@@ -261,6 +261,9 @@ puts user.name",
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "getUser_Response_200",
       "shape": {
         "extends": [],

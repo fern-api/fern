@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` now sends the time the publish started. When two publishes of the same
+    docs site overlap, the one that started later stays live, even if its build finishes first.
+  type: fix
