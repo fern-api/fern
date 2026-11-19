@@ -947,7 +947,10 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
     it("includes per-scheme scopes in multiAuth only when showScopes is set", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
-            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/endpoint-scopes")),
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/endpoint-scopes")
+            ),
             context,
             cliVersion: "0.0.0",
             workspaceName: "endpoint-scopes"
