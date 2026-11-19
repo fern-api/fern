@@ -1,0 +1,9 @@
+instances:
+  - url: https://fern.docs.buildwithfern.com
+title: Roles fixture
+roles:
+  - internal
+  - partner
+navigation:
+  - page: Overview
+    path: ./pages/overview.mdx
