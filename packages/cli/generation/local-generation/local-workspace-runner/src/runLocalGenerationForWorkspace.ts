@@ -50,6 +50,7 @@ import path from "path";
 import tmp from "tmp-promise";
 import { generatorWantsSpecs } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
+import { getPreviewPrivateRepoError } from "./getPreviewPrivateRepoError.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
 export async function runLocalGenerationForWorkspace({
@@ -160,6 +161,20 @@ export async function runLocalGenerationForWorkspace({
                     );
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);
+
+                const earlySelfhostedGithubConfig = getSelfhostedGithubConfig(generatorInvocation, isPreview);
+                if (earlySelfhostedGithubConfig != null) {
+                    const previewPrivateRepoError = await getPreviewPrivateRepoError({
+                        uri: earlySelfhostedGithubConfig.uri,
+                        token: earlySelfhostedGithubConfig.token,
+                        previewMode: isPreview
+                    });
+                    if (previewPrivateRepoError != null) {
+                        interactiveTaskContext.failAndThrow(previewPrivateRepoError, undefined, {
+                            code: CliError.Code.ConfigError
+                        });
+                    }
+                }
 
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
