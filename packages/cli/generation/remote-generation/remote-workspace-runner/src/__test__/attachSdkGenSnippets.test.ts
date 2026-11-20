@@ -90,7 +90,7 @@ describe("getSdkRequests", () => {
         ).toEqual([]);
     });
 
-    it("reads the other SDK languages too, but not the targets that are not SDKs", () => {
+    it("reads the other SDK languages and the CLI too", () => {
         expect(
             getSdkRequests({
                 swiftSdk: { package: "Acme", version: "1.0.0" },
@@ -99,7 +99,8 @@ describe("getSdkRequests", () => {
             })
         ).toEqual([
             { type: "rust", version: "2.0.0" },
-            { type: "swift", version: "1.0.0" }
+            { type: "swift", version: "1.0.0" },
+            { type: "cli", version: "3.0.0" }
         ]);
     });
 });

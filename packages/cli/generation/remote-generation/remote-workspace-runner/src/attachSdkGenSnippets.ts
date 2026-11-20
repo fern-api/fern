@@ -16,8 +16,8 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 /** The code of one SDK's snippets, by endpoint, keyed like `GET /pet/{petId}`. */
 type CodeByEndpoint = ReadonlyMap<string, string>;
 
-/** The targets sdk-gen builds that are not SDKs, so docs.yml `snippets:` has no entry for them. */
-const NON_SDK_LANGUAGES = ["cli", "mcp", "terraform"];
+/** The targets sdk-gen builds that are not SDKs and have no code samples for the docs. The CLI has them: docs.yml `snippets:` has a `cli` entry. */
+const NON_SDK_LANGUAGES = ["mcp", "terraform"];
 const SDK_LANGUAGES = new Set<string>(targetLanguageSchema.options);
 for (const language of NON_SDK_LANGUAGES) {
     SDK_LANGUAGES.delete(language);
