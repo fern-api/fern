@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern check` now also requires the roles used in `<If roles={[...]}>` and `<If viewer={[...]}>`
+    components on docs pages to be declared in the top-level `roles:` list of `docs.yml`, as it already
+    does for `viewers:`. An undeclared role is an error, so `fern check` and `fern generate --docs`
+    fail on projects that used to pass (for example `<If roles={["everyone"]}>` without `everyone`
+    in `roles:`). To fix it, add the role to `roles:`. Snippets, translated pages and API reference
+    descriptions aren't checked yet.
+  type: feat
