@@ -76,12 +76,12 @@ export function resolveFernSdkGenApiPublishCredentialSource(
             return { registry: "pypi", username: source.username, password: source.password };
         case "maven": {
             assertDirectCredential("maven", "username", source.username);
-            assertDirectCredential("maven", "password", source.password);
+            const password = resolveMavenPassword(source.password);
             const signature = resolveMavenSignature(source.signature);
             return {
                 registry: "maven",
                 username: source.username,
-                password: source.password,
+                password,
                 ...(signature == null ? {} : { signature })
             };
         }
@@ -135,6 +135,18 @@ export function validateFernSdkGenApiPublishTargets(inputs: FernSdkGenApiPublish
             `sdk-gen-api publish credentials file is ${formatKiB(body.length)}, exceeding the 64 KiB limit`
         );
     }
+}
+
+/**
+ * Custom Maven registries may accept a username with no password (anonymous or token-less registries), as
+ * legacy Fiddle generation did, so a missing or blank password is sent as an empty string.
+ */
+function resolveMavenPassword(password: string | undefined): string {
+    if (password == null || password.trim().length === 0) {
+        return "";
+    }
+    assertDirectCredential("maven", "password", password);
+    return password;
 }
 
 function resolveMavenSignature(

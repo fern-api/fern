@@ -32,6 +32,7 @@ import {
     resolveSdkConfigRequestedOutput,
     runFernSdkGenApiBuild,
     selectFernSdkGenApiRoute,
+    validateFernSdkGenApiDirectPublishCredentials,
     validateFernSdkGenApiPublishCredentialSource,
     validateFernSdkGenApiPublishCredentialSources
 } from "../fernSdkGenApi.js";
@@ -2254,7 +2255,16 @@ describe("isEligibleForFernSdkGenApi", () => {
                 "https://pypi.buildwithfern.com"
             )
         ).not.toThrow();
-        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "maven", username: "user" })).toThrow(
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSource({ registry: "maven", username: "user" })
+        ).not.toThrow();
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "maven", password: "secret" })).toThrow(
+            "requires username"
+        );
+        expect(() =>
+            validateFernSdkGenApiPublishCredentialSource({ registry: "maven", username: "user", password: "OIDC" })
+        ).toThrow("does not support OIDC");
+        expect(() => validateFernSdkGenApiPublishCredentialSource({ registry: "pypi", username: "user" })).toThrow(
             "requires password"
         );
         expect(() =>
@@ -2277,6 +2287,49 @@ describe("isEligibleForFernSdkGenApi", () => {
                 "https://user:password@npm.example.com"
             )
         ).toThrow("must use HTTPS and must not contain user information");
+    });
+
+    it.each([
+        ["empty", ""],
+        ["whitespace-only", "   "]
+    ])("sends an %s Maven password to sdk-gen-api as an empty string", (_label, password) => {
+        const generatorInvocation = invocation({
+            name: "fernapi/fern-java-sdk",
+            language: "java",
+            version: "3.0.0",
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.mavenOverride({
+                    registryUrl: "https://repo.example.com/releases",
+                    coordinate: "com.acme:sdk",
+                    username: "maven-user",
+                    password
+                })
+            )
+        });
+        expect(() => validateFernSdkGenApiDirectPublishCredentials(generatorInvocation)).not.toThrow();
+        const request = createFernSdkGenApiBatchRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            specsTarGzBuffer: Buffer.from("archive"),
+            targets: [
+                {
+                    generatorInvocation,
+                    sdkVersion: "1.2.3",
+                    targetIdSeed: "0",
+                    payload: runtimePayload(Buffer.from("bundle"))
+                }
+            ]
+        });
+
+        expect(createFernSdkGenApiPublishCredentials(request, [generatorInvocation])?.targets).toEqual([
+            {
+                targetId: request.targets[0]?.targetId,
+                registry: "maven",
+                username: "maven-user",
+                password: ""
+            }
+        ]);
     });
 
     it("applies the shared credential document size limit to normalized SDK Config credentials", () => {
