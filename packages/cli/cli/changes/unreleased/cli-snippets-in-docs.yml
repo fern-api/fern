@@ -2,6 +2,6 @@
 
 - summary: |
     Read the CLI's code snippets from sdk-gen for the docs, the way the SDK snippets are read, behind the
-    `ALLOW_CLI_SNIPPETS` feature flag (off by default). With the flag on, the `cli` entry of the docs.yml `snippets:`
+    `ALLOW_CLI_SNIPPETS=true` environment variable (off by default). With it set, the `cli` entry of the docs.yml `snippets:`
     section looks up the snippets of the CLI built from the sdk-config.yml.
   type: feat

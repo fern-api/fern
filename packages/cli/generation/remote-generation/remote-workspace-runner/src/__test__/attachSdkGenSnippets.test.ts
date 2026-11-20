@@ -3,7 +3,6 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
     ALLOW_CLI_SNIPPETS_ENV_VAR,
-    ALLOW_CLI_SNIPPETS_FEATURE_FLAG,
     attachSdkGenSnippets,
     describeSdkSnippetsReadFailures,
     describeSnippetSources,
@@ -127,18 +126,20 @@ describe("isCliSnippetsAllowed", () => {
         vi.unstubAllEnvs();
     });
 
-    it("is on or off by the override, whatever the flag says", async () => {
+    it("is on only when ALLOW_CLI_SNIPPETS is true", () => {
         vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "true");
-        expect(await isCliSnippetsAllowed("acme")).toBe(true);
+        expect(isCliSnippetsAllowed()).toBe(true);
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, " TRUE ");
+        expect(isCliSnippetsAllowed()).toBe(true);
         vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "false");
-        expect(await isCliSnippetsAllowed("acme")).toBe(false);
+        expect(isCliSnippetsAllowed()).toBe(false);
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "1");
+        expect(isCliSnippetsAllowed()).toBe(false);
     });
 
-    it("asks the feature flag when there is no override, and is off when the flag is not reachable", async () => {
-        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "");
-        expect(ALLOW_CLI_SNIPPETS_FEATURE_FLAG).toBe("ALLOW_CLI_SNIPPETS");
-        // Without a PostHog key the flag client is a no-op that answers off.
-        expect(await isCliSnippetsAllowed("acme")).toBe(false);
+    it("is off when ALLOW_CLI_SNIPPETS is not set", () => {
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, undefined);
+        expect(isCliSnippetsAllowed()).toBe(false);
     });
 });
 

@@ -1,7 +1,6 @@
 import { errorMessageOrString, nonEmpty } from "@fern-api/core-utils";
 import type { APIV1Write } from "@fern-api/fdr-sdk";
 import type { Logger } from "@fern-api/logger";
-import { getFeatureFlagClient } from "@fern-api/posthog-manager";
 import { targetLanguageSchema } from "@postman/sdk-config";
 import { omit } from "lodash-es";
 
@@ -24,19 +23,12 @@ for (const language of NON_SDK_LANGUAGES) {
     SDK_LANGUAGES.delete(language);
 }
 
-/** The PostHog flag that lets the docs read the snippets of the CLI: docs.yml `snippets:` has a `cli` entry for them. */
-export const ALLOW_CLI_SNIPPETS_FEATURE_FLAG = "ALLOW_CLI_SNIPPETS";
+/** The environment variable that lets the docs read the snippets of the CLI: docs.yml `snippets:` has a `cli` entry for them. */
+export const ALLOW_CLI_SNIPPETS_ENV_VAR = "ALLOW_CLI_SNIPPETS";
 
-/** Runtime override of the {@link ALLOW_CLI_SNIPPETS_FEATURE_FLAG} flag, for tests and debugging: `true` or `false`. */
-export const ALLOW_CLI_SNIPPETS_ENV_VAR = "FERN_ALLOW_CLI_SNIPPETS";
-
-/** Whether the docs of an organization read the snippets of the CLI. Off unless the flag or the override says so. */
-export async function isCliSnippetsAllowed(organization: string): Promise<boolean> {
-    const override = process.env[ALLOW_CLI_SNIPPETS_ENV_VAR]?.trim().toLowerCase();
-    if (override === "true" || override === "false") {
-        return override === "true";
-    }
-    return await getFeatureFlagClient().isEnabled(ALLOW_CLI_SNIPPETS_FEATURE_FLAG, { org: organization });
+/** Whether the docs read the snippets of the CLI: only when `ALLOW_CLI_SNIPPETS=true`. */
+export function isCliSnippetsAllowed(): boolean {
+    return process.env[ALLOW_CLI_SNIPPETS_ENV_VAR]?.trim().toLowerCase() === "true";
 }
 
 /** The SDK of one language, at one version, that the docs ask for. */

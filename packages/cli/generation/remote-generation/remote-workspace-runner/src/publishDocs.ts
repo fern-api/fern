@@ -432,23 +432,20 @@ export async function publishDocs({
                 return existing;
             }
             // A snippet problem must never fail the docs publish, so the cached promise always resolves.
-            const snippets = isCliSnippetsAllowed(organization)
-                .then((allowCli) =>
-                    readSdkGenSnippets({
-                        token: token.value,
-                        organization,
-                        snippetsConfig,
-                        sdkNames,
-                        allowCli,
-                        logger: context.logger
-                    })
-                )
-                .catch((error: unknown): SdkGenSnippets => {
-                    for (const line of describeSdkSnippetsReadFailures({ snippetsConfig, sdkNames, error })) {
-                        context.logger.warn(line);
-                    }
-                    return new Map();
-                });
+            const allowCli = isCliSnippetsAllowed();
+            const snippets = readSdkGenSnippets({
+                token: token.value,
+                organization,
+                snippetsConfig,
+                sdkNames,
+                allowCli,
+                logger: context.logger
+            }).catch((error: unknown): SdkGenSnippets => {
+                for (const line of describeSdkSnippetsReadFailures({ snippetsConfig, sdkNames, allowCli, error })) {
+                    context.logger.warn(line);
+                }
+                return new Map();
+            });
             sdkGenSnippetsByConfig.set(key, snippets);
             return snippets;
         };
