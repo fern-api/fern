@@ -1,6 +1,7 @@
 import { errorMessageOrString, nonEmpty } from "@fern-api/core-utils";
 import type { APIV1Write } from "@fern-api/fdr-sdk";
 import type { Logger } from "@fern-api/logger";
+import { getFeatureFlagClient } from "@fern-api/posthog-manager";
 import { targetLanguageSchema } from "@postman/sdk-config";
 import { omit } from "lodash-es";
 
@@ -16,11 +17,26 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 /** The code of one SDK's snippets, by endpoint, keyed like `GET /pet/{petId}`. */
 type CodeByEndpoint = ReadonlyMap<string, string>;
 
-/** The targets sdk-gen builds that are not SDKs and have no code samples for the docs. The CLI has them: docs.yml `snippets:` has a `cli` entry. */
-const NON_SDK_LANGUAGES = ["mcp", "terraform"];
+/** The targets sdk-gen builds that are not SDKs, so docs.yml `snippets:` has no entry for them. */
+const NON_SDK_LANGUAGES = ["cli", "mcp", "terraform"];
 const SDK_LANGUAGES = new Set<string>(targetLanguageSchema.options);
 for (const language of NON_SDK_LANGUAGES) {
     SDK_LANGUAGES.delete(language);
+}
+
+/** The PostHog flag that lets the docs read the snippets of the CLI: docs.yml `snippets:` has a `cli` entry for them. */
+export const ALLOW_CLI_SNIPPETS_FEATURE_FLAG = "ALLOW_CLI_SNIPPETS";
+
+/** Runtime override of the {@link ALLOW_CLI_SNIPPETS_FEATURE_FLAG} flag, for tests and debugging: `true` or `false`. */
+export const ALLOW_CLI_SNIPPETS_ENV_VAR = "FERN_ALLOW_CLI_SNIPPETS";
+
+/** Whether the docs of an organization read the snippets of the CLI. Off unless the flag or the override says so. */
+export async function isCliSnippetsAllowed(organization: string): Promise<boolean> {
+    const override = process.env[ALLOW_CLI_SNIPPETS_ENV_VAR]?.trim().toLowerCase();
+    if (override === "true" || override === "false") {
+        return override === "true";
+    }
+    return await getFeatureFlagClient().isEnabled(ALLOW_CLI_SNIPPETS_FEATURE_FLAG, { org: organization });
 }
 
 /** The SDK of one language, at one version, that the docs ask for. */
@@ -29,10 +45,17 @@ interface SdkRequest {
     version: string;
 }
 
-/** The SDKs whose snippets to look up: the docs.yml `snippets:` entry of each SDK language, when it names a version. */
-export function getSdkRequests(config: SnippetsConfig): SdkRequest[] {
+/**
+ * The SDKs whose snippets to look up: the docs.yml `snippets:` entry of each SDK language, when it names a version,
+ * and the `cli` entry when the CLI snippets are allowed.
+ */
+export function getSdkRequests(
+    config: SnippetsConfig,
+    { allowCli = false }: { allowCli?: boolean } = {}
+): SdkRequest[] {
     const entries: Record<string, { version?: string | null } | null | undefined> = config;
-    return [...SDK_LANGUAGES].flatMap((type) => {
+    const languages = allowCli ? [...SDK_LANGUAGES, "cli"] : [...SDK_LANGUAGES];
+    return languages.flatMap((type) => {
         const version = nonEmpty(entries[`${type}Sdk`]?.version);
         return version == null ? [] : [{ type, version }];
     });
@@ -42,14 +65,16 @@ export function getSdkRequests(config: SnippetsConfig): SdkRequest[] {
 export function describeSdkSnippetsReadFailures({
     snippetsConfig,
     sdkNames = {},
+    allowCli = false,
     error
 }: {
     snippetsConfig: SnippetsConfig;
     sdkNames?: Record<string, string[]>;
+    allowCli?: boolean;
     error: unknown;
 }): string[] {
     const reason = errorMessageOrString(error);
-    const requests = getSdkRequests(snippetsConfig);
+    const requests = getSdkRequests(snippetsConfig, { allowCli });
     if (requests.length === 0) {
         return [`Failed to read sdk snippets, error: ${reason}`];
     }
@@ -188,11 +213,14 @@ export async function readSdkGenSnippets(
         organization,
         snippetsConfig,
         sdkNames = {},
+        allowCli = false,
         logger
     }: {
         token: string;
         organization: string;
         snippetsConfig: SnippetsConfig;
+        /** Whether to read the snippets of the CLI too (see {@link isCliSnippetsAllowed}). */
+        allowCli?: boolean;
         /** The sdkNames of each language's SDK in the sdk-config.yml; a language without one has no snippets to read. */
         sdkNames?: Record<string, string[]>;
         logger: Pick<Logger, "debug" | "info" | "warn">;
@@ -203,7 +231,7 @@ export async function readSdkGenSnippets(
         readSnippets = downloadSnippetsJson
     }: AttachSdkGenSnippetsDependencies = {}
 ): Promise<SdkGenSnippets> {
-    const requests = getSdkRequests(snippetsConfig);
+    const requests = getSdkRequests(snippetsConfig, { allowCli });
     if (requests.length === 0) {
         return new Map();
     }

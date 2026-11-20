@@ -1,11 +1,14 @@
 import type { APIV1Write } from "@fern-api/fdr-sdk";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
+    ALLOW_CLI_SNIPPETS_ENV_VAR,
+    ALLOW_CLI_SNIPPETS_FEATURE_FLAG,
     attachSdkGenSnippets,
     describeSdkSnippetsReadFailures,
     describeSnippetSources,
     getSdkRequests,
+    isCliSnippetsAllowed,
     omitSdkLanguages,
     readSdkGenSnippets
 } from "../attachSdkGenSnippets.js";
@@ -90,7 +93,7 @@ describe("getSdkRequests", () => {
         ).toEqual([]);
     });
 
-    it("reads the other SDK languages and the CLI too", () => {
+    it("reads the other SDK languages too, but not the CLI or the other targets that are not SDKs", () => {
         expect(
             getSdkRequests({
                 swiftSdk: { package: "Acme", version: "1.0.0" },
@@ -99,9 +102,43 @@ describe("getSdkRequests", () => {
             })
         ).toEqual([
             { type: "rust", version: "2.0.0" },
+            { type: "swift", version: "1.0.0" }
+        ]);
+    });
+
+    it("reads the CLI too when the CLI snippets are allowed", () => {
+        expect(
+            getSdkRequests(
+                {
+                    swiftSdk: { package: "Acme", version: "1.0.0" },
+                    cliSdk: { package: "acme-cli", version: "3.0.0" }
+                },
+                { allowCli: true }
+            )
+        ).toEqual([
             { type: "swift", version: "1.0.0" },
             { type: "cli", version: "3.0.0" }
         ]);
+    });
+});
+
+describe("isCliSnippetsAllowed", () => {
+    afterEach(() => {
+        vi.unstubAllEnvs();
+    });
+
+    it("is on or off by the override, whatever the flag says", async () => {
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "true");
+        expect(await isCliSnippetsAllowed("acme")).toBe(true);
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "false");
+        expect(await isCliSnippetsAllowed("acme")).toBe(false);
+    });
+
+    it("asks the feature flag when there is no override, and is off when the flag is not reachable", async () => {
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "");
+        expect(ALLOW_CLI_SNIPPETS_FEATURE_FLAG).toBe("ALLOW_CLI_SNIPPETS");
+        // Without a PostHog key the flag client is a no-op that answers off.
+        expect(await isCliSnippetsAllowed("acme")).toBe(false);
     });
 });
 

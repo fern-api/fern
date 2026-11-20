@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Read the CLI's code snippets from sdk-gen for the docs, the way the SDK snippets are read. The `cli` entry of
-    the docs.yml `snippets:` section now looks up the snippets of the CLI built from the sdk-config.yml.
+    Read the CLI's code snippets from sdk-gen for the docs, the way the SDK snippets are read, behind the
+    `ALLOW_CLI_SNIPPETS` feature flag (off by default). With the flag on, the `cli` entry of the docs.yml `snippets:`
+    section looks up the snippets of the CLI built from the sdk-config.yml.
   type: feat
