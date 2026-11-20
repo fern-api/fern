@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.226.2
+  changelogEntry:
+    - summary: |
+        Keep OpenAPI error responses whose only content type is non-JSON (e.g. `text/plain`) in the
+        IR instead of dropping them. They now appear in API reference docs and `.md` exports like
+        error responses that declare no body.
+      type: fix
+  createdAt: "2026-11-20"
+  irVersion: 67
 - version: 5.226.1
   changelogEntry:
     - summary: |
