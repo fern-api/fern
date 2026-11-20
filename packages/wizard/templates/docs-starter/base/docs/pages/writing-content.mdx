@@ -1,0 +1,89 @@
+---
+title: Write content
+subtitle: Create documentation pages using MDX
+slug: writing-content
+---
+
+Documentation pages are written in MDX, which combines Markdown with React components. Create `.mdx` files in the `docs/pages/` directory and reference them in your `docs.yml` navigation.
+
+## Quick example
+
+Here's a minimal page with frontmatter and Markdown content:
+
+```markdown title="docs/pages/my-page.mdx"
+---
+title: Page title
+subtitle: Optional subtitle
+slug: my-page
+---
+
+Your content here. Use standard Markdown formatting like **bold**, *italic*, and `code`.
+
+## Headings
+
+Use headings to organize your content.
+```
+
+## Using components
+
+Fern provides [built-in components](https://buildwithfern.com/learn/docs/writing-content/components/overview) for common documentation patterns. Each example below shows the rendered component followed by the MDX that produces it.
+
+### Callouts
+
+Use callouts to highlight important information.
+
+<Note>
+Highlight important information with callouts.
+</Note>
+
+```jsx title="my-page.mdx"
+<Note>
+Highlight important information with callouts.
+</Note>
+```
+
+### Cards
+
+Use cards to link to related pages.
+
+<CardGroup cols={2}>
+  <Card title="Set up navigation" icon="duotone compass" href="/navigation">
+    Structure your docs with tabs, sections, and pages
+  </Card>
+  <Card title="Customize your docs" icon="duotone palette" href="/customization">
+    Change colors, fonts, and layout to match your brand
+  </Card>
+</CardGroup>
+
+```jsx title="my-page.mdx"
+<CardGroup cols={2}>
+  <Card title="Set up navigation" icon="duotone compass" href="/navigation">
+    Structure your docs with tabs, sections, and pages
+  </Card>
+  <Card title="Customize your docs" icon="duotone palette" href="/customization">
+    Change colors, fonts, and layout to match your brand
+  </Card>
+</CardGroup>
+```
+
+## More components
+
+Explore the full set of built-in components and click through to the Fern documentation for detailed usage guides.
+
+<CardGroup cols={2}>
+  <Card
+    title="Component library"
+    icon="duotone puzzle-piece"
+    href="https://buildwithfern.com/learn/docs/writing-content/components/overview"
+  >
+    Browse callouts, cards, tabs, accordions, and more
+  </Card>
+  <Card
+    title="Markdown syntax"
+    icon="duotone text"
+    href="https://buildwithfern.com/learn/docs/writing-content/markdown"
+  >
+    Format text, links, lists, tables, and code blocks
+  </Card>
+</CardGroup>
+

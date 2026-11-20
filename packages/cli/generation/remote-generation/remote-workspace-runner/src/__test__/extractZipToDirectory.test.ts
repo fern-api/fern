@@ -35,6 +35,29 @@ async function createTestZip(
 }
 
 describe("extractZipToDirectory", () => {
+    it("extracts every file after a large compressed one", async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        // Varied text that compresses to well over a read chunk, like a large generated source file.
+        const large = Array.from(
+            { length: 12_000 },
+            (_, i) => `let value_${i} = compute(${(i * 7919) % 104_729});\n`
+        ).join("");
+        const zipPath = await createTestZip(tmpDir, [
+            { name: "src/large.rs", content: large },
+            { name: "src/after.rs", content: "after" }
+        ]);
+
+        const outputDir = AbsoluteFilePath.of(path.join(tmpDir.path, "output"));
+        await mkdir(outputDir, { recursive: true });
+
+        await extractZipToDirectory(zipPath, outputDir);
+
+        expect(await readFile(path.join(outputDir, "src", "large.rs"), "utf-8")).toBe(large);
+        expect(await readFile(path.join(outputDir, "src", "after.rs"), "utf-8")).toBe("after");
+
+        await tmpDir.cleanup();
+    }, 15_000);
+
     it("extracts files correctly", async () => {
         const tmpDir = await tmp.dir({ unsafeCleanup: true });
         const zipPath = await createTestZip(tmpDir, [{ name: "file.txt", content: "hello world" }]);

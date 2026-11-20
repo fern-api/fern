@@ -1,0 +1,31 @@
+---
+title: September 15, 2025
+slug: 09-15-2025
+tags: ["plants-api", "search", "new-features", "plant-care"]
+---
+
+## New features
+
+### Plant care requirements
+Added detailed care information to plant objects:
+- `light_requirements` - Light level needs (low, medium, bright indirect, full sun)
+- `water_frequency` - Watering schedule recommendations
+- `temperature_range` - Ideal temperature range
+- `humidity_level` - Humidity preferences
+
+### Advanced filtering
+Plant search now supports filtering by care requirements:
+```bash
+GET /plants?care_level=easy&light_requirements=low
+```
+
+## Enhancements
+
+- Increased rate limit from 1000 to 5000 requests per hour for production API keys
+- Added response caching headers to improve performance
+- Order confirmation emails now include estimated delivery date
+
+## Bug fixes
+
+- Fixed pagination issue in customer order history
+- Resolved incorrect stock calculations when orders were cancelled

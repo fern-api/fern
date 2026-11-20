@@ -1,0 +1,47 @@
+{
+  "name": "@fern-api/wizard",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The setup wizard behind `fern init`, used as a library by the Fern CLI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern.git",
+    "directory": "packages/wizard"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "source": "src/index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@fern-api/cli-art": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "chalk": "catalog:",
+    "inquirer": "^9.2.15",
+    "yaml": "catalog:"
+  },
+  "scripts": {
+    "clean": "rm -rf ./lib && rm -rf ./dist",
+    "compile": "tsc --project tsconfig.build.json",
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "lint:eslint": "eslint --max-warnings 0 src",
+    "format": "biome check --write src",
+    "depcheck": "knip --config ../../knip.json --no-config-hints"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/inquirer": "catalog:",
+    "@types/node": "^22.0.0",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
