@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Plant API
+servers:
+  - url: https://api.plants.test
+paths:
+  /plants/{plantId}:
+    get:
+      operationId: getPlant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The plant
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+        "400":
+          description: Invalid plant id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "401":
+          description: Missing or invalid credentials
+          content:
+            text/plain:
+              schema:
+                type: string
+                enum:
+                  - Unauthorized
+        "404":
+          description: Plant not found
+          content:
+            text/plain:
+              schema:
+                type: string
+        "409":
+          description: Plant is being repotted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+            text/plain:
+              schema:
+                type: string
+        "500":
+          description: Server error
