@@ -10,6 +10,7 @@ import { Icons } from "../../../../ui/format.js";
 import { command } from "../../../_internal/command.js";
 import { LinkCheckClient, LinkCheckError } from "./LinkCheckClient.js";
 import { LinkCheckFormatter, type OutputFormat } from "./LinkCheckFormatter.js";
+import { LinkIgnoreFilter } from "./LinkIgnoreFilter.js";
 import { ProgressRenderer } from "./ProgressRenderer.js";
 import { SourceResolver } from "./SourceResolver.js";
 
@@ -19,6 +20,8 @@ export declare namespace LinkCheckCommand {
         url?: string;
         /** Output format for link check results */
         output: OutputFormat;
+        /** URL patterns to leave out of the results; `*` matches any characters */
+        ignore?: string[];
     }
 }
 
@@ -63,9 +66,15 @@ export class LinkCheckCommand {
             });
 
             const resolver = new SourceResolver(docsConfigDir);
-            const resolved = resolver.resolve(result);
+            const { result: resolved, ignoredCount } = new LinkIgnoreFilter(args.ignore ?? []).apply(
+                resolver.resolve(result)
+            );
 
             progress.finish();
+
+            if (ignoredCount > 0) {
+                context.stderr.info(`${Icons.info} Ignored ${ignoredCount} link(s) matching --ignore`);
+            }
 
             const formatter = new LinkCheckFormatter(domain);
             const output = formatter.format(resolved, args.output, { interrupted: streamInterrupted });
@@ -209,6 +218,12 @@ export function addLinkCheckCommand(cli: Argv<GlobalArgs>): void {
                     description: "Output format",
                     choices: ["text", "json", "csv"] as const,
                     default: "text" as const
+                })
+                .option("ignore", {
+                    type: "string",
+                    array: true,
+                    description:
+                        "URL pattern to leave out of the results (repeatable). `*` matches any characters, e.g. --ignore 'https://mcp.example.com/*'"
                 })
     );
 }
