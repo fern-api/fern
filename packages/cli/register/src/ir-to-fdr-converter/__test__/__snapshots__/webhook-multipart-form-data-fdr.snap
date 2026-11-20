@@ -28,6 +28,7 @@
     "swiftSdk": undefined,
     "typescriptSdk": undefined,
   },
+  "specVersion": "1.0.0",
   "subpackages": {
     "subpackage_documentManagement": {
       "description": undefined,

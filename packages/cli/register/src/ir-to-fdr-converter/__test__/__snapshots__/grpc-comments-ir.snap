@@ -363,7 +363,7 @@
     },
   },
   "sourceConfig": undefined,
-  "specVersion": undefined,
+  "specVersion": "0.0.1",
   "subpackages": {
     "subpackage_commentsService": {
       "displayName": undefined,

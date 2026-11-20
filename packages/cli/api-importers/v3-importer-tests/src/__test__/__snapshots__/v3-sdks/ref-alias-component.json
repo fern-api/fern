@@ -692,6 +692,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Ref alias component",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

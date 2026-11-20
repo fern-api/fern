@@ -595,6 +595,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Primitive Array Complex API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

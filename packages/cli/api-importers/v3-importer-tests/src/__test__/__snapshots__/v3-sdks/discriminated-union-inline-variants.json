@@ -599,6 +599,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test discriminator with inline oneOf variants",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

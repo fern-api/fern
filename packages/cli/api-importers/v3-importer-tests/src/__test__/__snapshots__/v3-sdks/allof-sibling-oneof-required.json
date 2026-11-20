@@ -1674,6 +1674,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Sibling oneOf required constraint",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

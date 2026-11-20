@@ -1,6 +1,7 @@
 {
   "apiName": "URL Reference API",
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiDisplayName": "URL Reference API",
   "auth": {
     "requirement": "ALL",

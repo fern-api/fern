@@ -841,6 +841,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test content-type parsing.",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

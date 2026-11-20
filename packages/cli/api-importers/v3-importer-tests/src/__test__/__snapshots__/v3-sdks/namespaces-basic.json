@@ -1,6 +1,7 @@
 {
   "apiName": "Pet API",
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiDisplayName": "Pet API",
   "auth": {
     "requirement": "ALL",

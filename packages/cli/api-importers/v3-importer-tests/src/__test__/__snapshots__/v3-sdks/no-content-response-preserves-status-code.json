@@ -1028,6 +1028,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "No Content Response Status Code Preservation",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

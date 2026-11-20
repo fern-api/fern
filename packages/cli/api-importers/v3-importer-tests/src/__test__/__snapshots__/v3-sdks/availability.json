@@ -4517,6 +4517,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Deprecated params and fields",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

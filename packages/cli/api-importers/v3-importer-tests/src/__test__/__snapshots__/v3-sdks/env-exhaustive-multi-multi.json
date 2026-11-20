@@ -1,6 +1,7 @@
 {
   "apiName": "Test API",
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiDisplayName": "Test API",
   "auth": {
     "requirement": "ALL",

@@ -1282,6 +1282,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Auth Overrides Respect security:[] Opt-Out",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

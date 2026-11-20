@@ -847,6 +847,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Endpoint Security With Spec-Level Global Security",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

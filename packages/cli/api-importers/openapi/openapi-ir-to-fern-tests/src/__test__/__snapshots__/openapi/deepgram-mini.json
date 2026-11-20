@@ -89,5 +89,5 @@ error-discrimination:
   strategy: status-code
 ",
   },
-  "specVersion": undefined,
+  "specVersion": "1.0.0",
 }

@@ -1345,6 +1345,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test that streaming $ref schemas are not excluded when shared with other endpoints.",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

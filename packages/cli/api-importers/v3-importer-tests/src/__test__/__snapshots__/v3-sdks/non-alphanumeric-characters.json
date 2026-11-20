@@ -461,6 +461,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Enum of separator characters",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

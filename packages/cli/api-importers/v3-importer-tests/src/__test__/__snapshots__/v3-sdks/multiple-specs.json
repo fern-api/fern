@@ -1,6 +1,7 @@
 {
   "apiName": "Test file upload v1",
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiDisplayName": "Test file upload v1",
   "auth": {
     "requirement": "ALL",

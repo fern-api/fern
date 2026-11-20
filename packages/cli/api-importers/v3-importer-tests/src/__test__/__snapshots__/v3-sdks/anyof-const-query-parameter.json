@@ -580,6 +580,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test spec for anyOf with const query parameter",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -392,6 +392,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "No JSON Content Response API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

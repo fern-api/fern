@@ -820,6 +820,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Parameter Allow Empty Value Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

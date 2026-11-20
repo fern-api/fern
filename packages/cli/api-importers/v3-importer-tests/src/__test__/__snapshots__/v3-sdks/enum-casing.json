@@ -614,6 +614,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Example API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

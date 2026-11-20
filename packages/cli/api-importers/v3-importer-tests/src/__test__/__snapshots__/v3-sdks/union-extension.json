@@ -364,6 +364,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test inheritance from undiscrimnated union objects",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

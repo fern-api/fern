@@ -530,6 +530,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Security Multiple Options Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

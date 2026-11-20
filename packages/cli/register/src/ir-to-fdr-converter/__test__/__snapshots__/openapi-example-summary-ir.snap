@@ -574,7 +574,7 @@
     },
   },
   "sourceConfig": undefined,
-  "specVersion": undefined,
+  "specVersion": "1",
   "subpackages": {},
   "types": {
     "Payment": {

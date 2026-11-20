@@ -42,6 +42,7 @@
     "swiftSdk": undefined,
     "typescriptSdk": undefined,
   },
+  "specVersion": "0.0.1",
   "subpackages": {
     "subpackage_commentsService": {
       "description": undefined,
