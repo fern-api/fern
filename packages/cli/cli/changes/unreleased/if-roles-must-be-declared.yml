@@ -6,6 +6,5 @@
     does for `viewers:`. An undeclared role is an error, so `fern check` and `fern generate --docs`
     fail on projects that used to pass (for example `<If roles={["everyone"]}>` without `everyone`
     in `roles:`). To fix it, add the role to `roles:`. Snippets, translated pages and API reference
-    descriptions aren't checked yet. Docs publishes now also send the declared `roles:` to the docs
-    ledger, so the preview role picker can list every declared role.
+    descriptions aren't checked yet.
   type: feat

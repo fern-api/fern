@@ -1,7 +1,7 @@
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
 import { describe, expect, it } from "vitest";
 
-import { mapDeclaredRoles, mapDocsConfigToLedgerConfig } from "../mapDocsConfigToLedgerConfig";
+import { mapDocsConfigToLedgerConfig } from "../mapDocsConfigToLedgerConfig";
 
 function mapAgents(agents: Record<string, unknown>) {
     return mapDocsConfigToLedgerConfig({
@@ -35,16 +35,5 @@ describe("mapDocsConfigToLedgerConfig remotePaths", () => {
             fileIdToPath: undefined
         });
         expect(ledger.remotePaths).toEqual(remotePaths);
-    });
-});
-
-describe("mapDeclaredRoles", () => {
-    it("forwards docs.yml's declared roles", () => {
-        expect(mapDeclaredRoles(["internal", "partner"])).toEqual(["internal", "partner"]);
-    });
-
-    it("omits roles when docs.yml declares none", () => {
-        expect(mapDeclaredRoles(undefined)).toBeUndefined();
-        expect(mapDeclaredRoles([])).toBeUndefined();
     });
 });
