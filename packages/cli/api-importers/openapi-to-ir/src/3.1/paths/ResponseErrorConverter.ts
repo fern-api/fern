@@ -122,15 +122,16 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             docs: this.responseError.description
         };
 
+        const responseHeaders = this.convertResponseHeaders();
         return {
             error,
             errorType: TypeReference.unknown(),
             displayName: errorName,
             statusCode: this.statusCode,
             isWildcardStatusCode: this.isWildcardStatusCode,
-            inlinedTypes: this.convertResponseHeaders().inlinedTypes,
+            inlinedTypes: responseHeaders.inlinedTypes,
             examples: {},
-            headers: this.convertResponseHeaders().headers
+            headers: responseHeaders.headers
         };
     }
 
