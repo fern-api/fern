@@ -17,12 +17,12 @@ export class LinkIgnoreFilter {
         return this.patterns.some((pattern) => pattern.test(url));
     }
 
-    public apply(result: ResolvedLinkCheckResult): { result: ResolvedLinkCheckResult; ignoredCount: number } {
+    public apply(result: ResolvedLinkCheckResult): ResolvedLinkCheckResult {
         const brokenLinks = this.keep(result.brokenLinks);
         const blockedLinks = this.keep(result.blockedLinks);
         const ignoredCount =
             result.brokenLinks.length - brokenLinks.length + (result.blockedLinks.length - blockedLinks.length);
-        return { result: { ...result, brokenLinks, blockedLinks }, ignoredCount };
+        return { ...result, brokenLinks, blockedLinks, ignoredLinks: (result.ignoredLinks ?? 0) + ignoredCount };
     }
 
     private keep(links: ResolvedBrokenLink[]): ResolvedBrokenLink[] {
@@ -32,7 +32,7 @@ export class LinkIgnoreFilter {
     private toRegExp(pattern: string): RegExp {
         const source = pattern
             .split("*")
-            .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+            .map((part) => part.replace(/[.+?^${}()|[\]\\]/g, "\\$&"))
             .join(".*");
         return new RegExp(`^${source}$`);
     }

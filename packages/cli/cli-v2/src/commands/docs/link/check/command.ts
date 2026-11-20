@@ -66,15 +66,9 @@ export class LinkCheckCommand {
             });
 
             const resolver = new SourceResolver(docsConfigDir);
-            const { result: resolved, ignoredCount } = new LinkIgnoreFilter(args.ignore ?? []).apply(
-                resolver.resolve(result)
-            );
+            const resolved = new LinkIgnoreFilter(args.ignore ?? []).apply(resolver.resolve(result));
 
             progress.finish();
-
-            if (ignoredCount > 0) {
-                context.stderr.info(`${Icons.info} Ignored ${ignoredCount} link(s) matching --ignore`);
-            }
 
             const formatter = new LinkCheckFormatter(domain);
             const output = formatter.format(resolved, args.output, { interrupted: streamInterrupted });

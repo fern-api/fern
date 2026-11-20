@@ -31,6 +31,8 @@ export interface ResolvedLinkCheckResult {
     workingLinks: number;
     brokenLinks: ResolvedBrokenLink[];
     blockedLinks: ResolvedBrokenLink[];
+    /** Broken or blocked links dropped by `--ignore` */
+    ignoredLinks?: number;
     durationMs: number;
 }
 

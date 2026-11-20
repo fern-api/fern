@@ -38,7 +38,7 @@ describe("LinkIgnoreFilter", () => {
     it("removes ignored broken and blocked links and counts them", () => {
         const filter = new LinkIgnoreFilter(["https://claude.ai/api/mcp/auth_callback", "https://mcp.docusign.com/*"]);
 
-        const { result: filtered, ignoredCount } = filter.apply(
+        const filtered = filter.apply(
             result(
                 [link("https://claude.ai/api/mcp/auth_callback", 400), link("https://example.com/missing")],
                 [link("https://mcp.docusign.com/mcp", 401)]
@@ -47,15 +47,14 @@ describe("LinkIgnoreFilter", () => {
 
         expect(filtered.brokenLinks.map((l) => l.url)).toEqual(["https://example.com/missing"]);
         expect(filtered.blockedLinks).toEqual([]);
-        expect(ignoredCount).toBe(2);
+        expect(filtered.ignoredLinks).toBe(2);
     });
 
     it("ignores nothing when no patterns are given", () => {
         const input = result([link("https://example.com/missing")]);
 
-        const { result: filtered, ignoredCount } = new LinkIgnoreFilter([]).apply(input);
+        const filtered = new LinkIgnoreFilter([]).apply(input);
 
-        expect(filtered).toEqual(input);
-        expect(ignoredCount).toBe(0);
+        expect(filtered).toEqual({ ...input, ignoredLinks: 0 });
     });
 });
