@@ -16,8 +16,11 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 /** The code of one SDK's snippets, by endpoint, keyed like `GET /pet/{petId}`. */
 type CodeByEndpoint = ReadonlyMap<string, string>;
 
+/** The CLI target: not an SDK, but docs.yml `snippets:` has a `cli` entry for it (read only when allowed). */
+const CLI_LANGUAGE = "cli";
+
 /** The targets sdk-gen builds that are not SDKs, so docs.yml `snippets:` has no entry for them. */
-const NON_SDK_LANGUAGES = ["cli", "mcp", "terraform"];
+const NON_SDK_LANGUAGES = [CLI_LANGUAGE, "mcp", "terraform"];
 const SDK_LANGUAGES = new Set<string>(targetLanguageSchema.options);
 for (const language of NON_SDK_LANGUAGES) {
     SDK_LANGUAGES.delete(language);
@@ -46,7 +49,7 @@ export function getSdkRequests(
     { allowCli = false }: { allowCli?: boolean } = {}
 ): SdkRequest[] {
     const entries: Record<string, { version?: string | null } | null | undefined> = config;
-    const languages = allowCli ? [...SDK_LANGUAGES, "cli"] : [...SDK_LANGUAGES];
+    const languages = allowCli ? [...SDK_LANGUAGES, CLI_LANGUAGE] : [...SDK_LANGUAGES];
     return languages.flatMap((type) => {
         const version = nonEmpty(entries[`${type}Sdk`]?.version);
         return version == null ? [] : [{ type, version }];
