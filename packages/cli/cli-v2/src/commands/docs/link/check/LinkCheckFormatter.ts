@@ -42,6 +42,7 @@ export class LinkCheckFormatter {
                     workingLinks: result.workingLinks,
                     brokenLinks: result.brokenLinks.length,
                     blockedLinks: result.blockedLinks.length,
+                    ignoredLinks: result.ignoredLinks ?? 0,
                     durationMs: result.durationMs
                 },
                 brokenLinks: result.brokenLinks.map((link) => ({
@@ -138,6 +139,10 @@ export class LinkCheckFormatter {
 
         if (result.blockedLinks.length > 0) {
             lines.push(`  ${chalk.yellow("⚠")} Blocked         ${result.blockedLinks.length}`);
+        }
+
+        if (result.ignoredLinks != null && result.ignoredLinks > 0) {
+            lines.push(`  ${chalk.dim("-")} Ignored         ${result.ignoredLinks}`);
         }
 
         const internal = result.brokenLinks.filter((l) => l.isInternal);

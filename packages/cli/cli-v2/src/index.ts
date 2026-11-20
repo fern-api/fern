@@ -3,6 +3,7 @@ export type { BrokenLink, LinkCheckResult } from "./commands/docs/link/check/Lin
 export { LinkCheckClient, LinkCheckError } from "./commands/docs/link/check/LinkCheckClient.js";
 export type { OutputFormat } from "./commands/docs/link/check/LinkCheckFormatter.js";
 export { LinkCheckFormatter } from "./commands/docs/link/check/LinkCheckFormatter.js";
+export { LinkIgnoreFilter } from "./commands/docs/link/check/LinkIgnoreFilter.js";
 export { ProgressRenderer } from "./commands/docs/link/check/ProgressRenderer.js";
 export type {
     ResolvedBrokenLink,
