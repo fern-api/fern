@@ -78,6 +78,7 @@ import {
     attachSdkGenSnippets,
     describeSdkSnippetsReadFailures,
     describeSnippetSources,
+    isCliSnippetsAllowed,
     omitSdkLanguages,
     readSdkGenSnippets,
     type SdkGenSnippets
@@ -431,14 +432,16 @@ export async function publishDocs({
                 return existing;
             }
             // A snippet problem must never fail the docs publish, so the cached promise always resolves.
+            const allowCli = isCliSnippetsAllowed();
             const snippets = readSdkGenSnippets({
                 token: token.value,
                 organization,
                 snippetsConfig,
                 sdkNames,
+                allowCli,
                 logger: context.logger
             }).catch((error: unknown): SdkGenSnippets => {
-                for (const line of describeSdkSnippetsReadFailures({ snippetsConfig, sdkNames, error })) {
+                for (const line of describeSdkSnippetsReadFailures({ snippetsConfig, sdkNames, allowCli, error })) {
                     context.logger.warn(line);
                 }
                 return new Map();

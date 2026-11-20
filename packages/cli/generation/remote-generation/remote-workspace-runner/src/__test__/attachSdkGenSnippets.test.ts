@@ -1,11 +1,13 @@
 import type { APIV1Write } from "@fern-api/fdr-sdk";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
+    ALLOW_CLI_SNIPPETS_ENV_VAR,
     attachSdkGenSnippets,
     describeSdkSnippetsReadFailures,
     describeSnippetSources,
     getSdkRequests,
+    isCliSnippetsAllowed,
     omitSdkLanguages,
     readSdkGenSnippets
 } from "../attachSdkGenSnippets.js";
@@ -90,7 +92,7 @@ describe("getSdkRequests", () => {
         ).toEqual([]);
     });
 
-    it("reads the other SDK languages too, but not the targets that are not SDKs", () => {
+    it("reads the other SDK languages too, but not the CLI or the other targets that are not SDKs", () => {
         expect(
             getSdkRequests({
                 swiftSdk: { package: "Acme", version: "1.0.0" },
@@ -101,6 +103,43 @@ describe("getSdkRequests", () => {
             { type: "rust", version: "2.0.0" },
             { type: "swift", version: "1.0.0" }
         ]);
+    });
+
+    it("reads the CLI too when the CLI snippets are allowed", () => {
+        expect(
+            getSdkRequests(
+                {
+                    swiftSdk: { package: "Acme", version: "1.0.0" },
+                    cliSdk: { package: "acme-cli", version: "3.0.0" }
+                },
+                { allowCli: true }
+            )
+        ).toEqual([
+            { type: "swift", version: "1.0.0" },
+            { type: "cli", version: "3.0.0" }
+        ]);
+    });
+});
+
+describe("isCliSnippetsAllowed", () => {
+    afterEach(() => {
+        vi.unstubAllEnvs();
+    });
+
+    it("is on only when ALLOW_CLI_SNIPPETS is true", () => {
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "true");
+        expect(isCliSnippetsAllowed()).toBe(true);
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, " TRUE ");
+        expect(isCliSnippetsAllowed()).toBe(true);
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "false");
+        expect(isCliSnippetsAllowed()).toBe(false);
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, "1");
+        expect(isCliSnippetsAllowed()).toBe(false);
+    });
+
+    it("is off when ALLOW_CLI_SNIPPETS is not set", () => {
+        vi.stubEnv(ALLOW_CLI_SNIPPETS_ENV_VAR, undefined);
+        expect(isCliSnippetsAllowed()).toBe(false);
     });
 });
 
