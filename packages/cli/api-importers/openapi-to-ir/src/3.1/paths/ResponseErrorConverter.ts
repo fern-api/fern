@@ -53,39 +53,14 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
     public convert(): ResponseErrorConverter.Output | undefined {
         if (!this.responseError.content) {
             // TODO: Handle 204 in a first class manner.
-            const errorName = this.getErrorNameForStatusCode(this.statusCode, this.isWildcardStatusCode);
-            if (errorName == null) {
-                this.context.logger.warn(`No error name found for status code ${this.statusCode}`);
-                return undefined;
-            }
-
-            const errorId = this.getErrorIdFromErrorName(errorName);
-            const error: ResponseError = {
-                error: {
-                    name: this.context.casingsGenerator.generateName(errorId),
-                    fernFilepath: {
-                        allParts: [],
-                        packagePath: [],
-                        file: undefined
-                    },
-                    errorId
-                },
-                docs: this.responseError.description
-            };
-
-            return {
-                error,
-                errorType: TypeReference.unknown(),
-                displayName: errorName,
-                statusCode: this.statusCode,
-                isWildcardStatusCode: this.isWildcardStatusCode,
-                inlinedTypes: this.convertResponseHeaders().inlinedTypes,
-                examples: {},
-                headers: this.convertResponseHeaders().headers
-            };
+            return this.constructSchemalessErrorOutput();
         }
 
         const jsonContentTypes = Object.keys(this.responseError.content).filter((type) => type.includes("json"));
+        if (jsonContentTypes.length === 0) {
+            // Non-JSON error bodies (e.g. text/plain) are not typed, but the error itself must be preserved.
+            return this.constructSchemalessErrorOutput();
+        }
         const errorName = this.getErrorNameForStatusCode(this.statusCode, this.isWildcardStatusCode);
         if (errorName == null) {
             this.context.logger.warn(`No error name found for status code ${this.statusCode}`);
@@ -124,6 +99,39 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             }
         }
         return undefined;
+    }
+
+    private constructSchemalessErrorOutput(): ResponseErrorConverter.Output | undefined {
+        const errorName = this.getErrorNameForStatusCode(this.statusCode, this.isWildcardStatusCode);
+        if (errorName == null) {
+            this.context.logger.warn(`No error name found for status code ${this.statusCode}`);
+            return undefined;
+        }
+
+        const errorId = this.getErrorIdFromErrorName(errorName);
+        const error: ResponseError = {
+            error: {
+                name: this.context.casingsGenerator.generateName(errorId),
+                fernFilepath: {
+                    allParts: [],
+                    packagePath: [],
+                    file: undefined
+                },
+                errorId
+            },
+            docs: this.responseError.description
+        };
+
+        return {
+            error,
+            errorType: TypeReference.unknown(),
+            displayName: errorName,
+            statusCode: this.statusCode,
+            isWildcardStatusCode: this.isWildcardStatusCode,
+            inlinedTypes: this.convertResponseHeaders().inlinedTypes,
+            examples: {},
+            headers: this.convertResponseHeaders().headers
+        };
     }
 
     private constructErrorConverterOutput({
