@@ -102,7 +102,8 @@ const OAUTH_UNMAPPED_FIELDS: Record<string, FieldTreatment> = Object.fromEntries
         "tokenParameters.*",
         "refreshParameters.*",
         "deviceAuthorizationUrl",
-        "deviceAuthorizationParameters.*"
+        "deviceAuthorizationParameters.*",
+        "environmentTokenUrls.*"
     ].map((field) => [
         `api.auth.schemes[].flows[].${field}`,
         {

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    MCP targets now accept `instructions` and `appendInstructions` in the SDK Config `generation`
+    block (`@postman/sdk-config` 0.25.0). `instructions` replaces the server instructions returned
+    on `initialize`; `appendInstructions` appends to the generated ones. Previously these keys were
+    rejected during SDK Config validation.
+  type: feat
