@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern docs theme rebuild` to rebuild docs sites that were built with an older version of an org theme. Pass `--name` to limit it to one theme and `--dry-run` to list the sites without rebuilding. Requires org admin.
+  type: feat
