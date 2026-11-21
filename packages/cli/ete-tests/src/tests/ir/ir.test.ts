@@ -59,6 +59,14 @@ const FIXTURES: Fixture[] = [
     },
     {
         name: "response-property"
+    },
+    // generators.yml has a Go generator with smart-casing: true, so `--language go` must case `storeId` as `StoreID`
+    {
+        name: "smart-casing",
+        language: "go"
+    },
+    {
+        name: "smart-casing"
     }
 ];
 
