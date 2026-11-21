@@ -19,6 +19,7 @@ const include = [
     "src/__test__/versioned-root-landing-page.test.ts",
     "src/__test__/versionDefault.test.ts",
     "src/__test__/library-hardfail.test.ts",
+    "src/__test__/library-symbol.test.ts",
     "src/__test__/direct-api-spec.test.ts",
     "src/__test__/graphql-type-navigation.test.ts",
     "src/__test__/api-type-navigation.test.ts",

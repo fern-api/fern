@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `<LibrarySymbol library="..." name="..." />` to embed a generated Python or C/C++ symbol
+    in authored MDX pages (optional `heading` and `members`), with type references linked to the
+    generated reference pages. `fern docs md generate` persists the library IR to
+    `<output.path>/.fern/library-ir.json`; `output.pages: false` keeps the IR without generating pages.
+  type: feat
+- summary: |
+    `<Code src="..." />` handles files containing backticks, keeps processing other tags when one
+    file is missing, and reports the referencing file and line in errors.
+  type: fix

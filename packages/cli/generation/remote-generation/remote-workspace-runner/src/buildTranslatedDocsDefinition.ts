@@ -6,6 +6,7 @@ import {
     getTranslatedSettings,
     markUntranslatedNavNodesNoindex,
     replaceImagePathsAndUrls,
+    replaceLibrarySymbols,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
@@ -93,8 +94,15 @@ export async function buildTranslatedDocsDefinition({
                     fileLoader: localeAwareFileLoader
                 });
 
-                const importsResolved = transformAtPrefixImports({
+                const symbolsResolved = await replaceLibrarySymbols({
                     markdown: codeResolved,
+                    absolutePathToMarkdownFile,
+                    context,
+                    renderSymbol: resolver.getLibrarySymbolRenderer()
+                });
+
+                const importsResolved = transformAtPrefixImports({
+                    markdown: symbolsResolved,
                     absolutePathToFernFolder: docsWorkspacePath,
                     absolutePathToMarkdownFile,
                     context

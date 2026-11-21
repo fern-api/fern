@@ -9,10 +9,12 @@ export const LibraryOutputConfiguration: core.serialization.ObjectSchema<
     FernDocsConfig.LibraryOutputConfiguration
 > = core.serialization.object({
     path: core.serialization.string(),
+    pages: core.serialization.boolean().optional(),
 });
 
 export declare namespace LibraryOutputConfiguration {
     export interface Raw {
         path: string;
+        pages?: boolean | null;
     }
 }

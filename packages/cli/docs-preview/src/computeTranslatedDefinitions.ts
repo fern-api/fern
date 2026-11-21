@@ -6,6 +6,7 @@ import {
     getTranslatedAnnouncement,
     getTranslatedSettings,
     replaceImagePathsAndUrls,
+    replaceLibrarySymbols,
     replaceReferencedCode,
     replaceReferencedMarkdown,
     stripMdxComments,
@@ -33,7 +34,8 @@ export async function computeTranslatedDefinitions(
         translatedApiDefinitions,
         collectedFileIds,
         docsWorkspacePath,
-        markdownFilesToPathName
+        markdownFilesToPathName,
+        renderLibrarySymbol
     } = result;
 
     const hasTranslatedPages = translationPages != null && Object.keys(translationPages).length > 0;
@@ -113,9 +115,16 @@ export async function computeTranslatedDefinitions(
                         fileLoader: localeAwareFileLoader
                     });
 
+                    const symbolsResolved = await replaceLibrarySymbols({
+                        markdown: codeResolved,
+                        absolutePathToMarkdownFile,
+                        context,
+                        renderSymbol: renderLibrarySymbol
+                    });
+
                     // Transform @/ prefix imports to relative paths
                     const importsResolved = transformAtPrefixImports({
-                        markdown: codeResolved,
+                        markdown: symbolsResolved,
                         absolutePathToFernFolder: docsWorkspacePath,
                         absolutePathToMarkdownFile,
                         context
