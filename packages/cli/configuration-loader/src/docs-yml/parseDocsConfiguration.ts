@@ -494,6 +494,7 @@ function convertPageActions(
             claude: pageActions.options?.claude ?? true,
             cursor: pageActions.options?.cursor ?? true,
             claudeCode: pageActions.options?.claudeCode ?? true,
+            codex: pageActions.options?.codex ?? true,
             mcp: pageActions.options?.mcp ?? true,
             mcpAuth: pageActions.options?.mcpAuth ?? false,
             vscode: pageActions.options?.vscode ?? false,
@@ -544,6 +545,8 @@ function convertPageActionOption(
             return "cursor";
         case "claude-code":
             return "claudeCode";
+        case "codex":
+            return "codex";
         case "vscode":
             return "vscode";
         default:

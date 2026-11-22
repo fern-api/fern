@@ -15,6 +15,7 @@ export const PageActionOption: core.serialization.Schema<
     "claude",
     "cursor",
     "claude-code",
+    "codex",
     "vscode",
 ]);
 
@@ -27,5 +28,6 @@ export declare namespace PageActionOption {
         | "claude"
         | "cursor"
         | "claude-code"
+        | "codex"
         | "vscode";
 }

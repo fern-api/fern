@@ -25,6 +25,7 @@ function makeParsedPageActions(
             claude: true,
             cursor: true,
             claudeCode: true,
+            codex: true,
             vscode: false,
             mcp: true,
             mcpAuth: false,
@@ -63,6 +64,7 @@ describe("DocsDefinitionResolver page actions skills config", () => {
                 claude: true,
                 cursor: true,
                 claudeCode: true,
+                codex: true,
                 vscode: false,
                 custom: [],
                 skills: {

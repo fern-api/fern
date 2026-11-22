@@ -3465,6 +3465,7 @@ export class DocsDefinitionResolver {
                 claude: this.parsedDocsConfig.pageActions.options.claude,
                 cursor: this.parsedDocsConfig.pageActions.options.cursor,
                 claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
+                codex: this.parsedDocsConfig.pageActions.options.codex,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
                 ...(!this.parsedDocsConfig.pageActions.options.mcp ? { mcp: false } : {}),
                 ...(this.parsedDocsConfig.pageActions.options.mcpAuth ? { mcpAuth: true } : {}),

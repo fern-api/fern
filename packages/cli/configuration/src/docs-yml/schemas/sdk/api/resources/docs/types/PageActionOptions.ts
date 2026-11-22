@@ -44,6 +44,14 @@ export interface PageActionOptions {
      */
     claudeCode?: boolean;
     /**
+     * Controls the "Connect to Codex" button, which copies a `codex mcp add` command to the
+     * clipboard so users can register this docs site's MCP server with Codex. The button only
+     * renders on docs sites that have Ask AI enabled; set to `false` to hide it on those sites.
+     *
+     * @default: true
+     */
+    codex?: boolean;
+    /**
      * Controls the "Connect to Cursor" button, which installs this docs site's MCP server in
      * Cursor via a deeplink. The button only renders on docs sites that have Ask AI enabled; set
      * to `false` to hide it on those sites.
@@ -54,8 +62,8 @@ export interface PageActionOptions {
     /**
      * Controls whether the MCP server endpoint (`/_mcp/server`) is enabled for this docs site.
      * When set to `false`, the endpoint returns 404, the MCP server URL is omitted from
-     * `llms.txt` and agent prompts, and the "Connect to Claude Code" / "Connect to Cursor"
-     * buttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents
+     * `llms.txt` and agent prompts, and the "Connect to Claude Code" / "Connect to Codex" /
+     * "Connect to Cursor" buttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents
      * discovering the endpoint would cause confusion.
      *
      * @default: true

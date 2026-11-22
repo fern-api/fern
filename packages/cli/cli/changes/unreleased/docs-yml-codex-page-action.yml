@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `codex` under `page-actions` in `docs.yml` to toggle the "Connect to Codex" button,
+    which copies a `codex mcp add` command for the docs site's MCP server
+    (e.g. `page-actions.options.codex: false` or `page-actions.default: codex`).
+  type: feat
