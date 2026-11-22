@@ -1,6 +1,5 @@
 import { cloneRepository } from "@fern-api/github";
 import { template } from "es-toolkit/compat";
-import { camelCase, upperFirst } from "es-toolkit/string";
 import type fs from "fs";
 import type { ReadmeFeature } from "../configuration/sdk/api/index.js";
 import { FernGeneratorCli } from "../configuration/sdk/index.js";
@@ -8,6 +7,14 @@ import { StreamWriter, StringWriter, type Writer } from "../utils/Writer.js";
 import { Block } from "./Block.js";
 import { BlockMerger } from "./BlockMerger.js";
 import type { ReadmeParser } from "./ReadmeParser.js";
+import {
+    assertNever,
+    featureIDToTitle,
+    getCrateNameFromPackageName,
+    languageToTitle,
+    pascalCase,
+    writeInstallation
+} from "./shared.js";
 
 export class ReadmeGenerator {
     private ADVANCED_FEATURE_ID = "ADVANCED";
@@ -486,229 +493,11 @@ export class ReadmeGenerator {
         const writer = new StringWriter();
         await writer.writeLine("## Installation");
         await writer.writeLine();
-        switch (language.type) {
-            case "typescript":
-                await this.writeInstallationForNPM({
-                    writer,
-                    npm: language.publishInfo
-                });
-                break;
-            case "python":
-                await this.writeInstallationForPyPi({
-                    writer,
-                    pypi: language.publishInfo
-                });
-                break;
-            case "java":
-                await this.writeInstallationForMaven({
-                    writer,
-                    maven: language.publishInfo
-                });
-                break;
-            case "go":
-                await this.writeInstallationForGo({
-                    writer,
-                    go: language.publishInfo
-                });
-                break;
-            case "ruby":
-                await this.writeInstallationForRubyGems({
-                    writer,
-                    rubyGems: language.publishInfo
-                });
-                break;
-            case "csharp":
-                await this.writeInstallationForNuget({
-                    writer,
-                    nuget: language.publishInfo
-                });
-                break;
-            case "php":
-                await this.writeInstallationForComposer({
-                    writer,
-                    composer: language.publishInfo
-                });
-                break;
-            case "rust":
-                await this.writeInstallationForCargo({
-                    writer,
-                    cargo: language.publishInfo
-                });
-                break;
-            case "swift":
-                await this.writeInstallationForSwiftPackageManager({
-                    writer,
-                    spm: language.publishInfo
-                });
-                break;
-            default:
-                assertNever(language);
-        }
+        await writeInstallation({ writer, language });
         return new Block({
             id: "INSTALLATION",
             content: writer.toString()
         });
-    }
-
-    private async writeInstallationForNPM({
-        writer,
-        npm
-    }: {
-        writer: Writer;
-        npm: FernGeneratorCli.NpmPublishInfo;
-    }): Promise<void> {
-        await writer.writeLine("```sh");
-        await writer.writeLine(`npm i -s ${npm.packageName}`);
-        await writer.writeLine("```");
-        await writer.writeLine();
-    }
-
-    private async writeInstallationForPyPi({
-        writer,
-        pypi
-    }: {
-        writer: Writer;
-        pypi: FernGeneratorCli.PypiPublishInfo;
-    }): Promise<void> {
-        await writer.writeLine("```sh");
-        await writer.writeLine(`pip install ${pypi.packageName}`);
-        await writer.writeLine("```");
-        await writer.writeLine();
-    }
-
-    private async writeInstallationForMaven({
-        writer,
-        maven
-    }: {
-        writer: Writer;
-        maven: FernGeneratorCli.MavenPublishInfo;
-    }): Promise<void> {
-        await writer.writeLine("### Gradle");
-        await writer.writeLine();
-        await writer.writeLine("Add the dependency in your `build.gradle` file:");
-        await writer.writeLine();
-        await writer.writeLine("```groovy");
-        await writer.writeLine("dependencies {");
-        await writer.writeLine(`  implementation '${maven.group}:${maven.artifact}:${maven.version}'`);
-        await writer.writeLine("}");
-        await writer.writeLine("```");
-        await writer.writeLine();
-
-        await writer.writeLine("### Maven");
-        await writer.writeLine();
-        await writer.writeLine("Add the dependency in your `pom.xml` file:");
-        await writer.writeLine();
-        await writer.writeLine("```xml");
-        await writer.writeLine("<dependency>");
-        await writer.writeLine(`  <groupId>${maven.group}</groupId>`);
-        await writer.writeLine(`  <artifactId>${maven.artifact}</artifactId>`);
-        await writer.writeLine(`  <version>${maven.version}</version>`);
-        await writer.writeLine("</dependency>");
-        await writer.writeLine("```");
-        await writer.writeLine();
-    }
-
-    private async writeInstallationForGo({
-        writer,
-        go
-    }: {
-        writer: Writer;
-        go: FernGeneratorCli.GoPublishInfo;
-    }): Promise<void> {
-        await writer.writeLine("```sh");
-        await writer.write(`go get github.com/${go.owner}/${go.repo}`);
-        const majorVersion = getMajorVersion(go.version);
-        if (!majorVersion.startsWith("0") && !majorVersion.startsWith("1")) {
-            // For Go, we need to append the major version to the module path for any release greater than v1.X.X.
-            await writer.write(`/v${majorVersion}`);
-        }
-        await writer.writeLine();
-        await writer.writeLine("```");
-        await writer.writeLine();
-    }
-
-    private async writeInstallationForRubyGems({
-        writer,
-        rubyGems
-    }: {
-        writer: Writer;
-        rubyGems: FernGeneratorCli.RubyGemsPublishInfo;
-    }): Promise<void> {
-        await writer.writeLine("```sh");
-        await writer.writeLine(`gem install ${rubyGems.packageName}`);
-        await writer.writeLine("```");
-        await writer.writeLine();
-    }
-
-    private async writeInstallationForNuget({
-        writer,
-        nuget
-    }: {
-        writer: Writer;
-        nuget: FernGeneratorCli.NugetPublishInfo;
-    }): Promise<void> {
-        await writer.writeLine("```sh");
-        await writer.writeLine(`dotnet add package ${nuget.packageName}`);
-        await writer.writeLine("```");
-        await writer.writeLine();
-    }
-
-    private async writeInstallationForComposer({
-        writer,
-        composer
-    }: {
-        writer: Writer;
-        composer: FernGeneratorCli.ComposerPublishInfo;
-    }): Promise<void> {
-        await writer.writeLine("```sh");
-        await writer.writeLine(`composer require ${composer.packageName}`);
-        await writer.writeLine("```");
-        await writer.writeLine();
-    }
-
-    private async writeInstallationForCargo({
-        writer,
-        cargo
-    }: {
-        writer: Writer;
-        cargo: FernGeneratorCli.CargoPublishInfo;
-    }): Promise<void> {
-        await writer.writeLine("Add this to your `Cargo.toml`:");
-        await writer.writeLine();
-        await writer.writeLine("```toml");
-        await writer.writeLine("[dependencies]");
-        await writer.writeLine(`${this.getCrateNameFromPackageName(cargo.packageName)} = "${cargo.version}"`);
-        await writer.writeLine("```");
-        await writer.writeLine();
-        await writer.writeLine("Or install via cargo:");
-        await writer.writeLine();
-        await writer.writeLine("```sh");
-        await writer.writeLine(`cargo add ${this.getCrateNameFromPackageName(cargo.packageName)}`);
-        await writer.writeLine("```");
-        await writer.writeLine();
-    }
-
-    private async writeInstallationForSwiftPackageManager({
-        writer,
-        spm
-    }: {
-        writer: Writer;
-        spm: FernGeneratorCli.SwiftPackageManagerPublishInfo;
-    }): Promise<void> {
-        await writer.writeLine(
-            "With Swift Package Manager (SPM), add the following to the top-level `dependencies` array within your `Package.swift` file:"
-        );
-        await writer.writeLine();
-        await writer.writeLine("```swift");
-        await writer.writeLine("dependencies: [");
-        await writer.writeLine(`    .package(url: "${spm.gitUrl}", from: "${spm.minVersion}"),`);
-        await writer.writeLine("]");
-        await writer.writeLine("```");
-        await writer.writeLine();
-    }
-
-    private getCrateNameFromPackageName(packageName: string): string {
-        return packageName.includes("/") ? (packageName.split("/").pop() ?? packageName) : packageName;
     }
 
     private async writeShield({
@@ -915,8 +704,8 @@ export class ReadmeGenerator {
         cargo: FernGeneratorCli.CargoPublishInfo;
     }): Promise<void> {
         await writer.write("[![crates.io shield]");
-        await writer.write(`(https://img.shields.io/crates/v/${this.getCrateNameFromPackageName(cargo.packageName)})]`);
-        await writer.writeLine(`(https://crates.io/crates/${this.getCrateNameFromPackageName(cargo.packageName)})`);
+        await writer.write(`(https://img.shields.io/crates/v/${getCrateNameFromPackageName(cargo.packageName)})]`);
+        await writer.writeLine(`(https://crates.io/crates/${getCrateNameFromPackageName(cargo.packageName)})`);
     }
 
     private async writeShieldForSwiftPackageManager({
@@ -955,76 +744,6 @@ On the other hand, contributions to the README are always very welcome!
     private shouldGenerateFeatures({ features }: { features: FernGeneratorCli.ReadmeFeature[] }): boolean {
         return features.some((feature) => !this.shouldSkipFeature({ feature }));
     }
-}
-
-function languageToTitle(language: FernGeneratorCli.LanguageInfo): string {
-    switch (language.type) {
-        case "typescript":
-            return "TypeScript";
-        case "python":
-            return "Python";
-        case "go":
-            return "Go";
-        case "java":
-            return "Java";
-        case "ruby":
-            return "Ruby";
-        case "csharp":
-            return "C#";
-        case "php":
-            return "PHP";
-        case "rust":
-            return "Rust";
-        case "swift":
-            return "Swift";
-        default:
-            assertNever(language);
-    }
-}
-
-function featureIDToTitle(featureID: string): string {
-    const words = featureID.split("_").map((s) => pascalCase(s));
-
-    const lowercaseWords = new Set([
-        "And",
-        "Or",
-        "Nor",
-        "But",
-        "For",
-        "Yet",
-        "So",
-        "At",
-        "By",
-        "In",
-        "Of",
-        "On",
-        "To",
-        "As"
-    ]);
-
-    return words
-        .map((word, index) => {
-            if (index === 0 || index === words.length - 1) {
-                return word;
-            }
-            if (lowercaseWords.has(word)) {
-                return word.toLowerCase();
-            }
-            return word;
-        })
-        .join(" ");
-}
-
-function pascalCase(s: string): string {
-    return upperFirst(camelCase(s));
-}
-
-function getMajorVersion(version: string): string {
-    return version.split(".")[0] ?? "0";
-}
-
-function assertNever(x: never): never {
-    throw new Error(`unexpected value: ${JSON.stringify(x)}`);
 }
 
 function toScreamingSnakeCase(s: string): string {
