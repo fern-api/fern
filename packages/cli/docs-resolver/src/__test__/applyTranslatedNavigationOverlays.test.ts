@@ -2,11 +2,7 @@ import { docsYml } from "@fern-api/configuration";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { describe, expect, it } from "vitest";
 
-import {
-    applyTranslatedNavigationOverlays,
-    getTranslatedAnnouncement,
-    getTranslatedSettings
-} from "../applyTranslatedNavigationOverlays.js";
+import { applyTranslatedNavigationOverlays, getTranslatedAnnouncement } from "../applyTranslatedNavigationOverlays.js";
 
 function asRoot(obj: unknown): FernNavigation.V1.RootNode {
     return obj as FernNavigation.V1.RootNode;
@@ -957,28 +953,5 @@ describe("getTranslatedAnnouncement", () => {
         };
         const result = getTranslatedAnnouncement(overlay);
         expect(result).toEqual({ text: "新しいバージョンがリリースされました" });
-    });
-});
-
-describe("getTranslatedSettings", () => {
-    it("returns the base settings when the overlay has no search-text", () => {
-        const settings = { searchText: "Search the docs", disableSearch: false };
-        expect(getTranslatedSettings(settings, emptyOverlay())).toBe(settings);
-        expect(getTranslatedSettings(settings, undefined)).toBe(settings);
-    });
-
-    it("overrides only searchText when the overlay sets it", () => {
-        const settings = { searchText: "Zoeken in de documentatie", disableSearch: false };
-        expect(getTranslatedSettings(settings, { ...emptyOverlay(), searchText: "Search the docs" })).toEqual({
-            searchText: "Search the docs",
-            disableSearch: false
-        });
-        expect(settings.searchText).toBe("Zoeken in de documentatie");
-    });
-
-    it("creates settings when the base has none", () => {
-        expect(getTranslatedSettings(undefined, { ...emptyOverlay(), searchText: "Suchen" })).toEqual({
-            searchText: "Suchen"
-        });
     });
 });
