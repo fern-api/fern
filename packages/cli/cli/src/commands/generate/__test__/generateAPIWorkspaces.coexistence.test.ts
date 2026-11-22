@@ -4,6 +4,7 @@ import path from "node:path";
 import type { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import type { fernConfigJson, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import type { Project } from "@fern-api/project-loader";
 import { CliError, createMockTaskContext } from "@fern-api/task-context";
@@ -385,6 +386,28 @@ describe("generateAPIWorkspaces coexistence", () => {
             sdkConfigPath: configPath
         });
         expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
+    });
+
+    it("resolves SDK Config paths relative to sdk-config.yml when legacy specs live outside the project", async () => {
+        const [workspace] = project.apiWorkspaces;
+        const workspaceOutsideProject = {
+            ...workspace,
+            getAbsoluteFilePaths: () => [
+                AbsoluteFilePath.of(temporaryDirectory),
+                AbsoluteFilePath.of(path.join(tmpdir(), "elsewhere", "openapi.yml"))
+            ]
+        } as unknown as AbstractAPIWorkspace<unknown>;
+        await runGenerate({
+            project: { ...project, apiWorkspaces: [workspaceOutsideProject] },
+            cliContext,
+            groupNames: undefined,
+            targetNames: ["typescript"]
+        });
+        const call = vi.mocked(generateWorkspace).mock.calls.find(([args]) => args.sdkConfigV1 != null)?.[0];
+        expect(call?.workspace).toBeInstanceOf(OSSWorkspace);
+        expect(call?.workspace instanceof OSSWorkspace ? call.workspace.allSpecs : []).toMatchObject([
+            { absoluteFilepath: path.join(temporaryDirectory, "openapi", "openapi.yml") }
+        ]);
     });
 
     it("generates without --version through the on-prem adapter", async () => {
