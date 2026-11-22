@@ -50,6 +50,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
         "require-analytics-consent",
         core.serialization.boolean().optional(),
     ),
+    siblingSiteLinks: core.serialization.property("sibling-site-links", core.serialization.boolean().optional()),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -72,5 +73,6 @@ export declare namespace DocsSettingsConfig {
         embedding?: EmbeddingConfig.Raw | null;
         "show-headers-in-examples"?: boolean | null;
         "require-analytics-consent"?: boolean | null;
+        "sibling-site-links"?: boolean | null;
     }
 }
