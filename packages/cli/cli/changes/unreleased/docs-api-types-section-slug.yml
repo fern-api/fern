@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The section `types: true` adds never shares a URL with a sibling at the API root: when `<api>/types`
+    is already taken (the GraphQL types section, a package or tag named "Types", a manually laid out
+    section) it becomes `Schemas` at `<api>/schemas`, then `types-2`, `types-3`, ...
+  type: fix
