@@ -4880,3 +4880,5 @@ function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {
     }
     return { owner, repo };
 }
+
+// ci cache-bust control (no-op) — throwaway branch to isolate ETE flake from the sdk-config bump
