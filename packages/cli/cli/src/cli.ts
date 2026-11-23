@@ -11,6 +11,7 @@ import {
     LinkCheckClient,
     LinkCheckError,
     LinkCheckFormatter,
+    LinkIgnoreFilter,
     ProgressRenderer,
     runCliV2,
     SourceResolver
@@ -3017,6 +3018,12 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                     description: "Output format: text, json, or csv",
                     choices: ["text", "json", "csv"] as const,
                     default: "text" as const
+                })
+                .option("ignore", {
+                    type: "string",
+                    array: true,
+                    description:
+                        "URL pattern to leave out of the results (repeatable). `*` matches any characters, e.g. --ignore 'https://mcp.example.com/*'"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern docs link check" });
@@ -3061,7 +3068,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 });
 
                 const resolver = new SourceResolver(docsConfigDir);
-                const resolved = resolver.resolve(result);
+                const resolved = new LinkIgnoreFilter(argv.ignore ?? []).apply(resolver.resolve(result));
 
                 progress.finish();
 
