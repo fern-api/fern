@@ -954,6 +954,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Parameter Style DeepObject Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

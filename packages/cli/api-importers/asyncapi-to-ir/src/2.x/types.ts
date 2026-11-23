@@ -4,6 +4,7 @@ import { ChannelId, MessageId } from "../sharedTypes.js";
 
 export interface DocumentV2 {
     asyncapi: string;
+    info?: { version?: string };
     servers?: Record<string, ServerV2>;
     channels?: Record<ChannelId, ChannelV2>;
     components?: {

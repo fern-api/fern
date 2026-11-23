@@ -82,6 +82,11 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             this.ir.apiDisplayName = title;
         }
 
+        const version = this.context.spec.info?.version?.trim();
+        if (version) {
+            this.ir.specVersion = version;
+        }
+
         return this.finalizeIr();
     }
 

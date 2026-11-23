@@ -1619,6 +1619,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test `x-fern-pagination` with an operationId whose prefix does not match its tag",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

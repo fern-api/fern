@@ -47,6 +47,11 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
 
         this.convertChannels();
 
+        const version = this.context.spec.info?.version?.trim();
+        if (version) {
+            this.ir.specVersion = version;
+        }
+
         return this.finalizeIr();
     }
 

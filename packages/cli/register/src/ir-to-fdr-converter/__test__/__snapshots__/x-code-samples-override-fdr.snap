@@ -255,6 +255,7 @@ puts user.name",
     "swiftSdk": undefined,
     "typescriptSdk": undefined,
   },
+  "specVersion": "1.0.0",
   "subpackages": {},
   "types": {
     "getUser_Response_200": {

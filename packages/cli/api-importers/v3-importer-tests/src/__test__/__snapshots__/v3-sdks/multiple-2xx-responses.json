@@ -415,6 +415,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Multiple 2xx Responses API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

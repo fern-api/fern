@@ -32,6 +32,7 @@ export function convertIrToFdrApi({
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations, graphqlTypes, { showScopes }),
         apiName: apiNameOverride ?? getOriginalName(ir.apiName),
+        specVersion: ir.specVersion,
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
         snippetsConfiguration: snippetsConfig,

@@ -122,5 +122,5 @@ default-environment: production
 default-url: Base
 ",
   },
-  "specVersion": undefined,
+  "specVersion": "1.0.0",
 }

@@ -2228,6 +2228,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Property-level audience filtering regression fixture",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

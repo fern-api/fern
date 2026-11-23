@@ -16,6 +16,7 @@ export interface DocumentV3 {
 }
 
 export interface Info {
+    version?: string;
     tags?: Tag[];
     externalDocs?: OpenAPIV3.ExternalDocumentationObject;
 }

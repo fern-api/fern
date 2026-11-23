@@ -2012,6 +2012,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "0.0.1",
   "apiName": "OneOfService API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

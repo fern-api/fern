@@ -132,6 +132,10 @@ export function parse({
                     if (parsedAsyncAPI.basePath != null) {
                         ir.basePath = parsedAsyncAPI.basePath;
                     }
+                    const asyncApiVersion = document.value.info?.version?.trim();
+                    if (ir.specVersion == null && asyncApiVersion) {
+                        ir.specVersion = asyncApiVersion;
+                    }
                     documentIndex++;
                     break;
                 }

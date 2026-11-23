@@ -579,6 +579,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Security Global Inheritance Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

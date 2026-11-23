@@ -910,6 +910,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "0.1.0",
   "apiName": "TEST API v2",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

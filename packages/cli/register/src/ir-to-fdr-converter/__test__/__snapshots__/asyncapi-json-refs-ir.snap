@@ -90,7 +90,7 @@
   },
   "services": {},
   "sourceConfig": undefined,
-  "specVersion": undefined,
+  "specVersion": "1.0.0",
   "subpackages": {
     "subpackage_plantOrders": {
       "displayName": undefined,

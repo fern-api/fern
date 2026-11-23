@@ -956,6 +956,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Path Level Parameters Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -1633,6 +1633,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Endpoint Security Per-Endpoint Auth",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -512,6 +512,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test spec for `description` settings defined in anyOf.",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -1,6 +1,7 @@
 {
   "apiName": "API 1",
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiDisplayName": "API 1",
   "auth": {
     "requirement": "ALL",

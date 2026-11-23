@@ -834,6 +834,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "content-parameters",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

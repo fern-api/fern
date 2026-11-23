@@ -1664,6 +1664,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "User and Token API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -993,6 +993,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "list-ref-discriminated-union-audiences",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

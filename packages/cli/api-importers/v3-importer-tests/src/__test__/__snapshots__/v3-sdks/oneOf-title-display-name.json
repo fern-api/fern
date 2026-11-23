@@ -578,6 +578,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "0.0.0",
   "apiName": "",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

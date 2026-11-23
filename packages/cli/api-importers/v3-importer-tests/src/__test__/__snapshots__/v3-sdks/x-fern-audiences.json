@@ -393,6 +393,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test extension `x-fern-audiences`",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"
