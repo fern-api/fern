@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.229.0
+  changelogEntry:
+    - summary: |
+        Add a repeatable `--ignore <pattern>` option to `fern docs link check`. Links whose URL
+        matches a pattern (`*` matches any characters) are left out of the results and no longer
+        fail the run, e.g. `fern docs link check --ignore 'https://mcp.example.com/*'`.
+      type: feat
+  createdAt: "2026-11-23"
+  irVersion: 67
 - version: 5.228.2
   changelogEntry:
     - summary: |
