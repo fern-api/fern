@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    MCP targets now accept an `egress` block in the SDK Config `generation` config
+    (`@postman/sdk-config` 0.26.0): `egress.policy` (`open` | `allowlist`) and
+    `egress.allowedUpstreams`. This is an opt-in outbound allow-list that restricts which
+    hosts a generated MCP server's tools may call. Previously these keys were rejected
+    during SDK Config validation.
+  type: feat
