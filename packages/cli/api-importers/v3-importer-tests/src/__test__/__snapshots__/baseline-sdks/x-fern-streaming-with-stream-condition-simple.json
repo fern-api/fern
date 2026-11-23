@@ -794,6 +794,7 @@
         "response": {
           "type": "streaming"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.create": {
@@ -931,6 +932,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

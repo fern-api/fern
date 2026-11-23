@@ -307,6 +307,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       },
       "endpoint_wateringSchedule.listWateringSchedules": {
@@ -385,6 +386,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       },
       "endpoint_seed.listSeeds": {
@@ -463,6 +465,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       },
       "endpoint_petStore.list": {
@@ -541,6 +544,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       }
     },

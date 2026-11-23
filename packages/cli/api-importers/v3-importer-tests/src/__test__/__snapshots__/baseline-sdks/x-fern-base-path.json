@@ -129,6 +129,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       }
     },

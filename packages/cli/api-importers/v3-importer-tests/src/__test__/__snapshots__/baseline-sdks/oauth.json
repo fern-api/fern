@@ -814,6 +814,7 @@
     "endpoints": {
       "endpoint_auth.get-token": {
         "auth": {
+          "requirement": "ALL",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -1162,6 +1163,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

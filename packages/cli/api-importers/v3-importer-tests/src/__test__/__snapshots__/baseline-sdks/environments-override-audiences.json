@@ -181,6 +181,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       },
       "endpoint_.listScimUsers": {
@@ -220,6 +221,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       }
     },

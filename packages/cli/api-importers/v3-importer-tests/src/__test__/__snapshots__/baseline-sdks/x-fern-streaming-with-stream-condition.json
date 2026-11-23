@@ -2076,6 +2076,7 @@
         "response": {
           "type": "streaming"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.chat": {
@@ -2273,6 +2274,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.interact_stream": {
@@ -2320,6 +2322,7 @@
         "response": {
           "type": "streaming"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.interact": {
@@ -2367,6 +2370,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

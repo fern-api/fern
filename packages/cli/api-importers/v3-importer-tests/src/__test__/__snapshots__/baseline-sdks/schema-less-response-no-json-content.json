@@ -310,6 +310,7 @@
         "response": {
           "type": "text"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },
