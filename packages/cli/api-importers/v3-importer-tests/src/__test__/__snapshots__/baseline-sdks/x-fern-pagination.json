@@ -1783,6 +1783,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.listWithUriPagination": {
@@ -1822,6 +1823,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.listWithPathPagination": {
@@ -1861,6 +1863,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

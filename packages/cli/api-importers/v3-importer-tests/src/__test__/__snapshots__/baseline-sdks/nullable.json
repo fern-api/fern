@@ -1600,6 +1600,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.updateAUser": {
@@ -1771,6 +1772,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.getAUser": {
@@ -1930,6 +1932,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

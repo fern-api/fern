@@ -1857,6 +1857,7 @@
         "response": {
           "type": "streaming"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.user": {
@@ -1994,6 +1995,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.user_v2_stream": {
@@ -2131,6 +2133,7 @@
         "response": {
           "type": "streaming"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.user_v2": {
@@ -2268,6 +2271,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.user_v3_stream": {
@@ -2405,6 +2409,7 @@
         "response": {
           "type": "streaming"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.user_v3": {
@@ -2542,6 +2547,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

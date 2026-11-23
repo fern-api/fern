@@ -790,6 +790,7 @@
               "safeName": "PlantOAuth"
             }
           },
+          "requirement": "ENDPOINT_SECURITY",
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -958,6 +959,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.getPlant": {
@@ -981,6 +983,7 @@
               "safeName": "PlantOAuth"
             }
           },
+          "requirement": "ENDPOINT_SECURITY",
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -1117,6 +1120,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.listPremiumPlants": {
@@ -1140,6 +1144,7 @@
               "safeName": "PlantOAuth"
             }
           },
+          "requirement": "ENDPOINT_SECURITY",
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -1216,6 +1221,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.listPublicPlants": {
@@ -1239,6 +1245,7 @@
               "safeName": "PlantOAuth"
             }
           },
+          "requirement": "ENDPOINT_SECURITY",
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -1315,6 +1322,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },
@@ -1341,7 +1349,7 @@
     "hasWebSocketInTree": false
   },
   "sdkConfig": {
-    "isAuthMandatory": false,
+    "isAuthMandatory": true,
     "hasStreamingEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasFileDownloadEndpoints": false,

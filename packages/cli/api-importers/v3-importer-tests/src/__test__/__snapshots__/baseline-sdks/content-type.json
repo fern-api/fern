@@ -600,6 +600,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.testWithDualContentTypeRequestTypes": {
@@ -741,6 +742,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

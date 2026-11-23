@@ -2578,6 +2578,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.postSuccessRef": {
@@ -2715,6 +2716,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.postSuccessInlinePropertyDeprecation": {
@@ -2852,6 +2854,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.postSuccessInlineObjectDeprecation": {
@@ -2958,6 +2961,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.postSuccessInlineBetaBody": {
@@ -3064,6 +3068,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.postSuccessInlineAlphaBody": {
@@ -3170,6 +3175,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.postSuccessInlinePreviewBody": {
@@ -3276,6 +3282,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.postSuccessInlineLegacyBody": {
@@ -3382,6 +3389,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.postSuccessRefPropertyDeprecation": {
@@ -3736,6 +3744,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

@@ -436,6 +436,7 @@
     "endpoints": {
       "endpoint_chatCompletions.create": {
         "auth": {
+          "requirement": "ALL",
           "token": {
             "originalName": "apiKey",
             "camelCase": {
@@ -666,6 +667,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

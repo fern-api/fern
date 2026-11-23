@@ -254,6 +254,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       },
       "endpoint_seeds.listSeeds": {
@@ -332,6 +333,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       },
       "endpoint_.health": {
@@ -371,6 +373,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       }
     },

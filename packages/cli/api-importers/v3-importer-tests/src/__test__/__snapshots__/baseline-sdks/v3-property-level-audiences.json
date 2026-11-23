@@ -1318,6 +1318,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       },
       "endpoint_.createUser": {
@@ -1673,6 +1674,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       },
       "endpoint_.listAdmins": {
@@ -1712,6 +1714,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       },
       "endpoint_.getUser": {
@@ -1811,6 +1814,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

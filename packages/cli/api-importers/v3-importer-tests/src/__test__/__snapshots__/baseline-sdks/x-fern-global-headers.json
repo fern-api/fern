@@ -1095,6 +1095,7 @@
         "response": {
           "type": "streaming"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_user.get": {
@@ -1308,6 +1309,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

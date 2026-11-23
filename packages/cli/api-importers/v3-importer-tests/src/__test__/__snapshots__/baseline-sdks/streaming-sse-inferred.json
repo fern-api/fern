@@ -688,6 +688,7 @@
         "response": {
           "type": "streaming"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_completions.create": {
@@ -774,6 +775,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_completions.createWithStream": {
@@ -860,6 +862,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

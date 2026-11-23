@@ -696,6 +696,7 @@
     "endpoints": {
       "endpoint_.getToken": {
         "auth": {
+          "requirement": "ALL",
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -864,10 +865,12 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.listPublicPlants": {
         "auth": {
+          "requirement": "ALL",
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -944,10 +947,12 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.getPlant": {
         "auth": {
+          "requirement": "ALL",
           "clientId": {
             "originalName": "clientId",
             "camelCase": {
@@ -1084,6 +1089,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

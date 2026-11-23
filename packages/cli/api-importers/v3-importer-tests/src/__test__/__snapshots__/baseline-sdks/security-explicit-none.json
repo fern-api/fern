@@ -354,6 +354,7 @@
     "endpoints": {
       "endpoint_.getPlantById": {
         "auth": {
+          "requirement": "ALL",
           "header": {
             "name": {
               "wireValue": "x-api-key",
@@ -480,6 +481,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },

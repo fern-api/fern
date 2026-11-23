@@ -542,6 +542,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       },
       "endpoint_.headMethodsShouldNotDefineAResponseBody": {
@@ -581,6 +582,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": false,
         "examples": []
       }
     },

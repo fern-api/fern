@@ -480,6 +480,7 @@
     "endpoints": {
       "endpoint_.getPlantById": {
         "auth": {
+          "requirement": "ALL",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -597,6 +598,7 @@
         "response": {
           "type": "json"
         },
+        "hasResponseBody": true,
         "examples": []
       }
     },
