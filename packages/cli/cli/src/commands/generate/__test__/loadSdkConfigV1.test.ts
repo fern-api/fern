@@ -641,6 +641,177 @@ describe("loadSdkConfigV1", () => {
         expect(loaded.payload.targets[0]?.body.toString("utf8")).not.toContain("MY_NUGET_KEY");
     });
 
+    it("forwards Maven credential expressions as repository secret names for GitHub delivery", async () => {
+        vi.stubEnv("MAVEN_CENTRAL_PASSWORD", "maven-central-secret");
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "java",
+            package: { groupId: "com.acme", artifactId: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-java", mode: "pull-request" },
+                publish: {
+                    registry: "maven",
+                    username: "${MAVEN_CENTRAL_USERNAME}",
+                    password: "${MAVEN_CENTRAL_PASSWORD}",
+                    signature: {
+                        keyId: "${SIGNING_KEY_ID}",
+                        password: "${SIGNING_PASSWORD}",
+                        secretKey: "${SIGNING_IN_MEMORY_KEY}"
+                    }
+                }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+        const target = loaded.payload.targets[0];
+
+        expect(target?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk-java",
+            mode: "pull-request",
+            publish: {
+                registry: "maven",
+                usernameEnvironmentVariable: "MAVEN_CENTRAL_USERNAME",
+                passwordEnvironmentVariable: "MAVEN_CENTRAL_PASSWORD",
+                signatureEnvironmentVariables: {
+                    keyIdEnvironmentVariable: "SIGNING_KEY_ID",
+                    passwordEnvironmentVariable: "SIGNING_PASSWORD",
+                    secretKeyEnvironmentVariable: "SIGNING_IN_MEMORY_KEY"
+                }
+            }
+        });
+        expect(target?.publishCredential).toBeUndefined();
+        expect(JSON.stringify(target)).not.toContain("maven-central-secret");
+        expect(target?.body.toString("utf8")).not.toContain("MAVEN_CENTRAL_USERNAME");
+    });
+
+    it("drops literal Maven credentials instead of forwarding them as secret names", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "java",
+            package: { groupId: "com.acme", artifactId: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-java" },
+                publish: {
+                    registry: "maven",
+                    username: "${MAVEN_CENTRAL_USERNAME}",
+                    password: "literal-maven-password",
+                    signature: {
+                        keyId: "literal-key-id",
+                        password: "literal-signing-password",
+                        secretKey: "${SIGNING_IN_MEMORY_KEY}"
+                    }
+                }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+        const target = loaded.payload.targets[0];
+
+        expect(target?.requestedOutput).toMatchObject({
+            publish: {
+                registry: "maven",
+                usernameEnvironmentVariable: "MAVEN_CENTRAL_USERNAME",
+                signatureEnvironmentVariables: { secretKeyEnvironmentVariable: "SIGNING_IN_MEMORY_KEY" }
+            }
+        });
+        expect(target?.requestedOutput).not.toHaveProperty("publish.passwordEnvironmentVariable");
+        expect(target?.requestedOutput).not.toHaveProperty(
+            "publish.signatureEnvironmentVariables.keyIdEnvironmentVariable"
+        );
+        expect(target?.requestedOutput).not.toHaveProperty(
+            "publish.signatureEnvironmentVariables.passwordEnvironmentVariable"
+        );
+        expect(JSON.stringify(target)).not.toContain("literal-");
+    });
+
+    it("omits Maven secret names when only literal credentials are configured", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "java",
+            package: { groupId: "com.acme", artifactId: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-java" },
+                publish: {
+                    registry: "maven",
+                    username: "literal-user",
+                    password: "literal-password",
+                    signature: { keyId: "literal-key", password: "literal-pass", secretKey: "literal-secret" }
+                }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk-java",
+            publish: { registry: "maven" }
+        });
+    });
+
+    it("forwards a crates.io token expression as a repository secret name for GitHub delivery", async () => {
+        vi.stubEnv("CARGO_REGISTRY_TOKEN", "crates-secret");
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "rust",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-rust", mode: "pull-request" },
+                publish: { registry: "crates", token: "${CARGO_REGISTRY_TOKEN}" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+        const target = loaded.payload.targets[0];
+
+        expect(target?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk-rust",
+            mode: "pull-request",
+            publish: { registry: "crates", tokenEnvironmentVariable: "CARGO_REGISTRY_TOKEN" }
+        });
+        expect(target?.publishCredential).toBeUndefined();
+        expect(JSON.stringify(target)).not.toContain("crates-secret");
+        expect(target?.body.toString("utf8")).not.toContain("CARGO_REGISTRY_TOKEN");
+    });
+
+    it("drops a literal crates.io token instead of forwarding it as a secret name", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "rust",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-rust" },
+                publish: { registry: "crates", token: "literal-crates-token" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk-rust",
+            publish: { registry: "crates" }
+        });
+        expect(JSON.stringify(loaded.payload.targets[0])).not.toContain("literal-crates-token");
+    });
+
+    it("does not forward Maven or crates.io secret names for direct publication", async () => {
+        vi.stubEnv("CARGO_REGISTRY_TOKEN", "crates-secret");
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "rust",
+            output: { delivery: "files", publish: { registry: "crates", token: "${CARGO_REGISTRY_TOKEN}" } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "publish",
+            publish: { registry: "crates" }
+        });
+    });
+
     it("forwards github.workflows false as requestedOutput.workflows", async () => {
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
             language: "typescript",

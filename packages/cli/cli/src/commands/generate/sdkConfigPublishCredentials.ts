@@ -4,6 +4,22 @@ import {
     parseSecretNameExpression
 } from "@fern-api/remote-workspace-runner/direct-publish-credentials";
 
+/**
+ * Names of the repository secrets a generated release workflow reads its publish credentials from, forwarded to
+ * sdk-gen-api in the GitHub requested output. Only names travel this way; values never do.
+ */
+export interface SdkConfigPublishSecretNames {
+    apiKeyEnvironmentVariable?: string;
+    usernameEnvironmentVariable?: string;
+    passwordEnvironmentVariable?: string;
+    signatureEnvironmentVariables?: {
+        keyIdEnvironmentVariable?: string;
+        passwordEnvironmentVariable?: string;
+        secretKeyEnvironmentVariable?: string;
+    };
+    tokenEnvironmentVariable?: string;
+}
+
 interface CredentialFields {
     token?: unknown;
     username?: unknown;
@@ -17,16 +33,16 @@ export function sanitizeSdkConfigPublishCredentials(
 ): {
     sanitizedInput: unknown;
     credentials: Array<FernSdkGenApiPublishCredentialSource | undefined>;
-    /** Per target, the repository secret a NuGet release workflow reads its API key from. */
-    apiKeySecretNames: Array<string | undefined>;
+    /** Per target, the repository secrets its generated release workflow reads publish credentials from. */
+    publishSecretNames: Array<SdkConfigPublishSecretNames | undefined>;
 } {
     if (!isRecord(input) || !Array.isArray(input.targets)) {
-        return { sanitizedInput: input, credentials: [], apiKeySecretNames: [] };
+        return { sanitizedInput: input, credentials: [], publishSecretNames: [] };
     }
     const rootOutput = sanitizeOutput(input.output, isRootOutputInheritedOnlyByCliTargets(input.targets));
     const sanitizedTargets = input.targets.map((target) => {
         if (!isRecord(target)) {
-            return { target, credential: undefined, apiKeySecretName: undefined };
+            return { target, credential: undefined, publishSecretNames: undefined };
         }
         const sanitized = sanitizeOutput(target.output, isCliTarget(target));
         const targetOutput = isRecord(target) ? target.output : undefined;
@@ -37,7 +53,7 @@ export function sanitizeSdkConfigPublishCredentials(
             // A preview downloads files instead of publishing, so the secret name is discarded
             // anyway. Reading it would only add a way for a preview to fail; schema validation
             // still rejects a literal key on a real run, with a better message than this throws.
-            apiKeySecretName: isPreview ? undefined : extractApiKeySecretName(output)
+            publishSecretNames: isPreview ? undefined : extractPublishSecretNames(output)
         };
     });
     return {
@@ -47,7 +63,7 @@ export function sanitizeSdkConfigPublishCredentials(
             targets: sanitizedTargets.map(({ target }) => target)
         },
         credentials: sanitizedTargets.map(({ credential }) => credential),
-        apiKeySecretNames: sanitizedTargets.map(({ apiKeySecretName }) => apiKeySecretName)
+        publishSecretNames: sanitizedTargets.map(({ publishSecretNames }) => publishSecretNames)
     };
 }
 
@@ -80,6 +96,63 @@ function isRootOutputInheritedOnlyByCliTargets(targets: unknown[]): boolean {
     const inheritingTargets = targets.filter((target) => !isRecord(target) || target.output == null);
     const isInheritedAtAll = inheritingTargets.length > 0;
     return isInheritedAtAll && inheritingTargets.every(isCliTarget);
+}
+
+function extractPublishSecretNames(output: unknown): SdkConfigPublishSecretNames | undefined {
+    const apiKeyEnvironmentVariable = extractApiKeySecretName(output);
+    if (apiKeyEnvironmentVariable != null) {
+        return { apiKeyEnvironmentVariable };
+    }
+    return extractWorkflowCredentialSecretNames(output);
+}
+
+/**
+ * The Maven and crates.io release workflows generated into a GitHub repository read their credentials from
+ * repository secrets. A `${NAME}` credential names that secret, so the name is forwarded; a literal is not a secret
+ * name and is dropped. Direct (files/zip) publication resolves these values through the credential path instead.
+ */
+function extractWorkflowCredentialSecretNames(output: unknown): SdkConfigPublishSecretNames | undefined {
+    if (!isRecord(output) || output.delivery !== "github" || !isRecord(output.publish)) {
+        return undefined;
+    }
+    const fields = credentialFields(output.publish);
+    if (output.publish.registry === "crates") {
+        const tokenEnvironmentVariable = secretNameOf(fields.token);
+        return tokenEnvironmentVariable == null ? undefined : { tokenEnvironmentVariable };
+    }
+    if (output.publish.registry !== "maven") {
+        return undefined;
+    }
+    const usernameEnvironmentVariable = secretNameOf(fields.username);
+    const passwordEnvironmentVariable = secretNameOf(fields.password);
+    const signature = isRecord(fields.signature) ? fields.signature : {};
+    const keyIdEnvironmentVariable = secretNameOf(signature.keyId);
+    const signaturePasswordEnvironmentVariable = secretNameOf(signature.password);
+    const secretKeyEnvironmentVariable = secretNameOf(signature.secretKey);
+    const hasSignature =
+        keyIdEnvironmentVariable != null ||
+        signaturePasswordEnvironmentVariable != null ||
+        secretKeyEnvironmentVariable != null;
+    const names: SdkConfigPublishSecretNames = {
+        ...(usernameEnvironmentVariable == null ? {} : { usernameEnvironmentVariable }),
+        ...(passwordEnvironmentVariable == null ? {} : { passwordEnvironmentVariable }),
+        ...(hasSignature
+            ? {
+                  signatureEnvironmentVariables: {
+                      ...(keyIdEnvironmentVariable == null ? {} : { keyIdEnvironmentVariable }),
+                      ...(signaturePasswordEnvironmentVariable == null
+                          ? {}
+                          : { passwordEnvironmentVariable: signaturePasswordEnvironmentVariable }),
+                      ...(secretKeyEnvironmentVariable == null ? {} : { secretKeyEnvironmentVariable })
+                  }
+              }
+            : {})
+    };
+    return Object.keys(names).length === 0 ? undefined : names;
+}
+
+function secretNameOf(value: unknown): string | undefined {
+    return typeof value === "string" ? parseSecretNameExpression(value) : undefined;
 }
 
 /**
