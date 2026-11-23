@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.228.2
+  changelogEntry:
+    - summary: |
+        SDK Config targets delivered to GitHub now forward Maven and crates.io publish credential
+        `${NAME}` expressions to sdk-gen-api as repository secret names (`usernameEnvironmentVariable`,
+        `passwordEnvironmentVariable`, `signatureEnvironmentVariables`, `tokenEnvironmentVariable`), so the
+        generated release workflow publishes with the configured secrets. Literal credentials are not forwarded.
+      type: fix
+  createdAt: "2026-11-23"
+  irVersion: 67
 - version: 5.228.1
   changelogEntry:
     - summary: |
