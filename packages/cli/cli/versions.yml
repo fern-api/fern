@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.228.1
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now registers the OpenAPI or AsyncAPI `info.version` with the API definition, so the
+        `/openapi.json`, `/openapi/<api>.json` and AsyncAPI downloads on a docs site show the source spec's version
+        instead of `1.0.0`.
+      type: fix
+  createdAt: "2026-11-23"
+  irVersion: 67
 - version: 5.228.0
   changelogEntry:
     - summary: |
