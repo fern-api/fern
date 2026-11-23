@@ -26,6 +26,7 @@ import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 import {
     extractSdkConfigGithubNpmTokens,
     resolveSdkConfigPublishCredential,
+    type SdkConfigPublishSecretNames,
     sanitizeSdkConfigPublishCredentials
 } from "./sdkConfigPublishCredentials.js";
 
@@ -63,7 +64,7 @@ export async function loadSdkConfigV1(
     }
 
     try {
-        const { sanitizedInput, credentials, apiKeySecretNames } = sanitizeSdkConfigPublishCredentials(
+        const { sanitizedInput, credentials, publishSecretNames } = sanitizeSdkConfigPublishCredentials(
             input,
             isPreview
         );
@@ -102,9 +103,9 @@ export async function loadSdkConfigV1(
                 }
                 const output = target.output ?? parsed.output;
                 const duplicateTargetLanguageIndex = duplicateTargetLanguageIndexes[index];
-                const requestedOutput = toRequestedOutput(output, isPreview, apiKeySecretNames[index]);
+                const requestedOutput = toRequestedOutput(output, isPreview, publishSecretNames[index]);
                 const configuredOutput = isPreview
-                    ? toRequestedOutput(output, false, apiKeySecretNames[index])
+                    ? toRequestedOutput(output, false, publishSecretNames[index])
                     : undefined;
                 return {
                     body: Buffer.from(
@@ -294,7 +295,7 @@ function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOu
 function toRequestedOutput(
     output: SdkConfigV1["output"] | SdkConfigV1McpOutputConfig,
     isPreview: boolean,
-    apiKeySecretName: string | undefined
+    publishSecretNames: SdkConfigPublishSecretNames | undefined
 ): FernSdkGenApiRequestedOutput {
     if (isPreview) {
         return { type: "download" };
@@ -319,7 +320,7 @@ function toRequestedOutput(
             : {
                   publish: {
                       ...output.publish,
-                      ...(apiKeySecretName == null ? {} : { apiKeyEnvironmentVariable: apiKeySecretName })
+                      ...publishSecretNames
                   }
               })
     };

@@ -89,6 +89,16 @@ export interface FernSdkGenApiPublishConfig {
     url?: string;
     /** Name of the repository secret the generated release workflow reads the API key from. */
     apiKeyEnvironmentVariable?: string;
+    /** Names of the repository secrets the generated Maven release workflow reads its credentials from. */
+    usernameEnvironmentVariable?: string;
+    passwordEnvironmentVariable?: string;
+    signatureEnvironmentVariables?: {
+        keyIdEnvironmentVariable?: string;
+        passwordEnvironmentVariable?: string;
+        secretKeyEnvironmentVariable?: string;
+    };
+    /** Name of the repository secret the generated crates.io release workflow reads its token from. */
+    tokenEnvironmentVariable?: string;
     /** Authenticate the generated release workflow with an OIDC token instead of an API key secret. */
     trustedPublishing?: boolean;
 }
