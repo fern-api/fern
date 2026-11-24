@@ -170,6 +170,10 @@ describe("fern generate --docs", () => {
         beforeEach(() => {
             vi.stubEnv("FERN_TOKEN", "");
             vi.stubEnv("LOCAL_STORAGE_FOLDER", ".fern-test-no-login");
+            // The tests themselves run in GitHub Actions; this one is about a run outside it.
+            vi.stubEnv("GITHUB_ACTIONS", "");
+            vi.stubEnv("ACTIONS_ID_TOKEN_REQUEST_URL", "");
+            vi.stubEnv("ACTIONS_ID_TOKEN_REQUEST_TOKEN", "");
             isTTY = Object.getOwnPropertyDescriptor(process.stdout, "isTTY");
             Object.defineProperty(process.stdout, "isTTY", { value: false, configurable: true });
         });
