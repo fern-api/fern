@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    OpenAPI header parameters that match a header auth scheme declared in `generators.yml` `auth-schemes`
+    are no longer promoted to global headers, and are dropped from endpoints regardless of header-name casing.
+    Previously these became an extra client constructor argument alongside the auth scheme's own argument.
+  type: fix
