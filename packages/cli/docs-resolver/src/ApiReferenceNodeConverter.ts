@@ -1694,9 +1694,9 @@ export class ApiReferenceNodeConverter {
             return undefined;
         }
 
-        const statusCodesByName = new Map<string, number>();
+        const statusCountByName = new Map<string, number>();
         for (const { name } of errors.values()) {
-            statusCodesByName.set(name, (statusCodesByName.get(name) ?? 0) + 1);
+            statusCountByName.set(name, (statusCountByName.get(name) ?? 0) + 1);
         }
         const errorsSlug = parentSlug.append(API_ERRORS_URL_SLUG);
         const usedSlugs = new Set<string>();
@@ -1704,7 +1704,7 @@ export class ApiReferenceNodeConverter {
             .sort((a, b) => a.statusCode - b.statusCode || a.name.localeCompare(b.name, "en"))
             .map(({ name, statusCode, availability }) => {
                 const baseSlug =
-                    (statusCodesByName.get(name) ?? 0) > 1 ? `${kebabCase(name)}-${statusCode}` : kebabCase(name);
+                    (statusCountByName.get(name) ?? 0) > 1 ? `${kebabCase(name)}-${statusCode}` : kebabCase(name);
                 let slug = baseSlug;
                 for (let n = 2; usedSlugs.has(slug); n++) {
                     slug = `${baseSlug}-${n}`;
