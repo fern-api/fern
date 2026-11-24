@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Plant Store
+  version: 1.0.0
+paths:
+  /plants/{id}:
+    get:
+      operationId: getPlant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The plant.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+        "404":
+          description: The plant does not exist. Check the `id` and retry.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "429":
+          description: Too many requests.
+        4XX:
+          description: Any other client error.
+    delete:
+      operationId: deletePlant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted.
+        "404":
+          description: The plant does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "410":
+          description: The plant was already deleted.
+  /plants:
+    get:
+      operationId: listPlants
+      responses:
+        "200":
+          description: Every plant.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plant"
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        id:
+          type: string
+    ErrorBody:
+      type: object
+      properties:
+        message:
+          type: string

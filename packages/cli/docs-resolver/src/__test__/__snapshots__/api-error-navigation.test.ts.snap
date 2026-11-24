@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`API error navigation (\`error-pages: true\`) > emits one hidden page per distinct declared error under <api>/errors/<error-name> 1`] = `
+[
+  [
+    "Not Found Error",
+    404,
+    "base/path/api-reference/errors/not-found-error",
+    true,
+  ],
+  [
+    "Gone Error",
+    410,
+    "base/path/api-reference/errors/gone-error",
+    true,
+  ],
+  [
+    "Too Many Requests Error",
+    429,
+    "base/path/api-reference/errors/too-many-requests-error",
+    true,
+  ],
+]
+`;

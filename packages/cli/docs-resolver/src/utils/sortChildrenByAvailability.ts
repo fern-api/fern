@@ -54,6 +54,7 @@ function getChildAvailability(
         case "graphql":
         case "graphqlType":
         case "apiType":
+        case "apiError":
         case "page":
             return child.availability;
         case "link":

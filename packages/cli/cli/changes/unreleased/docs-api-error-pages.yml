@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `error-pages: true` to the `api` navigation item in `docs.yml`. When set, every error the API
+    declares gets its own page at `<api>/errors/<error-name>` (for example
+    `/api-reference/errors/not-found-error`), listing the error's status code, description, body
+    fields, an example and the endpoints that return it. The pages are hidden from the sidebar and are
+    included in search and `llms.txt`. A name declared with more than one status code gets the status
+    code appended to its URL. Off by default.
+  type: feat

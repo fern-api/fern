@@ -90,6 +90,12 @@ const GRAPHQL_TYPES_URL_SLUG = "types";
  */
 type ApiTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "apiType" }>;
 
+/** The error-page member of {@link FernNavigation.V1.ApiPackageChild}, emitted when the API section sets `error-pages: true`. */
+type ApiErrorChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "apiError" }>;
+
+const API_ERRORS_URL_SLUG = "errors";
+const API_ERRORS_TITLE = "Errors";
+
 const API_TYPES_URL_SLUG = "types";
 /** Used instead of `types` when a GraphQL schema in the same API already has a `types` section. */
 const API_SCHEMAS_URL_SLUG = "schemas";
@@ -1231,6 +1237,12 @@ export class ApiReferenceNodeConverter {
                     additionalChildren.push(apiTypesSection);
                 }
             }
+            if (this.apiSection.errorPages) {
+                const apiErrorsSection = this.#convertErrorsToSection(parentSlug, parentAvailability);
+                if (apiErrorsSection != null) {
+                    additionalChildren.push(apiErrorsSection);
+                }
+            }
         }
 
         additionalChildren = this.mergeEndpointPairs(additionalChildren);
@@ -1644,6 +1656,103 @@ export class ApiReferenceNodeConverter {
             orphaned: undefined,
             featureFlags: undefined
         };
+    }
+
+    /**
+     * One hidden "Errors" section at the API root with a page per distinct error the API declares,
+     * keyed by name and status code. Each page lives at `<api>/errors/<error-name>`; a name declared
+     * with more than one status code gets the status code appended (`<error-name>-<status>`) so every
+     * page keeps its own URL. Wildcard (`4XX`) and unnamed declarations are left out.
+     */
+    #convertErrorsToSection(
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): FernNavigation.V1.ApiPackageChild | undefined {
+        const api = this.#holder.api;
+        const errors = new Map<
+            string,
+            { name: string; statusCode: number; availability: APIV1Read.Availability | undefined }
+        >();
+        for (const pkg of [api.rootPackage, ...Object.values(api.subpackages)]) {
+            for (const endpoint of pkg.endpoints) {
+                for (const error of endpoint.errorsV2 ?? []) {
+                    if (error.name == null || error.name.length === 0 || error.isWildcard === true) {
+                        continue;
+                    }
+                    const key = `${error.statusCode}:${error.name}`;
+                    if (!errors.has(key)) {
+                        errors.set(key, {
+                            name: error.name,
+                            statusCode: error.statusCode,
+                            availability: error.availability ?? undefined
+                        });
+                    }
+                }
+            }
+        }
+        if (errors.size === 0) {
+            return undefined;
+        }
+
+        const statusCodesByName = new Map<string, number>();
+        for (const { name } of errors.values()) {
+            statusCodesByName.set(name, (statusCodesByName.get(name) ?? 0) + 1);
+        }
+        const errorsSlug = parentSlug.append(API_ERRORS_URL_SLUG);
+        const usedSlugs = new Set<string>();
+        const children: ApiErrorChildNode[] = [...errors.values()]
+            .sort((a, b) => a.statusCode - b.statusCode || a.name.localeCompare(b.name, "en"))
+            .map(({ name, statusCode, availability }) => {
+                const baseSlug =
+                    (statusCodesByName.get(name) ?? 0) > 1 ? `${kebabCase(name)}-${statusCode}` : kebabCase(name);
+                let slug = baseSlug;
+                for (let n = 2; usedSlugs.has(slug); n++) {
+                    slug = `${baseSlug}-${n}`;
+                }
+                usedSlugs.add(slug);
+                return {
+                    id: this.#idgen.get(`${this.apiDefinitionId}:apiError:${statusCode}:${name}`),
+                    type: "apiError",
+                    collapsed: undefined,
+                    errorName: name,
+                    statusCode,
+                    title: name,
+                    slug: errorsSlug.append(slug).get(),
+                    icon: undefined,
+                    hidden: true,
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability:
+                        FernNavigation.V1.convertAvailability(availability) ??
+                        convertDocsAvailability(parentAvailability),
+                    authed: undefined,
+                    viewers: undefined,
+                    orphaned: undefined,
+                    featureFlags: undefined
+                };
+            });
+
+        return {
+            id: this.#idgen.get(`${this.apiDefinitionId}:errors`),
+            type: "apiPackage",
+            collapsed: undefined,
+            children,
+            title: API_ERRORS_TITLE,
+            slug: errorsSlug.get(),
+            icon: undefined,
+            hidden: true,
+            overviewPageId: undefined,
+            collapsible: undefined,
+            collapsedByDefault: undefined,
+            availability: convertDocsAvailability(parentAvailability),
+            apiDefinitionId: this.apiDefinitionId,
+            pointsTo: undefined,
+            noindex: undefined,
+            playground: undefined,
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        } as ApiPackageNodeWithCollapsibleConfig;
     }
 
     #buildGraphqlTypeChildNode(

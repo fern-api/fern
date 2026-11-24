@@ -47,6 +47,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         paginated: core.serialization.boolean().optional(),
         showScopes: core.serialization.property("show-scopes", core.serialization.boolean().optional()),
         types: core.serialization.boolean().optional(),
+        errorPages: core.serialization.property("error-pages", core.serialization.boolean().optional()),
         playground: PlaygroundSettings.optional(),
     })
     .extend(WithPermissions)
@@ -77,6 +78,7 @@ export declare namespace ApiReferenceConfiguration {
         paginated?: boolean | null;
         "show-scopes"?: boolean | null;
         types?: boolean | null;
+        "error-pages"?: boolean | null;
         playground?: PlaygroundSettings.Raw | null;
     }
 }
