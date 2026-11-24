@@ -75,4 +75,23 @@ describe("safe remote URL resolution", () => {
         ).rejects.toThrow("blocked address");
         expect(request).toHaveBeenCalledTimes(1);
     });
+
+    it("returns the URL the body was served from after redirects", async () => {
+        const lookup = vi.fn(async () => [{ address: "8.8.8.8", family: 4 }]);
+        const request = vi
+            .fn()
+            .mockResolvedValueOnce({
+                statusCode: 302,
+                headers: { location: "https://api.example.com/v2/openapi.json" },
+                body: Buffer.alloc(0)
+            })
+            .mockResolvedValueOnce({ statusCode: 200, headers: {}, body: Buffer.from("{}") });
+
+        const resource = await safeFetchRemoteText("https://docs.example.com/spec", {
+            lookup: lookup as never,
+            request
+        });
+
+        expect(resource).toEqual({ body: "{}", url: "https://api.example.com/v2/openapi.json" });
+    });
 });

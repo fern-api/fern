@@ -1,0 +1,515 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Global header threshold",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "listA",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "X-Always",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListARequestXAlways",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "X-Mostly-Required",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListARequestXMostlyRequired",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "X-Mostly-Optional",
+          "schema": {
+            "generatedName": "ListARequestXMostlyOptional",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListARequestXMostlyOptional",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "X-Sometimes",
+          "schema": {
+            "generatedName": "ListARequestXSometimes",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListARequestXSometimes",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "Authorization",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListARequestAuthorization",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "ListARequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/a",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "X-Always",
+              "value": {
+                "value": {
+                  "value": "X-Always",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "X-Mostly-Required",
+              "value": {
+                "value": {
+                  "value": "X-Mostly-Required",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "Authorization",
+              "value": {
+                "value": {
+                  "value": "Authorization",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listB",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "X-Always",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListBRequestXAlways",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "X-Mostly-Required",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListBRequestXMostlyRequired",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "X-Mostly-Optional",
+          "schema": {
+            "generatedName": "ListBRequestXMostlyOptional",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListBRequestXMostlyOptional",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "X-Sometimes",
+          "schema": {
+            "generatedName": "ListBRequestXSometimes",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListBRequestXSometimes",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "Authorization",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListBRequestAuthorization",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "ListBRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/b",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "X-Always",
+              "value": {
+                "value": {
+                  "value": "X-Always",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "X-Mostly-Required",
+              "value": {
+                "value": {
+                  "value": "X-Mostly-Required",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "Authorization",
+              "value": {
+                "value": {
+                  "value": "Authorization",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listC",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "X-Always",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListCRequestXAlways",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "X-Mostly-Required",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListCRequestXMostlyRequired",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "X-Mostly-Optional",
+          "schema": {
+            "generatedName": "ListCRequestXMostlyOptional",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ListCRequestXMostlyOptional",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "Authorization",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListCRequestAuthorization",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "ListCRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/c",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "X-Always",
+              "value": {
+                "value": {
+                  "value": "X-Always",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "X-Mostly-Required",
+              "value": {
+                "value": {
+                  "value": "X-Mostly-Required",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "Authorization",
+              "value": {
+                "value": {
+                  "value": "Authorization",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "listD",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "X-Always",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListDRequestXAlways",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "Authorization",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ListDRequestAuthorization",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "ListDRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/d",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "X-Always",
+              "value": {
+                "value": {
+                  "value": "X-Always",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "Authorization",
+              "value": {
+                "value": {
+                  "value": "Authorization",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

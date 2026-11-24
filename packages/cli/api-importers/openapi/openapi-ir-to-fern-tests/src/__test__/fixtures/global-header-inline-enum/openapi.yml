@@ -1,0 +1,73 @@
+openapi: 3.0.3
+info:
+  title: Global header inline enum
+  version: 1.0.0
+paths:
+  /consents:
+    post:
+      operationId: createConsent
+      parameters:
+        - $ref: "#/components/parameters/X-Request-ID"
+        - name: PSU-Http-Method
+          in: header
+          required: false
+          schema:
+            type: string
+            enum: [GET, POST, PUT, PATCH, DELETE]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access:
+                  type: string
+      responses:
+        "201":
+          description: Created
+  /consents/{consentId}:
+    get:
+      operationId: getConsent
+      parameters:
+        - name: consentId
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/X-Request-ID"
+        - name: PSU-Http-Method
+          in: header
+          required: false
+          schema:
+            type: string
+            enum: [GET, POST, PUT, PATCH, DELETE]
+      responses:
+        "200":
+          description: OK
+    delete:
+      operationId: deleteConsent
+      parameters:
+        - name: consentId
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/X-Request-ID"
+        - name: PSU-Http-Method
+          in: header
+          required: false
+          schema:
+            type: string
+            enum: [GET, POST, PUT, PATCH, DELETE]
+      responses:
+        "204":
+          description: Deleted
+components:
+  parameters:
+    X-Request-ID:
+      name: X-Request-ID
+      in: header
+      required: true
+      schema:
+        type: string

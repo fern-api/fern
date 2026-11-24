@@ -1,0 +1,222 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createConsent": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "PSU-Http-Method": "PSU-Http-Method",
+                    "X-Request-ID": "X-Request-ID",
+                  },
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/consents",
+              "request": {
+                "body": {
+                  "properties": {
+                    "access": "optional<string>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateConsentRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "deleteConsent": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "PSU-Http-Method": "PSU-Http-Method",
+                    "X-Request-ID": "X-Request-ID",
+                  },
+                  "path-parameters": {
+                    "consentId": "consentId",
+                  },
+                },
+              ],
+              "method": "DELETE",
+              "pagination": undefined,
+              "path": "/consents/{consentId}",
+              "request": {
+                "name": "DeleteConsentRequest",
+                "path-parameters": {
+                  "consentId": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getConsent": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "PSU-Http-Method": "PSU-Http-Method",
+                    "X-Request-ID": "X-Request-ID",
+                  },
+                  "path-parameters": {
+                    "consentId": "consentId",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/consents/{consentId}",
+              "request": {
+                "name": "GetConsentRequest",
+                "path-parameters": {
+                  "consentId": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "CreateConsentRequestPsuHttpMethod": {
+            "enum": [
+              "GET",
+              "POST",
+              "PUT",
+              "PATCH",
+              "DELETE",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  CreateConsentRequestPsuHttpMethod:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+    source:
+      openapi: ../openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createConsent:
+      path: /consents
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: CreateConsentRequest
+        body:
+          properties:
+            access: optional<string>
+        content-type: application/json
+      examples:
+        - headers:
+            X-Request-ID: X-Request-ID
+            PSU-Http-Method: PSU-Http-Method
+          request: {}
+    getConsent:
+      path: /consents/{consentId}
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetConsentRequest
+        path-parameters:
+          consentId: string
+      examples:
+        - path-parameters:
+            consentId: consentId
+          headers:
+            X-Request-ID: X-Request-ID
+            PSU-Http-Method: PSU-Http-Method
+    deleteConsent:
+      path: /consents/{consentId}
+      method: DELETE
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: DeleteConsentRequest
+        path-parameters:
+          consentId: string
+      examples:
+        - path-parameters:
+            consentId: consentId
+          headers:
+            X-Request-ID: X-Request-ID
+            PSU-Http-Method: PSU-Http-Method
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Global header inline enum",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "headers": {
+        "PSU-Http-Method": {
+          "name": "psuHttpMethod",
+          "type": "optional<root.CreateConsentRequestPsuHttpMethod>",
+        },
+        "X-Request-ID": {
+          "name": "requestId",
+          "type": "string",
+        },
+      },
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Global header inline enum
+headers:
+  X-Request-ID:
+    type: string
+    name: requestId
+  PSU-Http-Method:
+    type: optional<root.CreateConsentRequestPsuHttpMethod>
+    name: psuHttpMethod
+imports:
+  root: __package__.yml
+",
+  },
+  "specVersion": "1.0.0",
+}
