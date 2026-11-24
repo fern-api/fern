@@ -1,0 +1,3 @@
+- summary: |
+    Send an `sdk-gen-api build finished` telemetry event for each target when an sdk-gen-api build stops, with its status and error code, so generation success rates can be measured.
+  type: internal
