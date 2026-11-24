@@ -97,6 +97,24 @@ describe("trailing slash and variable-prefixed servers", () => {
         });
     });
 
+    it("resolves a leading variable by its default instead of as a path segment", () => {
+        const resolved = resolveRelativeServerUrls(
+            { servers: [{ url: "{basePath}/pets", variables: { basePath: { default: "/v1" } } }] },
+            SPEC_URL
+        );
+
+        expect(resolved).toEqual({
+            servers: [{ url: "https://petstore31.swagger.io/v1/pets", variables: { basePath: { default: "/v1" } } }]
+        });
+    });
+
+    it("keeps later variables when a leading variable is inlined", () => {
+        const variables = { basePath: { default: "/api" }, version: { default: "v2" } };
+        const resolved = resolveRelativeServerUrls({ servers: [{ url: "{basePath}/{version}", variables }] }, SPEC_URL);
+
+        expect(resolved).toEqual({ servers: [{ url: "https://petstore31.swagger.io/api/{version}", variables }] });
+    });
+
     it("keeps a server whose variable default is a full address", () => {
         const servers = [{ url: "{base}/v1", variables: { base: { default: "https://api.example.com" } } }];
 

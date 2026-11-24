@@ -70,10 +70,27 @@ function resolveServers(owner: Record<string, unknown>, documentUrl: string): { 
     return {
         servers: servers.map((server: unknown) =>
             isPlainObject(server) && typeof server.url === "string" && isRelativeServerUrl(server.url, server.variables)
-                ? { ...server, url: resolveAgainst(server.url, documentUrl) }
+                ? { ...server, url: resolveAgainst(inlineLeadingVariable(server.url, server.variables), documentUrl) }
                 : server
         )
     };
+}
+
+/**
+ * A leading variable whose default starts with `/` or `.` (for example `{basePath}` with default `/v1`)
+ * decides how the URL resolves, so it is replaced by its default first. Otherwise `{basePath}` would resolve
+ * as a path segment next to the spec, and expanding it later would give `https://host/specs//v1` instead of
+ * `https://host/v1`. A default such as `prod` resolves the same way as the placeholder, so it is kept.
+ */
+function inlineLeadingVariable(url: string, variables: unknown): string {
+    const match = /^\{([^}]+)\}/.exec(url);
+    const variable = match != null && isPlainObject(variables) ? variables[match[1] ?? ""] : undefined;
+    return match != null &&
+        isPlainObject(variable) &&
+        typeof variable.default === "string" &&
+        /^[/.]/.test(variable.default)
+        ? variable.default + url.slice(match[0].length)
+        : url;
 }
 
 function resolveAgainst(url: string, documentUrl: string): string {

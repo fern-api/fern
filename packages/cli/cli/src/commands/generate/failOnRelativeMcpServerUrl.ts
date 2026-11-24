@@ -25,7 +25,7 @@ export async function failOnRelativeMcpServerUrl({
     sdkConfig: SdkConfigV1;
     context: TaskContext;
 }): Promise<void> {
-    if (!sdkConfig.targets.some((target) => target.language === "mcp") || sdkConfig.api.baseUrl !== "") {
+    if (!sdkConfig.targets.some((target) => target.language === "mcp") || Boolean(sdkConfig.api.baseUrl)) {
         return;
     }
     if (!("path" in source) || source.type !== "openapi") {
