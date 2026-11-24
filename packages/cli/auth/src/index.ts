@@ -1,4 +1,9 @@
 export type { FernGuestToken, FernOrganizationToken, FernToken, FernUserToken } from "./FernToken.js";
+export {
+    GithubOidcError,
+    getGithubOidcAudience,
+    getGithubOidcToken
+} from "./github-oidc/getGithubOidcToken.js";
 export type { GuestRejection } from "./guest/describeGuestRejection.js";
 export { describeGuestRejection, isGuestRejection, readGuestRejection } from "./guest/describeGuestRejection.js";
 export type { StoredGuestSession } from "./guest/GuestSession.js";
