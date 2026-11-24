@@ -1,6 +1,6 @@
-import { ROOT_API_FILENAME } from "@fern-api/configuration";
+import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { GlobalHeader } from "@fern-api/openapi-ir";
+import { GlobalHeader, Header } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase } from "lodash-es";
 import { buildHeader } from "./buildHeader.js";
@@ -12,11 +12,11 @@ import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional.js";
 
 class HeaderWithCount {
-    public readonly schema: RawSchemas.HttpHeaderSchema;
+    public readonly firstOccurrence: Header;
     public count = 0;
 
-    constructor(schema: RawSchemas.HttpHeaderSchema) {
-        this.schema = schema;
+    constructor(firstOccurrence: Header) {
+        this.firstOccurrence = firstOccurrence;
     }
 
     public increment(): void {
@@ -95,23 +95,8 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                 if (HEADERS_TO_IGNORE.has(header.name.toLowerCase())) {
                     continue;
                 }
-                let headerWithCount = globalHeaders[header.name];
-                if (headerWithCount == null) {
-                    const predefinedHeader = predefinedGlobalHeaders[header.name];
-                    const convertedHeader = buildHeader({
-                        header: {
-                            ...header,
-                            schema: predefinedHeader?.schema ?? header.schema,
-                            name: predefinedHeader?.name ?? header.name
-                        },
-                        fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
-                        context,
-                        // TODO: how are we namespacing global headers
-                        namespace: undefined
-                    });
-                    headerWithCount = new HeaderWithCount(convertedHeader);
-                    globalHeaders[header.name] = headerWithCount;
-                }
+                const headerWithCount = globalHeaders[header.name] ?? new HeaderWithCount(header);
+                globalHeaders[header.name] = headerWithCount;
                 headerWithCount.increment();
             }
         }
@@ -122,19 +107,34 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
             const predefinedHeader = predefinedGlobalHeaders[headerName];
             const isRequired = header.count === context.ir.endpoints.length;
             const isOptional = header.count >= globalHeaderThreshold;
-            if (predefinedHeader != null) {
-                continue; // already added
-            } else if (isRequired) {
-                context.builder.addGlobalHeader({
-                    name: headerName,
-                    schema: header.schema
-                });
-            } else if (isOptional) {
-                context.builder.addGlobalHeader({
-                    name: headerName,
-                    schema: wrapTypeReferenceAsOptional(header.schema)
-                });
+            if (predefinedHeader != null || !isOptional) {
+                continue;
             }
+            const schema = buildDetectedGlobalHeader({ header: header.firstOccurrence, context });
+            context.builder.addGlobalHeader({
+                name: headerName,
+                schema: isRequired ? schema : wrapTypeReferenceAsOptional(schema)
+            });
         }
     }
+}
+
+/**
+ * api.yml cannot hold type declarations, so a detected global header's inline types (for example an
+ * inline enum) are declared in the root __package__.yml and imported into api.yml.
+ */
+function buildDetectedGlobalHeader({
+    header,
+    context
+}: {
+    header: Header;
+    context: OpenApiIrConverterContext;
+}): RawSchemas.HttpHeaderSchema {
+    return buildHeader({
+        header,
+        fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
+        declarationFile: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+        context,
+        namespace: undefined
+    });
 }

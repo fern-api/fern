@@ -1,0 +1,266 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "listA": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "Authorization": "Authorization",
+                    "X-Always": "X-Always",
+                    "X-Mostly-Optional": "X-Mostly-Optional",
+                    "X-Mostly-Required": "X-Mostly-Required",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/a",
+              "request": {
+                "headers": {
+                  "Authorization": {
+                    "name": "authorization",
+                    "type": "string",
+                  },
+                  "X-Sometimes": {
+                    "name": "sometimes",
+                    "type": "optional<string>",
+                  },
+                },
+                "name": "ListARequest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "listB": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "Authorization": "Authorization",
+                    "X-Always": "X-Always",
+                    "X-Mostly-Optional": "X-Mostly-Optional",
+                    "X-Mostly-Required": "X-Mostly-Required",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/b",
+              "request": {
+                "headers": {
+                  "Authorization": {
+                    "name": "authorization",
+                    "type": "string",
+                  },
+                  "X-Sometimes": {
+                    "name": "sometimes",
+                    "type": "optional<string>",
+                  },
+                },
+                "name": "ListBRequest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "listC": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "Authorization": "Authorization",
+                    "X-Always": "X-Always",
+                    "X-Mostly-Optional": "X-Mostly-Optional",
+                    "X-Mostly-Required": "X-Mostly-Required",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/c",
+              "request": {
+                "headers": {
+                  "Authorization": {
+                    "name": "authorization",
+                    "type": "string",
+                  },
+                },
+                "name": "ListCRequest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "listD": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "Authorization": "Authorization",
+                    "X-Always": "X-Always",
+                    "X-Mostly-Optional": "X-Mostly-Optional",
+                    "X-Mostly-Required": "X-Mostly-Required",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/d",
+              "request": {
+                "headers": {
+                  "Authorization": {
+                    "name": "authorization",
+                    "type": "string",
+                  },
+                },
+                "name": "ListDRequest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listA:
+      path: /a
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ListARequest
+        headers:
+          X-Sometimes:
+            type: optional<string>
+            name: sometimes
+          Authorization:
+            type: string
+            name: authorization
+      examples:
+        - headers:
+            X-Always: X-Always
+            X-Mostly-Required: X-Mostly-Required
+            Authorization: Authorization
+            X-Mostly-Optional: X-Mostly-Optional
+    listB:
+      path: /b
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ListBRequest
+        headers:
+          X-Sometimes:
+            type: optional<string>
+            name: sometimes
+          Authorization:
+            type: string
+            name: authorization
+      examples:
+        - headers:
+            X-Always: X-Always
+            X-Mostly-Required: X-Mostly-Required
+            Authorization: Authorization
+            X-Mostly-Optional: X-Mostly-Optional
+    listC:
+      path: /c
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ListCRequest
+        headers:
+          Authorization:
+            type: string
+            name: authorization
+      examples:
+        - headers:
+            X-Always: X-Always
+            X-Mostly-Required: X-Mostly-Required
+            Authorization: Authorization
+            X-Mostly-Optional: X-Mostly-Optional
+    listD:
+      path: /d
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: ListDRequest
+        headers:
+          Authorization:
+            type: string
+            name: authorization
+      examples:
+        - headers:
+            X-Always: X-Always
+            Authorization: Authorization
+            X-Mostly-Required: X-Mostly-Required
+            X-Mostly-Optional: X-Mostly-Optional
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Global header threshold",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "headers": {
+        "X-Always": {
+          "name": "always",
+          "type": "string",
+        },
+        "X-Mostly-Optional": {
+          "name": "mostlyOptional",
+          "type": "optional<string>",
+        },
+        "X-Mostly-Required": {
+          "name": "mostlyRequired",
+          "type": "optional<string>",
+        },
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Global header threshold
+headers:
+  X-Always:
+    type: string
+    name: always
+  X-Mostly-Required:
+    type: optional<string>
+    name: mostlyRequired
+  X-Mostly-Optional:
+    type: optional<string>
+    name: mostlyOptional
+",
+  },
+  "specVersion": "1.0.0",
+}

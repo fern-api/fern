@@ -661,9 +661,6 @@ types:
       "error-discrimination": {
         "strategy": "status-code",
       },
-      "imports": {
-        "root": "__package__.yml",
-      },
       "name": "api",
     },
     "defaultUrl": undefined,
@@ -671,8 +668,6 @@ types:
 error-discrimination:
   strategy: status-code
 display-name: Deprecated params and fields
-imports:
-  root: __package__.yml
 ",
   },
   "specVersion": "1.0.0",

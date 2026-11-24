@@ -11,17 +11,20 @@ export function buildHeader({
     header,
     context,
     fileContainingReference,
+    declarationFile,
     namespace
 }: {
     header: Header;
     context: OpenApiIrConverterContext;
     fileContainingReference: RelativeFilePath;
+    declarationFile?: RelativeFilePath;
     namespace: string | undefined;
 }): RawSchemas.HttpHeaderSchema {
     const typeReference = buildTypeReference({
         schema: header.schema,
         context,
         fileContainingReference,
+        declarationFile,
         namespace,
         declarationDepth: 0
     });
