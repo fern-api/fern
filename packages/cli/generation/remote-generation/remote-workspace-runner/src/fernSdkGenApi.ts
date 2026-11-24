@@ -1694,6 +1694,7 @@ async function executeFernSdkGenApiBuild(
             return results;
         }
         if (isFinalPoll) {
+            instrumentFernSdkGenApiBuildFinished({ participants, request, origin, buildId, status, timedOut: true });
             return first.context.failAndThrow(
                 `Timed out waiting for sdk-gen-api build ${buildId} after ${POLL_TIMEOUT_MS / 60_000} minutes`,
                 undefined,
@@ -1758,13 +1759,15 @@ function instrumentFernSdkGenApiBuildFinished({
     request,
     origin,
     buildId,
-    status
+    status,
+    timedOut = false
 }: {
     participants: FernSdkGenApiBuildParameters[];
     request: FernSdkGenApiRequest;
     origin: string;
     buildId: string;
     status: FernBuildStatus;
+    timedOut?: boolean;
 }): void {
     for (const [index, participant] of participants.entries()) {
         const target = request.targets[index];
@@ -1782,7 +1785,8 @@ function instrumentFernSdkGenApiBuildFinished({
                     sdkGenApiHost: new URL(origin).host,
                     sdkGenApiBuildStatus: status.status,
                     sdkGenApiTargetStatus: result?.status ?? "missing",
-                    succeeded: result?.status === "succeeded",
+                    succeeded: !timedOut && result?.status === "succeeded",
+                    timedOut,
                     errorCode: result?.error?.code,
                     publicationStatus: result?.publication?.status,
                     apiName: request.apiName,
