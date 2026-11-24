@@ -160,6 +160,28 @@ describe("fern sdk migrate auth", () => {
         ]);
     });
 
+    it("warns that a bearer token name is not migrated and suggests x-fern-bearer", () => {
+        const result = mapFernDefinitionToSdkConfigApi(
+            createDefinition({
+                auth: "BearerAuth",
+                "auth-schemes": { BearerAuth: { scheme: "bearer", token: { name: "access_token", env: "TOKEN" } } }
+            })
+        );
+
+        expect(result.api.auth?.schemes).toEqual([{ id: "BearerAuth", type: "bearer", environmentVariable: "TOKEN" }]);
+        expect(result.diagnostics).toEqual([
+            {
+                code: "FERN_API_AUTH_FIELD_UNSUPPORTED",
+                severity: "warning",
+                path: ["auth-schemes", "BearerAuth", "token", "name"],
+                reason: "Fern auth scheme 'BearerAuth' was migrated without token.name: SDK Config v1 bearer schemes have no parameter name, so the SDKs fall back to the generator's default token parameter name.",
+                sdkConfigPath: ["api", "auth", "schemes", 0],
+                suggestedAction:
+                    "To keep the 'access_token' parameter name, set `x-fern-bearer: { name: access_token }` on the 'BearerAuth' security scheme in your OpenAPI spec or an overlay."
+            }
+        ]);
+    });
+
     it("keeps supported schemes under endpoint security", () => {
         const result = mapFernDefinitionToSdkConfigApi(
             createDefinition({

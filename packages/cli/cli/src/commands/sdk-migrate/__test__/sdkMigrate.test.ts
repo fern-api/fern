@@ -15,7 +15,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
-import { mapFernDefinitionToSdkConfigApi, mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
+import {
+    enableLegacyTestGeneration,
+    mapFernDefinitionToSdkConfigApi,
+    mapFernGroupToSdkConfig
+} from "../mapFernGroupToSdkConfig.js";
 import {
     identifySourceDerivedApiFields,
     isResolvedMigrationFileSpec,
@@ -69,6 +73,27 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.package).toBeUndefined();
         expect(result.sdkConfig.docs).toBeUndefined();
         expect(result.sdkConfig.generation).toBeUndefined();
+    });
+
+    it("enables unit tests for migrated configs that do not configure tests", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]),
+            source: createSource()
+        });
+
+        expect(enableLegacyTestGeneration(result.sdkConfig).generation).toEqual({ unitTests: { enabled: true } });
+    });
+
+    it("keeps configured test settings when enabling legacy test generation", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]),
+            source: createSource()
+        });
+        const configured = { ...result.sdkConfig, generation: { wireTests: { enabled: false } } };
+
+        expect(enableLegacyTestGeneration(configured)).toBe(configured);
     });
 
     it("uses an explicitly resolved SDK name", () => {

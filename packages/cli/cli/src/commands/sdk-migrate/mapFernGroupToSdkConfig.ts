@@ -89,6 +89,19 @@ export function mapFernGroupToSdkConfig({
     };
 }
 
+/**
+ * Legacy Fern generators always write unit tests, while SDK Config generators only write tests when
+ * `generation.unitTests` or `generation.wireTests` is enabled. Migrated configs opt in so the first
+ * SDK Config generation keeps the test suite.
+ */
+export function enableLegacyTestGeneration(sdkConfig: MappingResult["sdkConfig"]): MappingResult["sdkConfig"] {
+    const generation = sdkConfig.generation;
+    if (generation?.unitTests != null || generation?.wireTests != null) {
+        return sdkConfig;
+    }
+    return { ...sdkConfig, generation: { ...generation, unitTests: { enabled: true } } };
+}
+
 function sanitizeMigratedPublishIntent<
     Publish extends {
         registry: string;
