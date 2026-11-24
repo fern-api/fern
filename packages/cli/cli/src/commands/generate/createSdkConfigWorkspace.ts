@@ -18,6 +18,7 @@ import { loadSingleNamespaceAPIWorkspace, resolveRemoteSpecs } from "@fern-api/w
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { SdkConfigV1, SdkConfigV1McpOutputConfig, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 
+import { failOnRelativeMcpServerUrl } from "./failOnRelativeMcpServerUrl.js";
 import { getDuplicateTargetLanguageIndexes } from "./getDuplicateTargetLanguageIndexes.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 import { isProtobufSource, type SdkConfigV1ProtobufSourceSpec } from "./sdkConfigProtobufSources.js";
@@ -249,6 +250,7 @@ async function createSpec({
         );
     }
     const absoluteFilepath = await resolveSourcePath(spec, sourceDirectory, context, temporaryDirectories);
+    await failOnRelativeMcpServerUrl({ source: spec, absoluteFilepath, sdkConfig, context });
     const absoluteFilepathToOverrides = spec.overrides?.map((value) => resolveTransformPath(value, sourceDirectory));
     if (spec.type === "graphql") {
         return {
@@ -384,7 +386,10 @@ async function resolveSourcePath(
     }
     let bundled: unknown;
     try {
-        bundled = await bundleRemoteOpenAPI(spec.url);
+        bundled = await bundleRemoteOpenAPI(spec.url, undefined, {
+            // Overrides and overlays may select or replace `servers` by the URL as written in the spec.
+            resolveRelativeServers: (spec.overrides?.length ?? 0) === 0 && (spec.overlays?.length ?? 0) === 0
+        });
     } catch (error) {
         return context.failAndThrow(
             `Could not resolve SDK Config OpenAPI source '${spec.id}' from ${spec.url}`,

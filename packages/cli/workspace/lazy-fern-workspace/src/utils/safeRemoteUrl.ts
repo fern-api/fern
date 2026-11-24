@@ -12,6 +12,8 @@ const REQUEST_TIMEOUT_MS = 30_000;
 export interface RemoteTextResource {
     body: string;
     mimeType?: string;
+    /** The URL the body was served from, after redirects. */
+    url?: string;
 }
 
 interface RemoteResponse {
@@ -27,10 +29,11 @@ interface SafeFetchOptions {
 
 /** Fetches a public HTTP(S) resource while validating every redirect and pinning DNS results. */
 export async function safeFetchRemoteText(url: string, options: SafeFetchOptions = {}): Promise<RemoteTextResource> {
-    const response = await fetchWithRedirects(url, options, 0);
+    const { response, url: finalUrl } = await fetchWithRedirects(url, options, 0);
     const contentType = response.headers["content-type"];
     return {
         body: response.body.toString("utf8"),
+        url: finalUrl,
         ...(typeof contentType === "string" ? { mimeType: contentType } : {})
     };
 }
@@ -39,7 +42,7 @@ async function fetchWithRedirects(
     value: string,
     options: SafeFetchOptions,
     redirectCount: number
-): Promise<RemoteResponse> {
+): Promise<{ response: RemoteResponse; url: string }> {
     const { url, addresses } = await validateRemoteUrl(value, options.lookup ?? dnsLookup);
     const response = await (options.request ?? requestPinnedUrl)(url, addresses);
     if (isRedirect(response.statusCode)) {
@@ -55,7 +58,7 @@ async function fetchWithRedirects(
     if (response.statusCode < 200 || response.statusCode >= 300) {
         throw new Error(`Remote API source returned HTTP ${response.statusCode}`);
     }
-    return response;
+    return { response, url: url.href };
 }
 
 export async function validateRemoteUrl(
