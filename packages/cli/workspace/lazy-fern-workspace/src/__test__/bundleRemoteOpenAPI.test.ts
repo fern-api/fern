@@ -73,4 +73,20 @@ paths:
             }
         });
     });
+
+    it("resolves a relative servers URL against the remote root URL", async () => {
+        const loadRemote = vi.fn(async () => ({
+            body: JSON.stringify({
+                openapi: "3.0.4",
+                info: { title: "Petstore", version: "1" },
+                servers: [{ url: "/api/v31" }],
+                paths: {}
+            }),
+            mimeType: "application/json"
+        }));
+
+        const bundled = await bundleRemoteOpenAPI("https://petstore31.swagger.io/api/v31/openapi.json", loadRemote);
+
+        expect(bundled).toMatchObject({ servers: [{ url: "https://petstore31.swagger.io/api/v31" }] });
+    });
 });

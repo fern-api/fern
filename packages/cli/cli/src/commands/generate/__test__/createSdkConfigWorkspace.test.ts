@@ -13,7 +13,7 @@ import {
 } from "@fern-api/remote-workspace-runner";
 import { createMockTaskContext, TaskAbortSignal, type TaskContext } from "@fern-api/task-context";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { createSdkConfigWorkspace } from "../createSdkConfigWorkspace.js";
 
@@ -361,6 +361,56 @@ describe("createSdkConfigWorkspace", () => {
         // The generated bundle lands in a managed temporary directory that the deploy step assigns.
         expect(generator?.absolutePathToLocalOutput).toBeUndefined();
         await cleanup();
+    });
+
+    describe("relative servers URL in a local spec", () => {
+        const RELATIVE_SERVER_SPEC =
+            "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\nservers:\n  - url: /api/v31\npaths: {}\n";
+
+        async function createWorkspaceFor({
+            api
+        }: {
+            api: Record<string, unknown>;
+        }): ReturnType<typeof createSdkConfigWorkspace> {
+            const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+            temporaryDirectories.push(directory);
+            await writeFile(path.join(directory, "openapi.yml"), RELATIVE_SERVER_SPEC);
+            return createSdkConfigWorkspace({
+                sdkConfig: parseSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "payments",
+                    source: { specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }] },
+                    api,
+                    client: {},
+                    package: {},
+                    docs: {},
+                    generation: {},
+                    targets: [{ language: "mcp", output: { delivery: "hosted", slug: "payments" } }]
+                }),
+                absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+                cliVersion: "0.0.0",
+                context: createMockTaskContext({ logger: { ...CONSOLE_LOGGER, error: errorLog } })
+            });
+        }
+        const errorLog = vi.fn();
+
+        beforeEach(() => {
+            errorLog.mockClear();
+        });
+
+        it("fails an MCP target with a message that names servers and api.baseUrl", async () => {
+            await expect(createWorkspaceFor({ api: {} })).rejects.toBeInstanceOf(TaskAbortSignal);
+
+            expect(errorLog).toHaveBeenCalledWith(expect.stringContaining("relative servers URL ('/api/v31')"));
+            expect(errorLog).toHaveBeenCalledWith(expect.stringContaining("api.baseUrl"));
+        });
+
+        it("accepts it when api.baseUrl is set", async () => {
+            const { cleanup } = await createWorkspaceFor({ api: { baseUrl: "https://petstore31.swagger.io/api/v31" } });
+
+            expect(errorLog).not.toHaveBeenCalled();
+            await cleanup();
+        });
     });
 
     it("rejects a hosted MCP target under --local, because the MCP language has no local generator", async () => {
