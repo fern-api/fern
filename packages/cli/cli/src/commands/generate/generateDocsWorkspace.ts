@@ -1,4 +1,13 @@
-import { createOrganizationIfDoesNotExist, FernGuestToken, FernToken, FernUserToken, getToken } from "@fern-api/auth";
+import {
+    createOrganizationIfDoesNotExist,
+    FernGuestToken,
+    FernOrganizationToken,
+    FernToken,
+    FernUserToken,
+    GithubOidcError,
+    getGithubOidcToken,
+    getToken
+} from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
 import { extractErrorMessage, sanitizePreviewId } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
@@ -104,7 +113,8 @@ export async function generateDocsWorkspace({
     // the login prompt when stdout is a TTY, so a run that would not get the prompt (an agent, CI) is told about the
     // missing account here, before the production-site confirmation: the first error names the one step it can take
     // on its own, --guest.
-    if (!guest && !process.stdout.isTTY && (await getToken()) == null) {
+    const githubOidcToken = guest ? undefined : await getGithubOidcTokenIfNoAccount({ project, cliContext });
+    if (!guest && githubOidcToken == null && !process.stdout.isTTY && (await getToken()) == null) {
         cliContext.failAndThrow(getMissingLoginMessage({ suggestGuest: true }), undefined, {
             code: CliError.Code.AuthError,
             instructionsTopic: InstructionsTopic.NewSite
@@ -133,6 +143,8 @@ export async function generateDocsWorkspace({
     let token: FernToken | null = null;
     if (guestToken != null) {
         token = guestToken;
+    } else if (githubOidcToken != null) {
+        token = githubOidcToken;
     } else if (hasFdrOriginOverride) {
         const fernToken = await getToken();
         if (!fernToken) {
@@ -268,6 +280,36 @@ export async function generateDocsWorkspace({
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);
     });
+}
+
+/**
+ * In GitHub Actions with neither FERN_TOKEN nor a saved login: the 1-hour organization token Venus gives in exchange
+ * for the run's GitHub OIDC ID token. It is then used exactly like FERN_TOKEN. `undefined` everywhere else.
+ */
+async function getGithubOidcTokenIfNoAccount({
+    project,
+    cliContext
+}: {
+    project: Project;
+    cliContext: CliContext;
+}): Promise<FernOrganizationToken | undefined> {
+    if ((await getToken()) != null) {
+        return undefined;
+    }
+    try {
+        const token = await getGithubOidcToken({ organization: project.config.organization });
+        if (token != null) {
+            cliContext.logger.info(
+                `Signed in to organization ${project.config.organization} with this run's GitHub OIDC token (no FERN_TOKEN set).`
+            );
+        }
+        return token;
+    } catch (error) {
+        if (error instanceof GithubOidcError) {
+            return cliContext.failAndThrow(error.message, undefined, { code: CliError.Code.AuthError });
+        }
+        throw error;
+    }
 }
 
 /** The folders an sdk-config.yml can sit in: the docs folder and the API workspaces' folders. */

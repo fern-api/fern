@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` can publish from GitHub Actions without a stored `FERN_TOKEN`. When neither `FERN_TOKEN`
+    nor a saved login is present and the job has `permissions: id-token: write`, the CLI exchanges the run's GitHub
+    OIDC token for a 1-hour organization token, provided an organization admin has trusted the repository.
+    `FERN_TOKEN` and a saved login keep precedence, and other commands are unchanged.
+  type: feat
