@@ -250,6 +250,17 @@ jobs:
         run: |
           FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm --filter @fern-api/ete-tests test
 
+      - name: Print hang reports (diagnostic)
+        if: ${{ always() }}
+        run: |
+          ls -la /tmp/fern-hang-reports 2>/dev/null || { echo "no reports"; exit 0; }
+          for f in /tmp/fern-hang-reports/*.json; do
+            echo "===== $f"
+            jq '{commandLine: .header.commandLine, cwd: .header.cwd, dumpEventTime: .header.dumpEventTime, js: .javascriptStack, native: (.nativeStack[:12] | map(.symbol)), handles: [.libuv[] | select(.is_active == true or .type == "process" or .type == "tcp" or .type == "pipe")]}' "$f" || cat "$f" | head -c 20000
+          done
+          echo "===== processes"
+          ps -eo pid,ppid,etimes,args --sort=-etimes | head -60
+
       - name: Run ETE tests with snapshot updates
         if: ${{ github.event.inputs.update_snapshots == 'true' }}
         timeout-minutes: 20

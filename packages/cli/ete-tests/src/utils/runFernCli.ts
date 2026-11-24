@@ -24,10 +24,19 @@ export async function runFernCli(
         ...(includeAuthToken ? { FERN_TOKEN: process.env.FERN_ORG_TOKEN_DEV } : {})
     };
 
-    return loggingExeca(
+    // DIAGNOSTIC (do not merge): a CLI still running after 90s writes a Node diagnostic report on SIGUSR2,
+    // so a hung `fern init` / `fern generator upgrade` shows its JS stack and open handles.
+    const reportDirectory = "/tmp/fern-hang-reports";
+    const childPromise = runExeca(
         CONSOLE_LOGGER,
         "node",
-        ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args],
+        [
+            "--enable-source-maps",
+            "--report-on-signal",
+            `--report-directory=${reportDirectory}`,
+            path.join(__dirname, "../../../cli/dist/dev/cli.cjs"),
+            ...args
+        ],
         {
             ...execaOptions,
             env,
@@ -35,6 +44,27 @@ export async function runFernCli(
             signal
         }
     );
+    const watchdog = setTimeout(() => {
+        if (childPromise.pid != null) {
+            try {
+                process.kill(childPromise.pid, "SIGUSR2");
+            } catch {
+                // The process exited between the check and the signal; nothing to report.
+            }
+        }
+    }, 90_000);
+    if (execaOptions?.reject !== false) {
+        childPromise.stdout?.pipe(process.stdout);
+        childPromise.stderr?.pipe(process.stderr);
+    }
+    try {
+        const result = await childPromise;
+        result.stdout ??= "";
+        result.stderr ??= "";
+        return result;
+    } finally {
+        clearTimeout(watchdog);
+    }
 }
 
 interface CaptureFernCliOptions extends ExecaOptions {
