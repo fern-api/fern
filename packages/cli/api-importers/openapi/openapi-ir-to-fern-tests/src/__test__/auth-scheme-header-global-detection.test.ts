@@ -61,6 +61,7 @@ paths:
       parameters:
         - in: header
           name: Xi-Api-Key
+          required: true
           schema:
             type: string
       responses:
@@ -122,6 +123,12 @@ describe("auth scheme headers and global header detection", () => {
                 )
             );
             expect(endpointHeaders).toEqual([]);
+            const exampleHeaders = Object.values(definition.namedDefinitionFiles).flatMap((file) =>
+                Object.values(file.contents.service?.endpoints ?? {}).flatMap((endpoint) =>
+                    (endpoint.examples ?? []).flatMap((example) => Object.keys(example.headers ?? {}))
+                )
+            );
+            expect(exampleHeaders).toEqual([]);
         } finally {
             await rm(temporaryDirectory, { force: true, recursive: true });
         }
