@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.230.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI imports where a header with an inline enum is on most endpoints and is promoted to a
+        global header. The enum is now declared in the root package, so the IR no longer references a
+        type that does not exist and SDK generation no longer fails with "type not found".
+      type: fix
+  createdAt: "2026-11-24"
+  irVersion: 67
 - version: 5.230.1
   changelogEntry:
     - summary: |
