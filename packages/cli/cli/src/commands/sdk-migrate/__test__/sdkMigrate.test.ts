@@ -17,6 +17,7 @@ import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
 import {
     enableLegacyTestGeneration,
+    existingSdkConfigConfiguresTests,
     mapFernDefinitionToSdkConfigApi,
     mapFernGroupToSdkConfig
 } from "../mapFernGroupToSdkConfig.js";
@@ -94,6 +95,15 @@ describe("SDK Config migration", () => {
         const configured = { ...result.sdkConfig, generation: { wireTests: { enabled: false } } };
 
         expect(enableLegacyTestGeneration(configured)).toBe(configured);
+    });
+
+    it("detects test settings in an existing SDK Config so a merge keeps them", () => {
+        expect(existingSdkConfigConfiguresTests(undefined)).toBe(false);
+        expect(existingSdkConfigConfiguresTests("schemaVersion: sdk-config/v1\ntargets: []\n")).toBe(false);
+        expect(existingSdkConfigConfiguresTests("generation:\n  unitTests:\n    enabled: false\ntargets: []\n")).toBe(
+            true
+        );
+        expect(existingSdkConfigConfiguresTests("generation:\n  wireTests:\n    enabled: true\n")).toBe(true);
     });
 
     it("uses an explicitly resolved SDK name", () => {

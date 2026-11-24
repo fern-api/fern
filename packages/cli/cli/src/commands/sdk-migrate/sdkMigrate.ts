@@ -24,7 +24,12 @@ import type { CliContext } from "../../cli-context/CliContext.js";
 import { commitMigrationFiles, fileMode } from "./commitMigrationFiles.js";
 import { editLegacyGeneratorsConfiguration } from "./editLegacyGeneratorsConfiguration.js";
 import { loadCompatibleMigrationGroups } from "./loadCompatibleMigrationGroups.js";
-import { enableLegacyTestGeneration, type MappingResult, mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
+import {
+    enableLegacyTestGeneration,
+    existingSdkConfigConfiguresTests,
+    type MappingResult,
+    mapFernGroupToSdkConfig
+} from "./mapFernGroupToSdkConfig.js";
 import { mergeSdkConfig } from "./mergeSdkConfig.js";
 import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
 import {
@@ -118,7 +123,6 @@ export async function sdkMigrate({
         }
         throw error;
     }
-    mapped = { ...mapped, sdkConfig: enableLegacyTestGeneration(mapped.sdkConfig) };
 
     printDiagnostics(cliContext, mapped.diagnostics);
     if (args.strict && mapped.diagnostics.length > 0) {
@@ -132,6 +136,9 @@ export async function sdkMigrate({
         readFile(sourceGeneratorsPath, "utf8"),
         readOptionalFile(outputPath)
     ]);
+    if (!existingSdkConfigConfiguresTests(existingSdkConfig)) {
+        mapped = { ...mapped, sdkConfig: enableLegacyTestGeneration(mapped.sdkConfig) };
+    }
     const sdkConfigContents = mergeSdkConfig({
         existingContents: existingSdkConfig,
         legacyPlaceholderSdkName: sdkName === apiName ? undefined : apiName,
