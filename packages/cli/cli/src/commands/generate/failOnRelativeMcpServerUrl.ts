@@ -9,7 +9,8 @@ import YAML from "yaml";
  * a URL has it resolved against that URL; a local file has nothing to resolve against, so say what to
  * change here instead of failing later in the generator with `[metadata.baseUrl] Invalid url`.
  *
- * Skipped when `api.baseUrl` is set, or when overrides or overlays may change `servers`.
+ * Skipped when `api.baseUrl` is set, or when overrides, overlays or an embedded `x-fern-overrides-filepath`
+ * may change `servers`.
  */
 export async function failOnRelativeMcpServerUrl({
     source,
@@ -53,7 +54,12 @@ async function readFirstServer(absoluteFilepath: string): Promise<{ url: string;
         // An unreadable or invalid spec is reported by the loader with a better message.
         return undefined;
     }
-    if (typeof document !== "object" || document == null || !("servers" in document)) {
+    if (
+        typeof document !== "object" ||
+        document == null ||
+        !("servers" in document) ||
+        "x-fern-overrides-filepath" in document
+    ) {
         return undefined;
     }
     const [first] = Array.isArray(document.servers) ? document.servers : [];

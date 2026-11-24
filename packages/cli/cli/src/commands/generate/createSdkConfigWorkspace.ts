@@ -386,7 +386,10 @@ async function resolveSourcePath(
     }
     let bundled: unknown;
     try {
-        bundled = await bundleRemoteOpenAPI(spec.url);
+        bundled = await bundleRemoteOpenAPI(spec.url, undefined, {
+            // Overrides and overlays may select or replace `servers` by the URL as written in the spec.
+            resolveRelativeServers: (spec.overrides?.length ?? 0) === 0 && (spec.overlays?.length ?? 0) === 0
+        });
     } catch (error) {
         return context.failAndThrow(
             `Could not resolve SDK Config OpenAPI source '${spec.id}' from ${spec.url}`,

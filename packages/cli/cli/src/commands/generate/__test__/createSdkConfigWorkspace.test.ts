@@ -368,13 +368,20 @@ describe("createSdkConfigWorkspace", () => {
             "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\nservers:\n  - url: /api/v31\npaths: {}\n";
 
         async function createWorkspaceFor({
-            api
+            api,
+            spec = RELATIVE_SERVER_SPEC,
+            files = {}
         }: {
             api: Record<string, unknown>;
+            spec?: string;
+            files?: Record<string, string>;
         }): ReturnType<typeof createSdkConfigWorkspace> {
             const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
             temporaryDirectories.push(directory);
-            await writeFile(path.join(directory, "openapi.yml"), RELATIVE_SERVER_SPEC);
+            await writeFile(path.join(directory, "openapi.yml"), spec);
+            for (const [name, contents] of Object.entries(files)) {
+                await writeFile(path.join(directory, name), contents);
+            }
             return createSdkConfigWorkspace({
                 sdkConfig: parseSdkConfigV1({
                     schemaVersion: "sdk-config/v1",
@@ -403,6 +410,17 @@ describe("createSdkConfigWorkspace", () => {
 
             expect(errorLog).toHaveBeenCalledWith(expect.stringContaining("relative servers URL ('/api/v31')"));
             expect(errorLog).toHaveBeenCalledWith(expect.stringContaining("api.baseUrl"));
+        });
+
+        it("accepts it when the spec names an overrides file, which may replace servers", async () => {
+            const { cleanup } = await createWorkspaceFor({
+                api: {},
+                spec: `${RELATIVE_SERVER_SPEC}x-fern-overrides-filepath: ./production.yml\n`,
+                files: { "production.yml": "servers:\n  - url: https://api.example.com/v1\n" }
+            });
+
+            expect(errorLog).not.toHaveBeenCalled();
+            await cleanup();
         });
 
         it("accepts it when api.baseUrl is set", async () => {
@@ -530,7 +548,14 @@ describe("createSdkConfigWorkspace", () => {
         await cleanup();
     });
 
-    it("materializes a bundled OpenAPI URL source and cleans it up", async () => {
+    it.each([
+        { transforms: {}, resolveRelativeServers: true },
+        { transforms: { overlays: ["./overlay.yml"] }, resolveRelativeServers: false },
+        { transforms: { overrides: ["./overrides.yml"] }, resolveRelativeServers: false }
+    ])("materializes a bundled OpenAPI URL source with $transforms and cleans it up", async ({
+        transforms,
+        resolveRelativeServers
+    }) => {
         vi.mocked(bundleRemoteOpenAPI).mockResolvedValue({
             openapi: "3.0.0",
             info: { title: "Payments", version: "1.0.0" },
@@ -548,7 +573,8 @@ describe("createSdkConfigWorkspace", () => {
                         {
                             id: "payments",
                             type: "openapi",
-                            url: "https://example.com/openapi.yaml"
+                            url: "https://example.com/openapi.yaml",
+                            ...transforms
                         }
                     ]
                 },
@@ -568,7 +594,9 @@ describe("createSdkConfigWorkspace", () => {
         if (materialized?.type !== "openapi") {
             throw new Error("Expected an OpenAPI specification");
         }
-        expect(bundleRemoteOpenAPI).toHaveBeenCalledWith("https://example.com/openapi.yaml");
+        expect(bundleRemoteOpenAPI).toHaveBeenCalledWith("https://example.com/openapi.yaml", undefined, {
+            resolveRelativeServers
+        });
         expect(JSON.parse(await readFile(materialized.absoluteFilepath, "utf-8"))).toMatchObject({
             info: { title: "Payments" }
         });

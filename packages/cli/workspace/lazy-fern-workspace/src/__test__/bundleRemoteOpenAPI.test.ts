@@ -89,4 +89,33 @@ paths:
 
         expect(bundled).toMatchObject({ servers: [{ url: "https://petstore31.swagger.io/api/v31" }] });
     });
+
+    const RELATIVE_SERVER_DOCUMENT = JSON.stringify({
+        openapi: "3.0.4",
+        info: { title: "Petstore", version: "1" },
+        servers: [{ url: "/api" }],
+        paths: {}
+    });
+
+    it("resolves a relative servers URL against the URL the spec was served from after redirects", async () => {
+        const loadRemote = vi.fn(async () => ({
+            body: RELATIVE_SERVER_DOCUMENT,
+            mimeType: "application/json",
+            url: "https://api.example.com/v2/openapi.json"
+        }));
+
+        const bundled = await bundleRemoteOpenAPI("https://docs.example.com/spec", loadRemote);
+
+        expect(bundled).toMatchObject({ servers: [{ url: "https://api.example.com/api" }] });
+    });
+
+    it("keeps relative servers URLs as written when asked to, for overrides and overlays to match", async () => {
+        const loadRemote = vi.fn(async () => ({ body: RELATIVE_SERVER_DOCUMENT, mimeType: "application/json" }));
+
+        const bundled = await bundleRemoteOpenAPI("https://docs.example.com/spec", loadRemote, {
+            resolveRelativeServers: false
+        });
+
+        expect(bundled).toMatchObject({ servers: [{ url: "/api" }] });
+    });
 });
