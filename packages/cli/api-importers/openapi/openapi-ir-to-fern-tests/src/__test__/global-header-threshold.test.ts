@@ -5,6 +5,10 @@ import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 const FIXTURE_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/global-header-threshold/fern"));
 
+function getHeaderName(header: RawSchemas.HttpHeaderSchema | undefined): string | undefined {
+    return typeof header === "string" ? undefined : header?.name;
+}
+
 function getHeaderType(header: RawSchemas.HttpHeaderSchema | undefined): string | undefined {
     return typeof header === "string" ? header : header?.type;
 }
@@ -33,10 +37,12 @@ describe("detected global headers at the 75% threshold (4 endpoints)", () => {
 
     it("promotes a required header found on 3 of 4 endpoints as optional", () => {
         expect(getHeaderType(headers["X-Mostly-Required"])).toBe("optional<string>");
+        expect(getHeaderName(headers["X-Mostly-Required"])).toBe("mostlyRequired");
     });
 
     it("promotes an optional header found on exactly 3 of 4 endpoints", () => {
         expect(getHeaderType(headers["X-Mostly-Optional"])).toBe("optional<string>");
+        expect(getHeaderName(headers["X-Mostly-Optional"])).toBe("mostlyOptional");
     });
 
     it("does not promote a header found on 2 of 4 endpoints", () => {
