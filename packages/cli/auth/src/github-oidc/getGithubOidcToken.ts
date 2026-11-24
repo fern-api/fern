@@ -47,11 +47,12 @@ export async function getGithubOidcToken({
         return undefined;
     }
 
-    const origin = stripTrailingSlashes(venusOrigin);
+    // The audience is the Venus URL itself: see getGithubOidcAudience.
+    const origin = getGithubOidcAudience(venusOrigin);
     const idToken = await requestGithubIdToken({
         requestUrl,
         requestToken,
-        audience: getGithubOidcAudience(origin),
+        audience: origin,
         fetchImpl
     });
     const value = await exchangeWithVenus({ venusOrigin: origin, idToken, organization, fetchImpl });
