@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { applyOpenAPIOverlay, mergeWithOverrides, type Overlay } from "@fern-api/core-utils";
 import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
 import YAML from "yaml";
 import { isResolvedMigrationFileSpec, type ResolvedMigrationSourceSpec } from "./projectMigrationSource.js";
@@ -18,30 +19,43 @@ const UNSUPPORTED_EXTENSIONS: Record<string, { reason: string; suggestedAction: 
 };
 
 /**
- * Finds Fern OpenAPI extensions in the migrated specs and overlays that legacy generators honor and SDK Config
- * generators do not.
+ * Finds Fern OpenAPI extensions that legacy generators honor and SDK Config generators do not, in each migrated
+ * spec after its overrides and overlays are applied.
  */
 export async function scanSourceSpecExtensions(
     specs: ResolvedMigrationSourceSpec[]
 ): Promise<FernConfigMappingDiagnostic[]> {
-    const files = [
-        ...new Set(
-            specs
-                .filter(isResolvedMigrationFileSpec)
-                .filter((spec) => spec.type === "openapi")
-                .flatMap((spec) => [spec.absolutePath, ...spec.absoluteOverlayPaths])
-        )
-    ];
-    const diagnostics = await Promise.all(files.map(scanFile));
+    const diagnostics = await Promise.all(
+        specs
+            .filter(isResolvedMigrationFileSpec)
+            .filter((spec) => spec.type === "openapi")
+            .map((spec) => scanSpec(spec.absolutePath, spec.absoluteOverridePaths, spec.absoluteOverlayPaths))
+    );
     return diagnostics.flat();
 }
 
-async function scanFile(absolutePath: string): Promise<FernConfigMappingDiagnostic[]> {
+async function scanSpec(
+    absolutePath: string,
+    absoluteOverridePaths: string[],
+    absoluteOverlayPaths: string[]
+): Promise<FernConfigMappingDiagnostic[]> {
     let document: unknown;
     try {
-        document = YAML.parse(await readFile(absolutePath, "utf8"));
+        document = await readYaml(absolutePath);
+        for (const overridePath of absoluteOverridePaths) {
+            const overrides = await readYaml(overridePath);
+            if (isObject(document) && isObject(overrides)) {
+                document = mergeWithOverrides({ data: document, overrides });
+            }
+        }
+        for (const overlayPath of absoluteOverlayPaths) {
+            const overlay = await readYaml(overlayPath);
+            if (isObject(document) && isObject(overlay) && Array.isArray(overlay.actions)) {
+                document = applyOpenAPIOverlay({ data: document, overlay: overlay as unknown as Overlay });
+            }
+        }
     } catch {
-        // Unreadable specs fail later with a clearer error from the generator.
+        // Unreadable specs, overrides, and overlays fail later with a clearer error from the generator.
         return [];
     }
     const found = findExtensions(document);
@@ -98,4 +112,12 @@ function findExtensions(document: unknown): { extensions: Set<string>; offsetPag
 
 function isOffsetPaginationWithoutStep(value: unknown): boolean {
     return value != null && typeof value === "object" && "offset" in value && !("step" in value);
+}
+
+async function readYaml(absolutePath: string): Promise<unknown> {
+    return YAML.parse(await readFile(absolutePath, "utf8"));
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+    return value != null && typeof value === "object" && !Array.isArray(value);
 }

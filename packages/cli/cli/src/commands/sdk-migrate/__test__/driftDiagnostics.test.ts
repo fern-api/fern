@@ -122,10 +122,50 @@ describe("SDK Config migration drift diagnostics", () => {
 
         expect(diagnostics.map((diagnostic) => diagnostic.path)).toEqual([
             ["openapi.yml", "x-fern-base-path"],
-            ["openapi.yml", "x-fern-pagination", "step"],
-            ["overlay.yml", "x-fern-sdk-variables"]
+            ["openapi.yml", "x-fern-sdk-variables"],
+            ["openapi.yml", "x-fern-pagination", "step"]
         ]);
-        expect(diagnostics[1]?.reason).toMatch(/^1 offset x-fern-pagination/);
+        expect(diagnostics[2]?.reason).toMatch(/^1 offset x-fern-pagination/);
+    });
+
+    it("scans the spec after its overrides and overlays are applied", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "sdk-migrate-drift-"));
+        const specPath = path.join(directory, "openapi.yml");
+        const overridesPath = path.join(directory, "overrides.yml");
+        const overlayPath = path.join(directory, "overlay.yml");
+        await writeFile(
+            specPath,
+            [
+                "openapi: 3.0.3",
+                "paths:",
+                "  /items:",
+                "    get:",
+                "      x-fern-pagination:",
+                "        offset: $request.offset",
+                "        results: $response.data"
+            ].join("\n")
+        );
+        await writeFile(overridesPath, ["x-fern-base-path: /v2"].join("\n"));
+        await writeFile(
+            overlayPath,
+            [
+                "overlay: 1.0.0",
+                "actions:",
+                "  - target: $.paths['/items'].get.x-fern-pagination",
+                "    update:",
+                "      step: $request.limit"
+            ].join("\n")
+        );
+        const spec: ResolvedMigrationFileSpec = {
+            absolutePath: specPath,
+            absoluteOverlayPaths: [overlayPath],
+            absoluteOverridePaths: [overridesPath],
+            type: "openapi"
+        };
+
+        const diagnostics = await scanSourceSpecExtensions([spec]);
+
+        expect(diagnostics.map((diagnostic) => diagnostic.path)).toEqual([["openapi.yml", "x-fern-base-path"]]);
     });
 });
 
