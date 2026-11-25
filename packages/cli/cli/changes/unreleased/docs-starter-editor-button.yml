@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The docs starter that `fern init` creates now links its "Open Fern Editor" button with `<Button href>`, so it renders as one link button without a stray external-link icon next to it.
+  type: fix
