@@ -52,6 +52,8 @@ type OAuthFlowMapping =
 const AUTH_REQUIRES_REVIEW = "FERN_API_AUTH_REQUIRES_REVIEW";
 const AUTH_SCHEME_OMITTED = "FERN_API_AUTH_SCHEME_OMITTED";
 const AUTH_FIELD_UNSUPPORTED = "FERN_API_AUTH_FIELD_UNSUPPORTED";
+const DEFAULT_API_KEY_OPTION_NAME = "apiKey";
+const DEFAULT_BEARER_OPTION_NAME = "token";
 
 /**
  * Maps Fern API auth to SDK Config `api.auth`. Every representable scheme is kept; each scheme that
@@ -172,7 +174,12 @@ function mapFernAuthScheme(
                 ...optional("environmentVariable", header.env),
                 ...optional("description", description)
             },
-            lostFields: []
+            lostFields: lostOptionName({
+                path: ["name"],
+                name: header.name,
+                defaultName: DEFAULT_API_KEY_OPTION_NAME,
+                extension: "x-fern-header"
+            })
         }),
         basic: (basic) => ({
             scheme: {
@@ -191,7 +198,12 @@ function mapFernAuthScheme(
                 ...optional("environmentVariable", bearer.token?.env),
                 ...optional("description", description)
             },
-            lostFields: []
+            lostFields: lostOptionName({
+                path: ["token", "name"],
+                name: bearer.token?.name,
+                defaultName: DEFAULT_BEARER_OPTION_NAME,
+                extension: "x-fern-bearer"
+            })
         }),
         oauth: (oauth) => mapFernOAuthScheme(id, oauth, description, definition),
         inferredBearer: () => ({
@@ -603,6 +615,33 @@ function fieldUnsupportedDiagnostic(id: string, index: number, field: LostField)
         sdkConfigPath: ["api", "auth", "schemes", index],
         suggestedAction: `Review api.auth.schemes.${index} ('${id}') and confirm the generated SDK does not depend on ${field.path.join(".")}.`
     };
+}
+
+/**
+ * SDK Config v1 auth schemes have no SDK option name, so the new generators name the option `apiKey` or `token`
+ * unless the source spec's security scheme carries the name in an extension.
+ */
+function lostOptionName({
+    path,
+    name,
+    defaultName,
+    extension
+}: {
+    path: string[];
+    name: string | undefined;
+    defaultName: string;
+    extension: "x-fern-header" | "x-fern-bearer";
+}): LostField[] {
+    const configured = nonEmpty(name);
+    if (configured == null || configured === defaultName) {
+        return [];
+    }
+    return [
+        {
+            path,
+            reason: `SDK Config v1 has no field for the SDK option name, so generated SDKs rename '${configured}' to '${defaultName}'. Keep it by adding \`${extension}: { name: ${configured} }\` to this security scheme in an OpenAPI overlay`
+        }
+    ];
 }
 
 function nonEmpty(value: string | undefined): string | undefined {
