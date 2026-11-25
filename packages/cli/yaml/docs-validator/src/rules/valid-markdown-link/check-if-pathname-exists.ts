@@ -53,8 +53,13 @@ export async function checkIfPathnameExists({
     isSlugVisible?: (slug: string) => boolean;
 }): Promise<true | string[]> {
     pathname = removeTrailingSlash(pathname);
-    const slugs =
-        absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []).filter(isSlugVisible) : [];
+    const allSlugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
+    const slugs = allSlugs.filter(isSlugVisible);
+
+    // the link is hidden by `<If>` on every slug of the current file, so it never renders
+    if (allSlugs.length > 0 && slugs.length === 0) {
+        return true;
+    }
 
     // base case: empty pathname is valid
     if (pathname.trim() === "") {

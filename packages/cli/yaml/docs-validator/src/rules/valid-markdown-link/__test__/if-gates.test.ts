@@ -1,9 +1,10 @@
+import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
 
 import { checkIfPathnameExists } from "../check-if-pathname-exists.js";
 import { collectLinksAndSources } from "../collect-links.js";
-import { type IfGate, isVisibleInScope, type PageScope } from "../if-gates.js";
+import { getPageScope, type IfGate, isVisibleInScope, type PageScope } from "../if-gates.js";
 
 const v1Scope: PageScope = { versionNames: ["v1", "Version 1", "v1"], productNames: ["garden"] };
 const v2Scope: PageScope = { versionNames: ["v2", "Version 2", "v2"], productNames: ["greenhouse"] };
@@ -58,14 +59,57 @@ describe("collectLinksAndSources <If> gates", () => {
         ]);
     });
 
-    it("ignores <If> blocks that gate on roles", () => {
+    it("keeps the version gate of <If> blocks that also gate on roles", () => {
         expect(
             collectGates(`
 <If roles={["admin"]} versions={["v1"]}>
 [Pruning](./pruning)
 </If>
 `)
+        ).toEqual([[{ versions: ["v1"], products: undefined, not: false }]]);
+    });
+
+    it("ignores negated <If> blocks that also gate on roles", () => {
+        expect(
+            collectGates(`
+<If roles={["admin"]} versions={["v1"]} not>
+[Pruning](./pruning)
+</If>
+`)
         ).toEqual([undefined]);
+    });
+
+    it("treats a string not attribute like the docs renderer", () => {
+        expect(
+            collectGates(`
+<If versions={["v1"]} not="false">
+[Pruning](./pruning)
+</If>
+
+<If versions={["v1"]} not={false}>
+[Repotting](./repotting)
+</If>
+`)
+        ).toEqual([
+            [{ versions: ["v1"], products: undefined, not: true }],
+            [{ versions: ["v1"], products: undefined, not: false }]
+        ]);
+    });
+});
+
+describe("getPageScope", () => {
+    it("names the default version by its own slug, not the site prefix", () => {
+        // the default version is also served under the site prefix, with its original slug kept as canonicalSlug
+        const prunedDefaultVersion = {
+            type: "version",
+            versionId: "latest",
+            title: "Latest",
+            slug: "docs",
+            canonicalSlug: "docs/latest"
+        } as unknown as FernNavigation.NavigationNodeParent;
+        const scope = getPageScope([prunedDefaultVersion]);
+        expect(scope.versionNames).toEqual(["latest", "Latest", "latest"]);
+        expect(isVisibleInScope([{ versions: ["docs"], not: true }], scope)).toBe(true);
     });
 });
 
@@ -102,6 +146,12 @@ describe("isVisibleInScope", () => {
         ];
         expect(isVisibleInScope(gates, v1Scope)).toBe(false);
         expect(isVisibleInScope(gates, { versionNames: ["v2"], productNames: ["garden"] })).toBe(true);
+    });
+
+    it("requires both versions and products of a single gate to match", () => {
+        const gates: IfGate[] = [{ versions: ["v1"], products: ["greenhouse"], not: false }];
+        expect(isVisibleInScope(gates, v1Scope)).toBe(false);
+        expect(isVisibleInScope(gates, { versionNames: ["v1"], productNames: ["greenhouse"] })).toBe(true);
     });
 
     it("hides version-gated content on pages without a version", () => {
@@ -146,6 +196,17 @@ describe("checkIfPathnameExists with <If> gates", () => {
         expect(
             await checkIfPathnameExists({
                 ...baseArgs,
+                isSlugVisible: (slug) => isVisibleInScope(gates, scopes.get(slug))
+            })
+        ).toBe(true);
+    });
+
+    it("passes absolute links hidden on every slug of the page", async () => {
+        const gates: IfGate[] = [{ versions: ["v3"], not: false }];
+        expect(
+            await checkIfPathnameExists({
+                ...baseArgs,
+                pathname: "/v3/guides/pruning",
                 isSlugVisible: (slug) => isVisibleInScope(gates, scopes.get(slug))
             })
         ).toBe(true);

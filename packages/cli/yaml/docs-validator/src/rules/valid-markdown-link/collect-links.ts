@@ -133,7 +133,7 @@ export function collectLinksAndSources({
                                     contentQueue.push({
                                         content: readFile(resolvedImportPath),
                                         absoluteFilepath: resolvedImportPath,
-                                        ifGates: inheritedGates
+                                        ifGates: gates
                                     });
                                 }
                             }

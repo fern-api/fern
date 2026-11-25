@@ -32,12 +32,21 @@ export function getPageScope(parents: readonly FernNavigation.NavigationNodePare
     const productNames: string[] = [];
     for (const parent of parents) {
         if (parent.type === "version") {
-            versionNames.push(parent.versionId, parent.title, getLastSlugFragment(parent.slug));
+            versionNames.push(parent.versionId, parent.title, getLastSlugFragment(getConfiguredSlug(parent)));
         } else if (parent.type === "product") {
-            productNames.push(parent.productId, parent.title, getLastSlugFragment(parent.slug));
+            productNames.push(parent.productId, parent.title, getLastSlugFragment(getConfiguredSlug(parent)));
         }
     }
     return { versionNames: versionNames.filter(Boolean), productNames: productNames.filter(Boolean) };
+}
+
+/**
+ * The default version is also served without its slug segment, and that pruned copy keeps the
+ * original slug in `canonicalSlug`. Use the original so the default version isn't named after the
+ * site or product prefix.
+ */
+function getConfiguredSlug(node: { slug: string; canonicalSlug?: string }): string {
+    return node.canonicalSlug ?? node.slug;
 }
 
 function getLastSlugFragment(slug: string): string {
@@ -46,16 +55,13 @@ function getLastSlugFragment(slug: string): string {
 
 /**
  * Reads the version/product gate of an `<If>` element. Returns undefined when the element has no
- * versions/products condition, or when it also gates on roles/login (which `fern check` cannot
- * evaluate, so the content is treated as visible).
+ * versions/products condition. `fern check` cannot evaluate roles/login, so an `<If>` that also
+ * gates on them keeps its versions/products gate only when it can hide content regardless of the
+ * viewer (i.e. without `not`).
  */
 export function parseIfGate(attributes: MdxJsxAttributeOrExpression[]): IfGate | undefined {
     const jsxAttributes = attributes.filter(isMdxJsxAttribute);
     const getAttribute = (name: string) => jsxAttributes.find((attribute) => attribute.name === name);
-
-    if (getAttribute("roles") != null || getAttribute("viewer") != null || getAttribute("loggedIn") != null) {
-        return undefined;
-    }
 
     const versions = extractStringList(getAttribute("versions")?.value);
     const products = extractStringList(getAttribute("products")?.value);
@@ -63,7 +69,14 @@ export function parseIfGate(attributes: MdxJsxAttributeOrExpression[]): IfGate |
         return undefined;
     }
 
-    return { versions, products, not: isTruthyFlag(getAttribute("not")) };
+    const not = isTruthyFlag(getAttribute("not"));
+    const gatesOnViewer =
+        getAttribute("roles") != null || getAttribute("viewer") != null || getAttribute("loggedIn") != null;
+    if (gatesOnViewer && not) {
+        return undefined;
+    }
+
+    return { versions, products, not };
 }
 
 /**
@@ -130,8 +143,9 @@ function isTruthyFlag(attribute: MdxJsxAttribute | undefined): boolean {
     if (attribute.value == null) {
         return true;
     }
+    // the docs renderer passes string props through as-is, so any non-empty string is truthy
     if (typeof attribute.value === "string") {
-        return attribute.value !== "false";
+        return attribute.value !== "";
     }
     const literals = extractLiterals(attribute.value);
     return literals.length === 1 && literals[0] === true;
