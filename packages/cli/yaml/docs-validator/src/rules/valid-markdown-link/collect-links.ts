@@ -15,6 +15,8 @@ import { toHast } from "mdast-util-to-hast";
 import type { Position } from "unist";
 import { visit } from "unist-util-visit";
 
+import { collectIfGatesByNode, type IfGate } from "./if-gates.js";
+
 const MDX_NODE_TYPES = [
     "mdxFlowExpression",
     "mdxJsxFlowElement",
@@ -27,12 +29,15 @@ interface HastLink {
     href: string;
     sourceFilepath?: AbsoluteFilePath;
     position?: Position;
+    /** version/product conditions of the `<If>` blocks enclosing this link */
+    ifGates?: IfGate[];
 }
 
 interface HastSource {
     src: string;
     sourceFilepath?: AbsoluteFilePath;
     position?: Position;
+    ifGates?: IfGate[];
 }
 
 export function collectLinksAndSources({
@@ -53,6 +58,7 @@ export function collectLinksAndSources({
     const contentQueue: {
         content: string;
         absoluteFilepath?: AbsoluteFilePath;
+        ifGates?: IfGate[];
     }[] = [opts];
 
     const links: HastLink[] = [];
@@ -73,7 +79,7 @@ export function collectLinksAndSources({
             break;
         }
 
-        const { content, absoluteFilepath } = popped;
+        const { content, absoluteFilepath, ifGates: inheritedGates = [] } = popped;
 
         // NOTE: we don't want to visit the same file multiple times
         if (absoluteFilepath != null) {
@@ -101,7 +107,13 @@ export function collectLinksAndSources({
             passThrough: [...MDX_NODE_TYPES]
         }) as HastRoot;
 
+        const ifGatesByNode = collectIfGatesByNode(hast, inheritedGates);
+
         visit(hast, (node) => {
+            const gates = ifGatesByNode.get(node) ?? inheritedGates;
+            const withGates = <T extends object>(item: T): T & { ifGates?: IfGate[] } =>
+                gates.length > 0 ? { ...item, ifGates: gates } : item;
+
             // if mdxjsEsm imports from a .md or .mdx file, we'll treat it as if it was a markdown snippet
             // this doesn't handle plain javascript imports (which is outside of the scope of this rule)
             // TODO: should we verify that the imported file is actually used in the current page?
@@ -120,7 +132,8 @@ export function collectLinksAndSources({
                                 if (resolvedImportPath.endsWith(".mdx") || resolvedImportPath.endsWith(".md")) {
                                     contentQueue.push({
                                         content: readFile(resolvedImportPath),
-                                        absoluteFilepath: resolvedImportPath
+                                        absoluteFilepath: resolvedImportPath,
+                                        ifGates: gates
                                     });
                                 }
                             }
@@ -133,12 +146,12 @@ export function collectLinksAndSources({
             if (node.type === "element") {
                 const href = node.properties.href;
                 if (typeof href === "string") {
-                    links.push({ href, sourceFilepath: absoluteFilepath, position: node.position });
+                    links.push(withGates({ href, sourceFilepath: absoluteFilepath, position: node.position }));
                 }
 
                 const src = node.properties.src;
                 if (typeof src === "string") {
-                    sources.push({ src, sourceFilepath: absoluteFilepath, position: node.position });
+                    sources.push(withGates({ src, sourceFilepath: absoluteFilepath, position: node.position }));
                 }
             }
 
@@ -147,13 +160,13 @@ export function collectLinksAndSources({
                     src: (attr) => {
                         const src = extractSingleLiteral(attr.value);
                         if (typeof src === "string") {
-                            sources.push({ src, sourceFilepath: absoluteFilepath, position });
+                            sources.push(withGates({ src, sourceFilepath: absoluteFilepath, position }));
                         }
                     },
                     href: (attr) => {
                         const href = extractSingleLiteral(attr.value);
                         if (typeof href === "string") {
-                            links.push({ href, sourceFilepath: absoluteFilepath, position });
+                            links.push(withGates({ href, sourceFilepath: absoluteFilepath, position }));
                         }
                     }
                 });
@@ -175,7 +188,8 @@ export function collectLinksAndSources({
                         const resolvedImportPath = resolve(dirname(absoluteFilepath), src);
                         contentQueue.push({
                             content: readFile(resolvedImportPath),
-                            absoluteFilepath: resolvedImportPath
+                            absoluteFilepath: resolvedImportPath,
+                            ifGates: gates
                         });
                     }
 
@@ -186,19 +200,11 @@ export function collectLinksAndSources({
                 // NOTE: this collects links if they are in the form of <a href="...">
                 // if they're in the form of <a href={"..."} /> or <a {...{ href: "..." }} />, they will be ignored
                 if (typeof href === "string") {
-                    links.push({
-                        href,
-                        sourceFilepath: absoluteFilepath,
-                        position: node.position
-                    });
+                    links.push(withGates({ href, sourceFilepath: absoluteFilepath, position: node.position }));
                 }
 
                 if (typeof src === "string") {
-                    sources.push({
-                        src,
-                        sourceFilepath: absoluteFilepath,
-                        position: node.position
-                    });
+                    sources.push(withGates({ src, sourceFilepath: absoluteFilepath, position: node.position }));
                 }
 
                 node.attributes.forEach((attr) => {

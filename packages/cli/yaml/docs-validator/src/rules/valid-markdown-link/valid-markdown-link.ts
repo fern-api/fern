@@ -18,6 +18,7 @@ import path from "path";
 import { Rule, RuleViolation } from "../../Rule.js";
 import { checkIfPathnameExists } from "./check-if-pathname-exists.js";
 import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames.js";
+import { getPageScope, isVisibleInScope, type PageScope } from "./if-gates.js";
 import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils.js";
 
 /**
@@ -185,6 +186,7 @@ export const ValidMarkdownLinks: Rule = {
 
         const visitableSlugs = new Set<string>();
         const absoluteFilePathsToSlugs = new Map<AbsoluteFilePath, string[]>();
+        const slugScopes = new Map<string, PageScope>();
         const endpoints: FernNavigation.NavigationNodeApiLeaf[] = [];
         collector.slugMap.forEach((node, slug) => {
             // NOTE: even if the node is not a page, it can still be "visitable" because it will redirect to another page.
@@ -207,6 +209,7 @@ export const ValidMarkdownLinks: Rule = {
             const slugs = absoluteFilePathsToSlugs.get(absoluteFilePath) ?? [];
             slugs.push(slug);
             absoluteFilePathsToSlugs.set(absoluteFilePath, slugs);
+            slugScopes.set(slug, getPageScope(collector.getParents(node.id)));
         });
 
         // Collect version and product slugs for context-aware absolute link resolution
@@ -269,7 +272,8 @@ export const ValidMarkdownLinks: Rule = {
                             redirects: workspace.config.redirects,
                             baseUrl,
                             versionSlugs,
-                            productSlugs
+                            productSlugs,
+                            isSlugVisible: (slug) => isVisibleInScope(pathnameToCheck.ifGates, slugScopes.get(slug))
                         });
 
                         if (exists === true) {

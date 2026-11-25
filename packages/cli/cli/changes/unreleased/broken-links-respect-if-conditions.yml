@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern check` no longer reports broken links inside `<If versions>` or `<If products>` blocks
+    (including `not` and nested `<If>`) for versions and products where the block is not rendered.
+  type: fix

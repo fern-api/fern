@@ -26,7 +26,8 @@ export async function checkIfPathnameExists({
     redirects = [],
     baseUrl,
     versionSlugs = [],
-    productSlugs = []
+    productSlugs = [],
+    isSlugVisible = () => true
 }: {
     pathname: string;
     markdown: boolean;
@@ -45,9 +46,20 @@ export async function checkIfPathnameExists({
     };
     versionSlugs?: string[];
     productSlugs?: string[];
+    /**
+     * Whether the link is rendered on the given slug of the current file. Links inside `<If versions>` or
+     * `<If products>` blocks are hidden on some versions/products, so they should not be checked there.
+     */
+    isSlugVisible?: (slug: string) => boolean;
 }): Promise<true | string[]> {
     pathname = removeTrailingSlash(pathname);
-    const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
+    const allSlugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
+    const slugs = allSlugs.filter(isSlugVisible);
+
+    // the link is hidden by `<If>` on every slug of the current file, so it never renders
+    if (allSlugs.length > 0 && slugs.length === 0) {
+        return true;
+    }
 
     // base case: empty pathname is valid
     if (pathname.trim() === "") {
