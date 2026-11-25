@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { applyOpenAPIOverlay, mergeWithOverrides, type Overlay } from "@fern-api/core-utils";
+import { applyOpenAPIOverlay, isRecord, mergeWithOverrides, type Overlay } from "@fern-api/core-utils";
 import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
 import YAML from "yaml";
 import { isResolvedMigrationFileSpec, type ResolvedMigrationSourceSpec } from "./projectMigrationSource.js";
@@ -44,13 +44,13 @@ async function scanSpec(
         document = await readYaml(absolutePath);
         for (const overridePath of absoluteOverridePaths) {
             const overrides = await readYaml(overridePath);
-            if (isObject(document) && isObject(overrides)) {
+            if (isRecord(document) && isRecord(overrides)) {
                 document = mergeWithOverrides({ data: document, overrides });
             }
         }
         for (const overlayPath of absoluteOverlayPaths) {
             const overlay = await readYaml(overlayPath);
-            if (isObject(document) && isObject(overlay) && Array.isArray(overlay.actions)) {
+            if (isRecord(document) && isRecord(overlay) && Array.isArray(overlay.actions)) {
                 document = applyOpenAPIOverlay({ data: document, overlay: overlay as unknown as Overlay });
             }
         }
@@ -116,8 +116,4 @@ function isOffsetPaginationWithoutStep(value: unknown): boolean {
 
 async function readYaml(absolutePath: string): Promise<unknown> {
     return YAML.parse(await readFile(absolutePath, "utf8"));
-}
-
-function isObject(value: unknown): value is Record<string, unknown> {
-    return value != null && typeof value === "object" && !Array.isArray(value);
 }
