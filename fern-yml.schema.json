@@ -6652,6 +6652,9 @@
             "types": {
               "type": "boolean"
             },
+            "error-pages": {
+              "type": "boolean"
+            },
             "playground": {
               "type": "object",
               "properties": {
