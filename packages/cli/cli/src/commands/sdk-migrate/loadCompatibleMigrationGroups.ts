@@ -88,7 +88,7 @@ export async function loadCompatibleMigrationGroups({
 
     return {
         fernWorkspace: baseline.fernWorkspace,
-        sourceSpecs: baseline.sourceSpecs,
+        sourceSpecs: withUnmigratedSettingsOfEveryTarget(baseline.sourceSpecs, loaded),
         group: {
             groupName: groups.map((group) => group.groupName).join("+"),
             audiences: baseline.group.audiences,
@@ -98,6 +98,26 @@ export async function loadCompatibleMigrationGroups({
             reviewers: undefined
         }
     };
+}
+
+function withUnmigratedSettingsOfEveryTarget(
+    sourceSpecs: ResolvedMigrationSourceSpec[],
+    loaded: LoadedGenerator[]
+): ResolvedMigrationSourceSpec[] {
+    return sourceSpecs.map((spec, index) => {
+        if (!isResolvedMigrationFileSpec(spec)) {
+            return spec;
+        }
+        const settings = new Set(
+            loaded.flatMap((candidate) => {
+                const candidateSpec = candidate.sourceSpecs[index];
+                return candidateSpec != null && isResolvedMigrationFileSpec(candidateSpec)
+                    ? (candidateSpec.unmigratedApiImportSettings ?? [])
+                    : [];
+            })
+        );
+        return { ...spec, unmigratedApiImportSettings: [...settings] };
+    });
 }
 
 function migrationInputFingerprint(input: LoadedGenerator): string {
