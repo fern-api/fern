@@ -13,7 +13,7 @@ import {
 } from "@fern-api/remote-workspace-runner";
 import { createMockTaskContext, TaskAbortSignal, type TaskContext } from "@fern-api/task-context";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { createSdkConfigWorkspace } from "../createSdkConfigWorkspace.js";
 
@@ -363,6 +363,74 @@ describe("createSdkConfigWorkspace", () => {
         await cleanup();
     });
 
+    describe("relative servers URL in a local spec", () => {
+        const RELATIVE_SERVER_SPEC =
+            "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\nservers:\n  - url: /api/v31\npaths: {}\n";
+
+        async function createWorkspaceFor({
+            api,
+            spec = RELATIVE_SERVER_SPEC,
+            files = {}
+        }: {
+            api: Record<string, unknown>;
+            spec?: string;
+            files?: Record<string, string>;
+        }): ReturnType<typeof createSdkConfigWorkspace> {
+            const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+            temporaryDirectories.push(directory);
+            await writeFile(path.join(directory, "openapi.yml"), spec);
+            for (const [name, contents] of Object.entries(files)) {
+                await writeFile(path.join(directory, name), contents);
+            }
+            return createSdkConfigWorkspace({
+                sdkConfig: parseSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "payments",
+                    source: { specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }] },
+                    api,
+                    client: {},
+                    package: {},
+                    docs: {},
+                    generation: {},
+                    targets: [{ language: "mcp", output: { delivery: "hosted", slug: "payments" } }]
+                }),
+                absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+                cliVersion: "0.0.0",
+                context: createMockTaskContext({ logger: { ...CONSOLE_LOGGER, error: errorLog } })
+            });
+        }
+        const errorLog = vi.fn();
+
+        beforeEach(() => {
+            errorLog.mockClear();
+        });
+
+        it("fails an MCP target with a message that names servers and api.baseUrl", async () => {
+            await expect(createWorkspaceFor({ api: {} })).rejects.toBeInstanceOf(TaskAbortSignal);
+
+            expect(errorLog).toHaveBeenCalledWith(expect.stringContaining("relative servers URL ('/api/v31')"));
+            expect(errorLog).toHaveBeenCalledWith(expect.stringContaining("api.baseUrl"));
+        });
+
+        it("accepts it when the spec names an overrides file, which may replace servers", async () => {
+            const { cleanup } = await createWorkspaceFor({
+                api: {},
+                spec: `${RELATIVE_SERVER_SPEC}x-fern-overrides-filepath: ./production.yml\n`,
+                files: { "production.yml": "servers:\n  - url: https://api.example.com/v1\n" }
+            });
+
+            expect(errorLog).not.toHaveBeenCalled();
+            await cleanup();
+        });
+
+        it("accepts it when api.baseUrl is set", async () => {
+            const { cleanup } = await createWorkspaceFor({ api: { baseUrl: "https://petstore31.swagger.io/api/v31" } });
+
+            expect(errorLog).not.toHaveBeenCalled();
+            await cleanup();
+        });
+    });
+
     it("rejects a hosted MCP target under --local, because the MCP language has no local generator", async () => {
         const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
         temporaryDirectories.push(directory);
@@ -480,7 +548,14 @@ describe("createSdkConfigWorkspace", () => {
         await cleanup();
     });
 
-    it("materializes a bundled OpenAPI URL source and cleans it up", async () => {
+    it.each([
+        { transforms: {}, resolveRelativeServers: true },
+        { transforms: { overlays: ["./overlay.yml"] }, resolveRelativeServers: false },
+        { transforms: { overrides: ["./overrides.yml"] }, resolveRelativeServers: false }
+    ])("materializes a bundled OpenAPI URL source with $transforms and cleans it up", async ({
+        transforms,
+        resolveRelativeServers
+    }) => {
         vi.mocked(bundleRemoteOpenAPI).mockResolvedValue({
             openapi: "3.0.0",
             info: { title: "Payments", version: "1.0.0" },
@@ -498,7 +573,8 @@ describe("createSdkConfigWorkspace", () => {
                         {
                             id: "payments",
                             type: "openapi",
-                            url: "https://example.com/openapi.yaml"
+                            url: "https://example.com/openapi.yaml",
+                            ...transforms
                         }
                     ]
                 },
@@ -518,7 +594,9 @@ describe("createSdkConfigWorkspace", () => {
         if (materialized?.type !== "openapi") {
             throw new Error("Expected an OpenAPI specification");
         }
-        expect(bundleRemoteOpenAPI).toHaveBeenCalledWith("https://example.com/openapi.yaml");
+        expect(bundleRemoteOpenAPI).toHaveBeenCalledWith("https://example.com/openapi.yaml", undefined, {
+            resolveRelativeServers
+        });
         expect(JSON.parse(await readFile(materialized.absoluteFilepath, "utf-8"))).toMatchObject({
             info: { title: "Payments" }
         });

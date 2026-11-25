@@ -1,4 +1,33 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.230.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI imports where a header with an inline enum is on most endpoints and is promoted to a
+        global header. The enum is now declared in the root package, so the IR no longer references a
+        type that does not exist and SDK generation no longer fails with "type not found".
+      type: fix
+  createdAt: "2026-11-24"
+  irVersion: 67
+- version: 5.230.1
+  changelogEntry:
+    - summary: |
+        A spec loaded from a URL in `sdk-config.yml` (for example from `fern init --openapi <url>`) now has relative
+        `servers` URLs resolved against the spec URL, so a hosted MCP server deploys without extra config. For a local
+        spec file, an MCP target with a relative `servers` URL and no `api.baseUrl` now fails with a message that names
+        `servers` and `api.baseUrl`.
+      type: fix
+  createdAt: "2026-11-24"
+  irVersion: 67
+- version: 5.230.0
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` can publish from GitHub Actions without a stored `FERN_TOKEN`. When neither `FERN_TOKEN`
+        nor a saved login is present and the job has `permissions: id-token: write`, the CLI exchanges the run's GitHub
+        OIDC token for a 1-hour organization token, provided an organization admin has trusted the repository.
+        `FERN_TOKEN` and a saved login keep precedence, and other commands are unchanged.
+      type: feat
+  createdAt: "2026-11-24"
+  irVersion: 67
 - version: 5.229.0
   changelogEntry:
     - summary: |

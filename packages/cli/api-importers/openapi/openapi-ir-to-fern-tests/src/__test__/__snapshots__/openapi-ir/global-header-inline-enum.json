@@ -1,0 +1,432 @@
+{
+  "specVersion": "1.0.0",
+  "title": "Global header inline enum",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createConsent",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "X-Request-ID",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "CreateConsentRequestXRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "PSU-Http-Method",
+          "schema": {
+            "generatedName": "CreateConsentRequestPsuHttpMethod",
+            "value": {
+              "generatedName": "CreateConsentRequestPsuHttpMethod",
+              "values": [
+                {
+                  "generatedName": "GET",
+                  "value": "GET",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "POST",
+                  "value": "POST",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PUT",
+                  "value": "PUT",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PATCH",
+                  "value": "PATCH",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "DELETE",
+                  "value": "DELETE",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "CreateConsentRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createConsentRequestAccess",
+              "key": "access",
+              "schema": {
+                "generatedName": "CreateConsentRequestAccess",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "CreateConsentRequestAccess",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "CreateConsentRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "required": true,
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/consents",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "X-Request-ID",
+              "value": {
+                "value": {
+                  "value": "X-Request-ID",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getConsent",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "consentId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetConsentRequestConsentId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "X-Request-ID",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetConsentRequestXRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "PSU-Http-Method",
+          "schema": {
+            "generatedName": "GetConsentRequestPsuHttpMethod",
+            "value": {
+              "generatedName": "GetConsentRequestPsuHttpMethod",
+              "values": [
+                {
+                  "generatedName": "GET",
+                  "value": "GET",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "POST",
+                  "value": "POST",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PUT",
+                  "value": "PUT",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PATCH",
+                  "value": "PATCH",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "DELETE",
+                  "value": "DELETE",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "GetConsentRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/consents/{consentId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "consentId",
+              "value": {
+                "value": {
+                  "value": "consentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "X-Request-ID",
+              "value": {
+                "value": {
+                  "value": "X-Request-ID",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "deleteConsent",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "consentId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeleteConsentRequestConsentId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "X-Request-ID",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "DeleteConsentRequestXRequestId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "PSU-Http-Method",
+          "schema": {
+            "generatedName": "DeleteConsentRequestPsuHttpMethod",
+            "value": {
+              "generatedName": "DeleteConsentRequestPsuHttpMethod",
+              "values": [
+                {
+                  "generatedName": "GET",
+                  "value": "GET",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "POST",
+                  "value": "POST",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PUT",
+                  "value": "PUT",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "PATCH",
+                  "value": "PATCH",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "DELETE",
+                  "value": "DELETE",
+                  "casing": {}
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "DeleteConsentRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "DELETE",
+      "path": "/consents/{consentId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "consentId",
+              "value": {
+                "value": {
+                  "value": "consentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "X-Request-ID",
+              "value": {
+                "value": {
+                  "value": "X-Request-ID",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

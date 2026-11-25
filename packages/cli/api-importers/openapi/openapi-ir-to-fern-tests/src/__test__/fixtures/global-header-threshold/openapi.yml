@@ -1,0 +1,113 @@
+openapi: 3.0.3
+info:
+  title: Global header threshold
+  version: 1.0.0
+paths:
+  /a:
+    get:
+      operationId: listA
+      parameters:
+        - name: X-Always
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Mostly-Required
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Mostly-Optional
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: X-Sometimes
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /b:
+    get:
+      operationId: listB
+      parameters:
+        - name: X-Always
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Mostly-Required
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Mostly-Optional
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: X-Sometimes
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /c:
+    get:
+      operationId: listC
+      parameters:
+        - name: X-Always
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Mostly-Required
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: X-Mostly-Optional
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+  /d:
+    get:
+      operationId: listD
+      parameters:
+        - name: X-Always
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
