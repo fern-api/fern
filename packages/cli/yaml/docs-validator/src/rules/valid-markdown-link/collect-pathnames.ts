@@ -3,6 +3,7 @@ import type { Position } from "unist";
 
 import { RuleViolation } from "../../Rule.js";
 import { safeCollectLinksAndSources } from "./collect-links.js";
+import type { IfGate } from "./if-gates.js";
 import { stripAnchorsAndSearchParams, urlMatchesInstanceHost } from "./url-utils.js";
 
 // this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
@@ -13,6 +14,8 @@ export interface PathnameToCheck {
     pathname: string;
     sourceFilepath?: AbsoluteFilePath;
     position?: Position;
+    /** version/product conditions of the `<If>` blocks enclosing the link */
+    ifGates?: IfGate[];
 }
 
 function getFrontmatterOffset(content: string): number {
@@ -75,7 +78,8 @@ export function collectPathnamesToCheck(
                     pathname: url.pathname,
                     sourceFilepath: link.sourceFilepath,
                     position: adjustedPosition(link.position, frontmatterOffset),
-                    markdown: true
+                    markdown: true,
+                    ifGates: link.ifGates
                 });
             } catch (error) {
                 violations.push({
@@ -97,7 +101,8 @@ export function collectPathnamesToCheck(
             pathname,
             sourceFilepath: link.sourceFilepath,
             position: adjustedPosition(link.position, frontmatterOffset),
-            markdown: true
+            markdown: true,
+            ifGates: link.ifGates
         });
     });
 
@@ -118,7 +123,8 @@ export function collectPathnamesToCheck(
                 pathname: source.src,
                 sourceFilepath: source.sourceFilepath,
                 position: adjustedPosition(source.position, frontmatterOffset),
-                markdown: false
+                markdown: false,
+                ifGates: source.ifGates
             });
         }
     });
