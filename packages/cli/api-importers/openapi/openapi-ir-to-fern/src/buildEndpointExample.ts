@@ -8,6 +8,7 @@ import {
     PrimitiveExample
 } from "@fern-api/openapi-ir";
 
+import { getAuthHeaderNames } from "./buildGlobalHeaders.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample.js";
 
@@ -22,7 +23,7 @@ export function buildEndpointExample({
 }): RawSchemas.ExampleEndpointCallSchema {
     const example: RawSchemas.ExampleEndpointCallSchema = {};
     if (endpointExample.type !== "full") {
-        return endpointExample.value as RawSchemas.ExampleEndpointCallSchema;
+        return removeAuthHeaders(endpointExample.value as RawSchemas.ExampleEndpointCallSchema, context);
     }
 
     if (endpointExample.name != null) {
@@ -64,19 +65,25 @@ export function buildEndpointExample({
     const globalHeaders = context.builder.getGlobalHeaders();
     const hasGlobalHeaders = Object.keys(globalHeaders).length > 0;
 
-    const endpointHeaderNames = new Set(endpointExample.headers?.map((header) => header.name) ?? []);
+    const globalHeaderNamesByLowercase = new Map(
+        Object.keys(globalHeaders).map((headerName) => [headerName.toLowerCase(), headerName])
+    );
+    const endpointHeaderExamples = (endpointExample.headers ?? []).map((header) => ({
+        ...header,
+        name: globalHeaderNamesByLowercase.get(header.name.toLowerCase()) ?? header.name
+    }));
+    const endpointHeaderNames = new Set(endpointHeaderExamples.map((header) => header.name));
+    const authHeaderName = context.builder.getAuthHeaderName()?.toLowerCase();
 
     // Generate examples for headers
     if (hasEndpointHeaders || hasGlobalHeaders) {
         const namedFullExamples: NamedFullExample[] = [];
 
         // Auth header handling
-        if (endpointExample.headers != null) {
-            for (const header of endpointExample.headers) {
-                // ignore auth headers for example generation
-                if (header.name !== context.builder.getAuthHeaderName()) {
-                    namedFullExamples.push(header);
-                }
+        for (const header of endpointHeaderExamples) {
+            // ignore auth headers for example generation
+            if (header.name.toLowerCase() !== authHeaderName) {
+                namedFullExamples.push(header);
             }
         }
 
@@ -270,4 +277,23 @@ function convertHeaderExamples({
         }
     });
     return result;
+}
+
+function removeAuthHeaders(
+    example: RawSchemas.ExampleEndpointCallSchema,
+    context: OpenApiIrConverterContext
+): RawSchemas.ExampleEndpointCallSchema {
+    if (example.headers == null) {
+        return example;
+    }
+    const globalHeaderNames = new Set(
+        Object.keys(context.builder.getGlobalHeaders()).map((headerName) => headerName.toLowerCase())
+    );
+    const authHeaderNames = new Set(
+        getAuthHeaderNames(context).filter((headerName) => !globalHeaderNames.has(headerName))
+    );
+    const headers = Object.fromEntries(
+        Object.entries(example.headers).filter(([headerName]) => !authHeaderNames.has(headerName.toLowerCase()))
+    );
+    return { ...example, headers: Object.keys(headers).length > 0 ? headers : undefined };
 }

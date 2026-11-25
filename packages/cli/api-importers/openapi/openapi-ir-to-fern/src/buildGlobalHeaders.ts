@@ -1,5 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { isHeaderAuthScheme, RawSchemas } from "@fern-api/fern-definition-schema";
 import { GlobalHeader, Header } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase } from "lodash-es";
@@ -89,10 +89,11 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
     }
 
     if (context.options.detectGlobalHeaders) {
+        const headersToIgnore = new Set([...HEADERS_TO_IGNORE, ...getAuthHeaderNames(context)]);
         const globalHeaders: Record<string, HeaderWithCount> = {};
         for (const endpoint of context.ir.endpoints) {
             for (const header of endpoint.headers) {
-                if (HEADERS_TO_IGNORE.has(header.name.toLowerCase())) {
+                if (headersToIgnore.has(header.name.toLowerCase())) {
                     continue;
                 }
                 const headerWithCount = globalHeaders[header.name] ?? new HeaderWithCount(header);
@@ -117,6 +118,21 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
             });
         }
     }
+}
+
+export function getAuthHeaderNames(context: OpenApiIrConverterContext): string[] {
+    const headerNames: string[] = [];
+    for (const scheme of Object.values(context.authOverrides?.["auth-schemes"] ?? {})) {
+        if (isHeaderAuthScheme(scheme)) {
+            headerNames.push(scheme.header.toLowerCase());
+        }
+    }
+    for (const securityScheme of Object.values(context.ir.securitySchemes)) {
+        if (securityScheme.type === "header") {
+            headerNames.push(securityScheme.headerName.toLowerCase());
+        }
+    }
+    return headerNames;
 }
 
 /**
