@@ -52,7 +52,6 @@ const UNMIGRATED_API_IMPORT_SETTING_KEY_PAIRS = [
     ["resolveAliases", "resolve-aliases"],
     ["respectForwardCompatibleEnums", "respect-forward-compatible-enums"],
     ["respectPerSpecBasePath", "respect-per-spec-base-path"],
-    ["shouldInferDiscriminatedUnionBaseProperties", "infer-discriminated-union-base-properties"],
     ["shouldUseOptionalAdditionalProperties", "optional-additional-properties"],
     ["useReadVariantForResponses", "use-read-variant-for-responses"]
 ] as const satisfies ReadonlyArray<
@@ -882,6 +881,7 @@ function projectFernApiImportSettings(
         discriminatedUnionV2: settings.shouldUseUndiscriminatedUnionsWithLiterals,
         undiscriminatedUnionsWithLiterals: settings.shouldUseUndiscriminatedUnionsWithLiterals,
         inlineAllOfSchemas: settings.inlineAllOfSchemas,
+        inferDiscriminatedUnionBaseProperties: settings.shouldInferDiscriminatedUnionBaseProperties,
         resolveSchemaCollisions: settings.resolveSchemaCollisions,
         asyncApiMessageNaming: settings.asyncApiMessageNaming,
         defaultIntegerFormat: settings.defaultIntegerFormat
@@ -948,6 +948,9 @@ function projectRawApiImportSettings(
                   undiscriminatedUnionsWithLiterals: settings["prefer-undiscriminated-unions-with-literals"]
               }),
         ...(settings["inline-all-of-schemas"] == null ? {} : { inlineAllOfSchemas: settings["inline-all-of-schemas"] }),
+        ...(settings["infer-discriminated-union-base-properties"] == null
+            ? {}
+            : { inferDiscriminatedUnionBaseProperties: settings["infer-discriminated-union-base-properties"] }),
         ...(settings["resolve-schema-collisions"] == null
             ? {}
             : { resolveSchemaCollisions: settings["resolve-schema-collisions"] }),
