@@ -8,6 +8,7 @@ import {
     PrimitiveExample
 } from "@fern-api/openapi-ir";
 
+import { getAuthHeaderNames } from "./buildGlobalHeaders.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertEndpointResponseExample, convertFullExample } from "./utils/convertFullExample.js";
 
@@ -22,7 +23,7 @@ export function buildEndpointExample({
 }): RawSchemas.ExampleEndpointCallSchema {
     const example: RawSchemas.ExampleEndpointCallSchema = {};
     if (endpointExample.type !== "full") {
-        return endpointExample.value as RawSchemas.ExampleEndpointCallSchema;
+        return removeAuthHeaders(endpointExample.value as RawSchemas.ExampleEndpointCallSchema, context);
     }
 
     if (endpointExample.name != null) {
@@ -276,4 +277,23 @@ function convertHeaderExamples({
         }
     });
     return result;
+}
+
+function removeAuthHeaders(
+    example: RawSchemas.ExampleEndpointCallSchema,
+    context: OpenApiIrConverterContext
+): RawSchemas.ExampleEndpointCallSchema {
+    if (example.headers == null) {
+        return example;
+    }
+    const globalHeaderNames = new Set(
+        Object.keys(context.builder.getGlobalHeaders()).map((headerName) => headerName.toLowerCase())
+    );
+    const authHeaderNames = new Set(
+        getAuthHeaderNames(context).filter((headerName) => !globalHeaderNames.has(headerName))
+    );
+    const headers = Object.fromEntries(
+        Object.entries(example.headers).filter(([headerName]) => !authHeaderNames.has(headerName.toLowerCase()))
+    );
+    return { ...example, headers: Object.keys(headers).length > 0 ? headers : undefined };
 }

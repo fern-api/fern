@@ -120,7 +120,7 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
     }
 }
 
-function getAuthHeaderNames(context: OpenApiIrConverterContext): string[] {
+export function getAuthHeaderNames(context: OpenApiIrConverterContext): string[] {
     const headerNames: string[] = [];
     for (const scheme of Object.values(context.authOverrides?.["auth-schemes"] ?? {})) {
         if (isHeaderAuthScheme(scheme)) {

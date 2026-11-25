@@ -4,4 +4,5 @@
     OpenAPI header parameters that match a header auth scheme declared in `generators.yml` `auth-schemes`
     are no longer promoted to global headers, and are dropped from endpoints regardless of header-name casing.
     Previously these became an extra client constructor argument alongside the auth scheme's own argument.
+    Auth headers in `x-fern-examples` are also dropped, so examples no longer fail validation with `Unexpected header`.
   type: fix

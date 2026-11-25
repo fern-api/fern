@@ -27,6 +27,9 @@ paths:
   /voices:
     get:
       operationId: listVoices
+      x-fern-examples:
+        - headers:
+            xi-api-key: example-key
       security:
         - ApiKey: []
         - Bearer: []
