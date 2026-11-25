@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern sdk migrate` now warns about legacy behavior that SDK Config generators drop: header and bearer
+    auth option names (with the `x-fern-header`/`x-fern-bearer` overlay that keeps them), generators.yml
+    API settings SDK Config v1 has no field for (such as `filter` and `resolve-aliases`), `x-fern-base-path`,
+    `x-fern-sdk-variables`, and offset `x-fern-pagination` without `step`.
+  type: fix

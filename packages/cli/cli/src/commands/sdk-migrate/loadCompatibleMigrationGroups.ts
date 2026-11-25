@@ -9,7 +9,11 @@ import { CliError } from "@fern-api/task-context";
 import { createHash, type Hash } from "crypto";
 
 import type { CliContext } from "../../cli-context/CliContext.js";
-import { type ResolvedMigrationSourceSpec, resolveMigrationSourceSpecs } from "./projectMigrationSource.js";
+import {
+    isResolvedMigrationFileSpec,
+    type ResolvedMigrationSourceSpec,
+    resolveMigrationSourceSpecs
+} from "./projectMigrationSource.js";
 
 interface LoadedGenerator {
     fernWorkspace: FernWorkspace;
@@ -84,7 +88,7 @@ export async function loadCompatibleMigrationGroups({
 
     return {
         fernWorkspace: baseline.fernWorkspace,
-        sourceSpecs: baseline.sourceSpecs,
+        sourceSpecs: withUnmigratedSettingsOfEveryTarget(baseline.sourceSpecs, loaded),
         group: {
             groupName: groups.map((group) => group.groupName).join("+"),
             audiences: baseline.group.audiences,
@@ -96,10 +100,33 @@ export async function loadCompatibleMigrationGroups({
     };
 }
 
+function withUnmigratedSettingsOfEveryTarget(
+    sourceSpecs: ResolvedMigrationSourceSpec[],
+    loaded: LoadedGenerator[]
+): ResolvedMigrationSourceSpec[] {
+    return sourceSpecs.map((spec, index) => {
+        if (!isResolvedMigrationFileSpec(spec)) {
+            return spec;
+        }
+        const settings = new Set(
+            loaded.flatMap((candidate) => {
+                const candidateSpec = candidate.sourceSpecs[index];
+                return candidateSpec != null && isResolvedMigrationFileSpec(candidateSpec)
+                    ? (candidateSpec.unmigratedApiImportSettings ?? [])
+                    : [];
+            })
+        );
+        return { ...spec, unmigratedApiImportSettings: [...settings] };
+    });
+}
+
 function migrationInputFingerprint(input: LoadedGenerator): string {
     return stableJson({
         apiSchema: apiSchemaFingerprint(input.fernWorkspace.definition, input.group.audiences),
-        sourceSpecs: input.sourceSpecs
+        // Settings SDK Config can't carry only produce warnings, so they don't make targets incompatible.
+        sourceSpecs: input.sourceSpecs.map((spec) =>
+            isResolvedMigrationFileSpec(spec) ? { ...spec, unmigratedApiImportSettings: undefined } : spec
+        )
     });
 }
 

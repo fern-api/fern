@@ -11,6 +11,7 @@ import { docsYml, generatorsYml } from "@fern-api/configuration-loader";
 import { toPosixPath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import type {
+    FernConfigMappingDiagnostic,
     SdkConfigV1GitRemote,
     SdkConfigV1ProtobufSource,
     SdkConfigV1SourceConfig,
@@ -34,6 +35,29 @@ const DOCS_IMPORT_SETTING_KEY_PAIRS = [
 const DOCS_IMPORT_SETTING_KEYS = new Set(DOCS_IMPORT_SETTING_KEY_PAIRS.map(([key]) => key));
 const RAW_DOCS_IMPORT_SETTING_KEYS = new Set(DOCS_IMPORT_SETTING_KEY_PAIRS.map(([, key]) => key));
 
+const API_IMPORT_SETTING_UNSUPPORTED = "FERN_API_IMPORT_SETTING_UNSUPPORTED";
+// generators.yml API settings that SDK Config v1 has no field for, so the new generators never see them.
+const UNMIGRATED_API_IMPORT_SETTING_KEY_PAIRS = [
+    ["filter", "filter"],
+    ["additionalPropertiesDefaultsTo", "additional-properties-defaults-to"],
+    ["coerceConstsTo", "coerce-consts-to"],
+    ["defaultFormParameterEncoding", "default-form-parameter-encoding"],
+    ["exampleGeneration", "example-generation"],
+    ["groupEnvironmentsByHost", "group-environments-by-host"],
+    ["inferDefaultEnvironment", "infer-default-environment"],
+    ["multiServerStrategy", "multi-server-strategy"],
+    ["namespacedErrors", "namespaced-errors"],
+    ["preserveSingleSchemaOneOf", "preserve-single-schema-oneof"],
+    ["removeDiscriminantsFromSchemas", "remove-discriminants-from-schemas"],
+    ["resolveAliases", "resolve-aliases"],
+    ["respectForwardCompatibleEnums", "respect-forward-compatible-enums"],
+    ["respectPerSpecBasePath", "respect-per-spec-base-path"],
+    ["shouldUseOptionalAdditionalProperties", "optional-additional-properties"],
+    ["useReadVariantForResponses", "use-read-variant-for-responses"]
+] as const satisfies ReadonlyArray<
+    readonly [keyof generatorsYml.APIDefinitionSettings, keyof generatorsYml.OpenApiSettingsSchema]
+>;
+
 export type ResolvedMigrationSourceSpec = ResolvedMigrationFileSpec | ResolvedMigrationProtobufSpec;
 
 export interface ResolvedMigrationFileSpec {
@@ -49,6 +73,8 @@ export interface ResolvedMigrationFileSpec {
     name?: string;
     namespace?: string;
     type: Exclude<SdkConfigV1SourceSpec, { proto: unknown }>["type"];
+    /** generators.yml setting names (kebab-case) that SDK Config v1 cannot carry. */
+    unmigratedApiImportSettings?: string[];
 }
 
 export function isResolvedMigrationFileSpec(spec: ResolvedMigrationSourceSpec): spec is ResolvedMigrationFileSpec {
@@ -414,6 +440,7 @@ function resolveWorkspaceSpec(
                 absoluteOverlayPaths: spec.absoluteFilepathToOverlays == null ? [] : [spec.absoluteFilepathToOverlays],
                 absoluteOverridePaths: normalizePaths(spec.absoluteFilepathToOverrides),
                 apiImportSettings: projectFernApiImportSettings(settings),
+                unmigratedApiImportSettings: unmigratedFernApiImportSettings(settings),
                 docsImportSettings: projectFernDocsImportSettings(settings, spec.settings?.errorResponses),
                 hasLegacyOnlyDocsImportSettings: hasSettingsOutsideDocsAllowlist(settings, DOCS_IMPORT_SETTING_KEYS),
                 ...(spec.source.type !== "openapi"
@@ -661,6 +688,7 @@ function resolveGeneratorSpecOverrides(
                 path.resolve(workspacePath, override)
             ),
             apiImportSettings: projectRawApiImportSettings(spec.settings),
+            unmigratedApiImportSettings: unmigratedRawApiImportSettings(spec.settings),
             docsImportSettings: projectRawDocsImportSettings(spec.settings, workspacePath),
             hasLegacyOnlyDocsImportSettings: hasSettingsOutsideDocsAllowlist(
                 spec.settings,
@@ -781,6 +809,51 @@ function normalizeRawPaths(value: generatorsYml.OverridesSchema | undefined): st
     return paths as string[];
 }
 
+/** Warns once per source spec setting that `fern sdk migrate` cannot carry into SDK Config v1. */
+export function unmigratedApiImportSettingDiagnostics(
+    specs: ResolvedMigrationSourceSpec[]
+): FernConfigMappingDiagnostic[] {
+    return specs.flatMap((spec) =>
+        isResolvedMigrationFileSpec(spec)
+            ? (spec.unmigratedApiImportSettings ?? []).map((setting) => ({
+                  code: API_IMPORT_SETTING_UNSUPPORTED,
+                  severity: "warning" as const,
+                  path: ["api", "specs", spec.namespace ?? path.basename(spec.absolutePath), "settings", setting],
+                  reason: `SDK Config v1 has no equivalent for the '${setting}' API setting, so generated SDKs no longer apply it.`,
+                  suggestedAction:
+                      setting === "filter"
+                          ? "Remove the filtered-out endpoints from the spec with an OpenAPI overlay, or confirm the SDK should include them."
+                          : `Compare the generated SDK with the legacy one and confirm it does not depend on '${setting}'.`
+              }))
+            : []
+    );
+}
+
+function unmigratedFernApiImportSettings(settings: generatorsYml.APIDefinitionSettings | undefined): string[] {
+    if (settings == null) {
+        return [];
+    }
+    return UNMIGRATED_API_IMPORT_SETTING_KEY_PAIRS.filter(
+        ([key]) =>
+            settings[key] !== undefined &&
+            !(
+                key === "removeDiscriminantsFromSchemas" &&
+                settings[key] === generatorsYml.RemoveDiscriminantsFromSchemas.Always
+            )
+    ).map(([, rawKey]) => rawKey);
+}
+
+function unmigratedRawApiImportSettings(settings: generatorsYml.OpenApiSettingsSchema | undefined): string[] {
+    if (settings == null) {
+        return [];
+    }
+    return UNMIGRATED_API_IMPORT_SETTING_KEY_PAIRS.filter(
+        ([, rawKey]) =>
+            settings[rawKey] !== undefined &&
+            !(rawKey === "remove-discriminants-from-schemas" && settings[rawKey] === "always")
+    ).map(([, rawKey]) => rawKey);
+}
+
 function projectFernApiImportSettings(
     settings: generatorsYml.APIDefinitionSettings | undefined
 ): SdkConfigV1SourceSpec["apiImportSettings"] | undefined {
@@ -808,6 +881,7 @@ function projectFernApiImportSettings(
         discriminatedUnionV2: settings.shouldUseUndiscriminatedUnionsWithLiterals,
         undiscriminatedUnionsWithLiterals: settings.shouldUseUndiscriminatedUnionsWithLiterals,
         inlineAllOfSchemas: settings.inlineAllOfSchemas,
+        inferDiscriminatedUnionBaseProperties: settings.shouldInferDiscriminatedUnionBaseProperties,
         resolveSchemaCollisions: settings.resolveSchemaCollisions,
         asyncApiMessageNaming: settings.asyncApiMessageNaming,
         defaultIntegerFormat: settings.defaultIntegerFormat
@@ -874,6 +948,9 @@ function projectRawApiImportSettings(
                   undiscriminatedUnionsWithLiterals: settings["prefer-undiscriminated-unions-with-literals"]
               }),
         ...(settings["inline-all-of-schemas"] == null ? {} : { inlineAllOfSchemas: settings["inline-all-of-schemas"] }),
+        ...(settings["infer-discriminated-union-base-properties"] == null
+            ? {}
+            : { inferDiscriminatedUnionBaseProperties: settings["infer-discriminated-union-base-properties"] }),
         ...(settings["resolve-schema-collisions"] == null
             ? {}
             : { resolveSchemaCollisions: settings["resolve-schema-collisions"] }),

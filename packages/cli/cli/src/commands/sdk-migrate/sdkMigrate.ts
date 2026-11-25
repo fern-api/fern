@@ -34,8 +34,10 @@ import {
     type ResolvedMigrationSourceSpec,
     resolveMigrationPathParameterStyle,
     resolveWorkspaceSourceSpecs,
-    serializeMigrationSource
+    serializeMigrationSource,
+    unmigratedApiImportSettingDiagnostics
 } from "./projectMigrationSource.js";
+import { scanSourceSpecExtensions } from "./scanSourceSpecExtensions.js";
 import { selectMigrationTarget } from "./selectMigrationTarget.js";
 
 export interface SdkMigrateArgs {
@@ -119,6 +121,14 @@ export async function sdkMigrate({
         throw error;
     }
 
+    mapped = {
+        ...mapped,
+        diagnostics: [
+            ...mapped.diagnostics,
+            ...unmigratedApiImportSettingDiagnostics(sourceSpecs),
+            ...(await scanSourceSpecExtensions(sourceSpecs))
+        ]
+    };
     printDiagnostics(cliContext, mapped.diagnostics);
     if (args.strict && mapped.diagnostics.length > 0) {
         throw new CliError({
