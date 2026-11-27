@@ -69,4 +69,41 @@ describe("error page redirects in the docs config", () => {
             redirect("/docs/api/errors/not-found-error", "/docs/v2/api/get")
         ]);
     });
+
+    it("keeps the product prefix on the unversioned URL in a versioned product", () => {
+        const productRoot = {
+            type: "root",
+            slug: "docs",
+            child: {
+                type: "productgroup",
+                children: [
+                    {
+                        type: "product",
+                        slug: "docs/plants",
+                        child: {
+                            type: "versioned",
+                            children: [
+                                {
+                                    type: "version",
+                                    slug: "docs/plants/v2",
+                                    default: true,
+                                    child: { type: "unversioned", child: { type: "sidebarRoot", children: [] } }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        };
+        expect(
+            withErrorPageRedirects(
+                [redirect("/docs/plants/v2/api/errors/not-found-error", "/docs/plants/v2/api/get")],
+                undefined,
+                productRoot
+            )
+        ).toEqual([
+            redirect("/docs/plants/v2/api/errors/not-found-error", "/docs/plants/v2/api/get"),
+            redirect("/docs/plants/api/errors/not-found-error", "/docs/plants/v2/api/get")
+        ]);
+    });
 });

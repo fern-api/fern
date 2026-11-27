@@ -1197,19 +1197,26 @@ export class DocsDefinitionResolver {
         if (errorPageRedirects.length === 0) {
             return redirects;
         }
-        const defaultVersionSlugs: FernNavigation.V1.Slug[] = [];
-        FernNavigation.V1.traverseDF(root, (node) => {
+        // Each default version's slug, with the slug its unversioned URLs hang off (its product's, else the root's).
+        const defaultVersions: { versionSlug: FernNavigation.V1.Slug; scopeSlug: FernNavigation.V1.Slug }[] = [];
+        FernNavigation.V1.traverseDF(root, (node, parents) => {
             if (node.type === "version" && node.default) {
-                defaultVersionSlugs.push(node.slug);
+                const product = parents.findLast((parent) => parent.type === "product");
+                defaultVersions.push({ versionSlug: node.slug, scopeSlug: product?.slug ?? root.slug });
             }
         });
         const unversioned = errorPageRedirects.flatMap((redirect) => {
             const source = FernNavigation.V1.Slug(redirect.source.replace(/^\//, ""));
-            const versionSlug = defaultVersionSlugs.find((slug) => source.startsWith(`${slug}/`));
-            if (versionSlug == null) {
+            const version = defaultVersions.find(({ versionSlug }) => source.startsWith(`${versionSlug}/`));
+            if (version == null) {
                 return [];
             }
-            return [{ ...redirect, source: `/${FernNavigation.V1.toDefaultSlug(source, root.slug, versionSlug)}` }];
+            return [
+                {
+                    ...redirect,
+                    source: `/${FernNavigation.V1.toDefaultSlug(source, version.scopeSlug, version.versionSlug)}`
+                }
+            ];
         });
         return [...(redirects ?? []), ...errorPageRedirects, ...unversioned];
     }
