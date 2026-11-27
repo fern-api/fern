@@ -93,6 +93,23 @@ type ApiTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "apiT
 /** The error-page member of {@link FernNavigation.V1.ApiPackageChild}, emitted when the API section sets `error-pages: true`. */
 type ApiErrorChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "apiError" }>;
 
+interface DeclaredApiError {
+    name: string;
+    statusCode: number;
+    availability: APIV1Read.Availability | undefined;
+    /** Last URL segment of the error's page, unique within the API. */
+    urlSlug: string;
+    /** Endpoints that declare the error, in API definition order. */
+    endpointIds: FernNavigation.V1.EndpointId[];
+}
+
+/** A `docs.yml`-style redirect from a turned-off error page to where its error is documented. */
+export interface ErrorPageRedirect {
+    source: string;
+    destination: string;
+    permanent: boolean;
+}
+
 const API_ERRORS_URL_SLUG = "errors";
 const API_ERRORS_TITLE = "Errors";
 
@@ -1668,68 +1685,29 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.V1.SlugGenerator,
         parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageChild | undefined {
-        const api = this.#holder.api;
-        const errors = new Map<
-            string,
-            { name: string; statusCode: number; availability: APIV1Read.Availability | undefined }
-        >();
-        for (const pkg of [api.rootPackage, ...Object.values(api.subpackages)]) {
-            for (const endpoint of pkg.endpoints) {
-                for (const error of endpoint.errorsV2 ?? []) {
-                    if (error.name == null || error.name.length === 0 || error.isWildcard === true) {
-                        continue;
-                    }
-                    const key = `${error.statusCode}:${error.name}`;
-                    if (!errors.has(key)) {
-                        errors.set(key, {
-                            name: error.name,
-                            statusCode: error.statusCode,
-                            availability: error.availability ?? undefined
-                        });
-                    }
-                }
-            }
-        }
-        if (errors.size === 0) {
+        const errors = this.#collectDeclaredErrors();
+        if (errors.length === 0) {
             return undefined;
         }
-
-        const statusCountByName = new Map<string, number>();
-        for (const { name } of errors.values()) {
-            statusCountByName.set(name, (statusCountByName.get(name) ?? 0) + 1);
-        }
         const errorsSlug = parentSlug.append(API_ERRORS_URL_SLUG);
-        const usedSlugs = new Set<string>();
-        const children: ApiErrorChildNode[] = [...errors.values()]
-            .sort((a, b) => a.statusCode - b.statusCode || a.name.localeCompare(b.name, "en"))
-            .map(({ name, statusCode, availability }) => {
-                const baseSlug =
-                    (statusCountByName.get(name) ?? 0) > 1 ? `${kebabCase(name)}-${statusCode}` : kebabCase(name);
-                let slug = baseSlug;
-                for (let n = 2; usedSlugs.has(slug); n++) {
-                    slug = `${baseSlug}-${n}`;
-                }
-                usedSlugs.add(slug);
-                return {
-                    id: this.#idgen.get(`${this.apiDefinitionId}:apiError:${statusCode}:${name}`),
-                    type: "apiError",
-                    collapsed: undefined,
-                    errorName: name,
-                    statusCode,
-                    title: name,
-                    slug: errorsSlug.append(slug).get(),
-                    icon: undefined,
-                    hidden: true,
-                    apiDefinitionId: this.apiDefinitionId,
-                    availability:
-                        FernNavigation.V1.convertAvailability(availability) ??
-                        convertDocsAvailability(parentAvailability),
-                    authed: undefined,
-                    viewers: undefined,
-                    orphaned: undefined,
-                    featureFlags: undefined
-                };
-            });
+        const children: ApiErrorChildNode[] = errors.map(({ name, statusCode, availability, urlSlug }) => ({
+            id: this.#idgen.get(`${this.apiDefinitionId}:apiError:${statusCode}:${name}`),
+            type: "apiError",
+            collapsed: undefined,
+            errorName: name,
+            statusCode,
+            title: name,
+            slug: errorsSlug.append(urlSlug).get(),
+            icon: undefined,
+            hidden: true,
+            apiDefinitionId: this.apiDefinitionId,
+            availability:
+                FernNavigation.V1.convertAvailability(availability) ?? convertDocsAvailability(parentAvailability),
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        }));
 
         return {
             id: this.#idgen.get(`${this.apiDefinitionId}:errors`),
@@ -1753,6 +1731,98 @@ export class ApiReferenceNodeConverter {
             orphaned: undefined,
             featureFlags: undefined
         } as ApiPackageNodeWithCollapsibleConfig;
+    }
+
+    /**
+     * Every distinct error the API declares, keyed by name and status code, sorted by status code
+     * then name, each with its URL segment and the endpoints that declare it. A name declared with
+     * more than one status code gets the status code appended to its segment. Wildcard (`4XX`) and
+     * unnamed declarations are left out.
+     */
+    #collectDeclaredErrors(): DeclaredApiError[] {
+        const api = this.#holder.api;
+        const errors = new Map<string, Omit<DeclaredApiError, "urlSlug">>();
+        for (const pkg of [api.rootPackage, ...Object.values(api.subpackages)]) {
+            for (const endpoint of pkg.endpoints) {
+                for (const error of endpoint.errorsV2 ?? []) {
+                    if (error.name == null || error.name.length === 0 || error.isWildcard === true) {
+                        continue;
+                    }
+                    const key = `${error.statusCode}:${error.name}`;
+                    let entry = errors.get(key);
+                    if (entry == null) {
+                        entry = {
+                            name: error.name,
+                            statusCode: error.statusCode,
+                            availability: error.availability ?? undefined,
+                            endpointIds: []
+                        };
+                        errors.set(key, entry);
+                    }
+                    const endpointId = this.#holder.getEndpointId(endpoint);
+                    if (endpointId != null && !entry.endpointIds.includes(endpointId)) {
+                        entry.endpointIds.push(endpointId);
+                    }
+                }
+            }
+        }
+
+        const statusCountByName = new Map<string, number>();
+        for (const { name } of errors.values()) {
+            statusCountByName.set(name, (statusCountByName.get(name) ?? 0) + 1);
+        }
+        const usedSlugs = new Set<string>();
+        return [...errors.values()]
+            .sort((a, b) => a.statusCode - b.statusCode || a.name.localeCompare(b.name, "en"))
+            .map((error) => {
+                const baseSlug =
+                    (statusCountByName.get(error.name) ?? 0) > 1
+                        ? `${kebabCase(error.name)}-${error.statusCode}`
+                        : kebabCase(error.name);
+                let urlSlug = baseSlug;
+                for (let n = 2; usedSlugs.has(urlSlug); n++) {
+                    urlSlug = `${baseSlug}-${n}`;
+                }
+                usedSlugs.add(urlSlug);
+                return { ...error, urlSlug };
+            });
+    }
+
+    /**
+     * With `error-pages` off, a redirect from each error's page URL to the first endpoint page that
+     * returns the error, or to the API reference home when none of them has a page. Links to pages
+     * from a publish with the setting on (for example in a released SDK) keep landing somewhere
+     * useful. The redirects are temporary, so turning the setting back on serves the pages again.
+     * A URL that is a page in this API reference is never redirected.
+     */
+    public getErrorPageRedirects(apiReferenceNode: FernNavigation.V1.ApiReferenceNode): ErrorPageRedirect[] {
+        if (this.apiSection.errorPages === true) {
+            return [];
+        }
+        const errors = this.#collectDeclaredErrors();
+        if (errors.length === 0) {
+            return [];
+        }
+        const pageSlugs = new Set<string>();
+        const endpointSlugs = new Map<FernNavigation.V1.EndpointId, string>();
+        FernNavigation.V1.traverseDF(apiReferenceNode, (node) => {
+            if (FernNavigation.V1.hasMetadata(node)) {
+                pageSlugs.add(node.slug);
+            }
+            if (node.type === "endpoint" && !endpointSlugs.has(node.endpointId)) {
+                endpointSlugs.set(node.endpointId, node.slug);
+            }
+        });
+        const errorsSlug = this.#slug.append(API_ERRORS_URL_SLUG);
+        const home = apiReferenceNode.slug;
+        return errors.flatMap(({ urlSlug, endpointIds }) => {
+            const source = errorsSlug.append(urlSlug).get();
+            if (pageSlugs.has(source)) {
+                return [];
+            }
+            const destination = endpointIds.map((id) => endpointSlugs.get(id)).find(isNonNullish) ?? home;
+            return [{ source: `/${source}`, destination: `/${destination}`, permanent: false }];
+        });
     }
 
     #buildGraphqlTypeChildNode(

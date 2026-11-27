@@ -6,7 +6,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 
-import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter.js";
+import { ApiReferenceNodeConverter, type ErrorPageRedirect } from "../ApiReferenceNodeConverter.js";
 import { NodeIdGenerator } from "../NodeIdGenerator.js";
 import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition.js";
 
@@ -19,6 +19,7 @@ const FIXTURE = "fixtures/api-error-navigation/fern";
 async function convertFixture({ errorPages = true }: { errorPages?: boolean } = {}): Promise<{
     node: FernNavigation.V1.ApiReferenceNode;
     apiDefinition: FdrAPI.api.v1.read.ApiDefinition;
+    redirects: ErrorPageRedirect[];
 }> {
     const fernDirectory = resolve(AbsoluteFilePath.of(__dirname), FIXTURE);
 
@@ -69,7 +70,7 @@ async function convertFixture({ errorPages = true }: { errorPages?: boolean } = 
 
     const apiDefinition = convertIrToApiDefinition({ ir, apiDefinitionId, context });
 
-    const node = new ApiReferenceNodeConverter(
+    const converter = new ApiReferenceNodeConverter(
         { ...apiSection, errorPages },
         apiDefinition,
         FernNavigation.V1.SlugGenerator.init("/base/path"),
@@ -86,8 +87,9 @@ async function convertFixture({ errorPages = true }: { errorPages?: boolean } = 
         undefined,
         undefined,
         undefined
-    ).get();
-    return { node, apiDefinition };
+    );
+    const node = converter.get();
+    return { node, apiDefinition, redirects: converter.getErrorPageRedirects(node) };
 }
 
 type ApiErrorChild = Extract<FernNavigation.V1.ApiPackageChild, { type: "apiError" }>;
@@ -126,5 +128,39 @@ describe("API error navigation (`error-pages: true`)", () => {
     it("emits nothing when the flag is off", async () => {
         const { node } = await convertFixture({ errorPages: false });
         expect(errorsSection(node)).toBeUndefined();
+    });
+
+    it("adds no redirects when the flag is on", async () => {
+        const { redirects } = await convertFixture();
+        expect(redirects).toEqual([]);
+    });
+
+    it("redirects each error page URL to the first endpoint returning it when the flag is off", async () => {
+        const { node, redirects } = await convertFixture({ errorPages: false });
+        const endpointSlugs = new Map<string, string>();
+        FernNavigation.V1.traverseDF(node, (child) => {
+            if (child.type === "endpoint") {
+                endpointSlugs.set(child.endpointId, child.slug);
+            }
+        });
+        const slugFor = (suffix: string) => [...endpointSlugs].find(([id]) => id.endsWith(suffix))?.[1];
+        expect(redirects).toEqual([
+            {
+                source: "/base/path/api-reference/errors/not-found-error",
+                destination: `/${slugFor("getPlant")}`,
+                permanent: false
+            },
+            {
+                source: "/base/path/api-reference/errors/gone-error",
+                destination: `/${slugFor("deletePlant")}`,
+                permanent: false
+            },
+            {
+                source: "/base/path/api-reference/errors/too-many-requests-error",
+                destination: `/${slugFor("getPlant")}`,
+                permanent: false
+            }
+        ]);
+        expect(redirects.every(({ destination }) => destination !== "/undefined")).toBe(true);
     });
 });

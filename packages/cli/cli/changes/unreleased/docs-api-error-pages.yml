@@ -6,5 +6,7 @@
     `/api-reference/errors/not-found-error`), listing the error's status code, description, body
     fields, an example and the endpoints that return it. The pages are hidden from the sidebar and are
     included in search and `llms.txt`. A name declared with more than one status code gets the status
-    code appended to its URL. Off by default.
+    code appended to its URL. Off by default. When the setting is off, each error's URL redirects
+    (307) to the first endpoint page that returns the error, so links to error pages from an earlier
+    publish keep working.
   type: feat
