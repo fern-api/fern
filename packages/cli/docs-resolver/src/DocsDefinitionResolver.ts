@@ -86,7 +86,7 @@ type AIChatConfigWithUnpublishedFields = NonNullable<DocsV1Write.DocsConfig["aiC
     buttonText?: string;
 };
 
-import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
+import { ApiReferenceNodeConverter, type ErrorPageRedirect } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { type ProfileVarsScope } from "./ProfileVarsScope.js";
@@ -572,6 +572,7 @@ export class DocsDefinitionResolver {
         translatedIrsByLocale?: Map<string, IntermediateRepresentation>;
     }> = [];
     private pendingApiCounter = 0;
+    private errorPageRedirects: ErrorPageRedirect[] = [];
     private skippedApiCounter = 0;
     private skippedApiDefinitions: Record<string, APIV1Read.ApiDefinition> = {};
     /**
@@ -586,6 +587,7 @@ export class DocsDefinitionResolver {
 
         // Reset referenced markdown files to prevent accumulation if resolver is reused
         this.referencedMarkdownFiles = [];
+        this.errorPageRedirects = [];
 
         this.taskContext.logger.debug("Parsing docs configuration...");
         const parseStart = performance.now();
@@ -1181,6 +1183,44 @@ export class DocsDefinitionResolver {
         return url.pathname;
     }
 
+    /**
+     * Authored redirects first, so a `docs.yml` redirect for an error page URL wins over the generated
+     * one. An error page under the default version was also served without the version prefix, so
+     * its redirect is emitted for that URL too.
+     */
+    private withErrorPageRedirects(
+        redirects: DocsV1Write.RedirectConfig[] | undefined,
+        root: FernNavigation.V1.RootNode
+    ): DocsV1Write.RedirectConfig[] | undefined {
+        // Resolvers built without the constructor (in tests) have no collected redirects.
+        const errorPageRedirects = this.errorPageRedirects ?? [];
+        if (errorPageRedirects.length === 0) {
+            return redirects;
+        }
+        // Each default version's slug, with the slug its unversioned URLs hang off (its product's, else the root's).
+        const defaultVersions: { versionSlug: FernNavigation.V1.Slug; scopeSlug: FernNavigation.V1.Slug }[] = [];
+        FernNavigation.V1.traverseDF(root, (node, parents) => {
+            if (node.type === "version" && node.default) {
+                const product = parents.findLast((parent) => parent.type === "product");
+                defaultVersions.push({ versionSlug: node.slug, scopeSlug: product?.slug ?? root.slug });
+            }
+        });
+        const unversioned = errorPageRedirects.flatMap((redirect) => {
+            const source = FernNavigation.V1.Slug(redirect.source.replace(/^\//, ""));
+            const version = defaultVersions.find(({ versionSlug }) => source.startsWith(`${versionSlug}/`));
+            if (version == null) {
+                return [];
+            }
+            return [
+                {
+                    ...redirect,
+                    source: `/${FernNavigation.V1.toDefaultSlug(source, version.scopeSlug, version.versionSlug)}`
+                }
+            ];
+        });
+        return [...(redirects ?? []), ...errorPageRedirects, ...unversioned];
+    }
+
     private async convertDocsConfiguration(root: FernNavigation.V1.RootNode): Promise<DocsV1Write.DocsConfig> {
         const integrations =
             this.parsedDocsConfig.integrations != null || this.parsedDocsConfig.context7File != null
@@ -1266,7 +1306,7 @@ export class DocsDefinitionResolver {
                       } as DocsV1Write.DocsConfig["agents"])
                     : undefined,
             metadata: this.convertMetadata(),
-            redirects: this.parsedDocsConfig.redirects,
+            redirects: this.withErrorPageRedirects(this.parsedDocsConfig.redirects, root),
             remotePaths: this.parsedDocsConfig.remotePaths,
             integrations,
             footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
@@ -2574,6 +2614,7 @@ export class DocsDefinitionResolver {
         }
 
         const apiReferenceNode = node.get();
+        this.errorPageRedirects.push(...node.getErrorPageRedirects(apiReferenceNode));
 
         // Translated API IRs need an OSS workspace whose spec file paths can be remapped to the
         // translated dir; they're built with the same parser (v3, or v2) as the base locale.

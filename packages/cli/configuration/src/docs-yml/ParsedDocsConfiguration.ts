@@ -582,6 +582,7 @@ export declare namespace DocsNavigationItem {
         paginated: boolean;
         showScopes: boolean;
         types: boolean;
+        errorPages: boolean;
         playground: PlaygroundSettings | undefined;
     }
 

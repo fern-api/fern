@@ -1819,6 +1819,7 @@ async function convertNavigationItem({
             paginated: rawConfig.paginated ?? false,
             showScopes: rawConfig.showScopes ?? false,
             types: rawConfig.types ?? false,
+            errorPages: rawConfig.errorPages ?? false,
             playground: rawConfig.playground,
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,

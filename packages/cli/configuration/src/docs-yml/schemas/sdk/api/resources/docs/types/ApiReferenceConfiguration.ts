@@ -51,6 +51,8 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     showScopes?: boolean;
     /** If `types` is set to true, every schema that no endpoint, webhook or WebSocket of the API references gets its own page, grouped under a `Types` section at the end of the API reference. Schemas an operation references are still documented inline on that operation's page. */
     types?: boolean;
+    /** If `error-pages` is set to true, every error the API declares gets its own page at `<api>/errors/<error-name>`, listing the error's status code, description, body fields, an example and the endpoints that return it. The pages are hidden from the sidebar and are included in search and `llms.txt`. */
+    errorPages?: boolean;
     /** Settings for the api playground that affects all endpoints. */
     playground?: FernDocsConfig.PlaygroundSettings;
 }

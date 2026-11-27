@@ -971,6 +971,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         paginated: z.boolean().optional(),
         "show-scopes": z.boolean().optional(),
         types: z.boolean().optional(),
+        "error-pages": z.boolean().optional(),
         playground: PlaygroundSettings.optional()
     })
 );
