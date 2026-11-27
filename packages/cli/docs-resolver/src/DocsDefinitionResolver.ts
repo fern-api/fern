@@ -1183,13 +1183,35 @@ export class DocsDefinitionResolver {
         return url.pathname;
     }
 
-    /** Authored redirects first, so a `docs.yml` redirect for an error page URL wins over the generated one. */
+    /**
+     * Authored redirects first, so a `docs.yml` redirect for an error page URL wins over the generated
+     * one. An error page under the default version was also served without the version prefix, so
+     * its redirect is emitted for that URL too.
+     */
     private withErrorPageRedirects(
-        redirects: DocsV1Write.RedirectConfig[] | undefined
+        redirects: DocsV1Write.RedirectConfig[] | undefined,
+        root: FernNavigation.V1.RootNode
     ): DocsV1Write.RedirectConfig[] | undefined {
         // Resolvers built without the constructor (in tests) have no collected redirects.
         const errorPageRedirects = this.errorPageRedirects ?? [];
-        return errorPageRedirects.length > 0 ? [...(redirects ?? []), ...errorPageRedirects] : redirects;
+        if (errorPageRedirects.length === 0) {
+            return redirects;
+        }
+        const defaultVersionSlugs: FernNavigation.V1.Slug[] = [];
+        FernNavigation.V1.traverseDF(root, (node) => {
+            if (node.type === "version" && node.default) {
+                defaultVersionSlugs.push(node.slug);
+            }
+        });
+        const unversioned = errorPageRedirects.flatMap((redirect) => {
+            const source = FernNavigation.V1.Slug(redirect.source.replace(/^\//, ""));
+            const versionSlug = defaultVersionSlugs.find((slug) => source.startsWith(`${slug}/`));
+            if (versionSlug == null) {
+                return [];
+            }
+            return [{ ...redirect, source: `/${FernNavigation.V1.toDefaultSlug(source, root.slug, versionSlug)}` }];
+        });
+        return [...(redirects ?? []), ...errorPageRedirects, ...unversioned];
     }
 
     private async convertDocsConfiguration(root: FernNavigation.V1.RootNode): Promise<DocsV1Write.DocsConfig> {
@@ -1277,7 +1299,7 @@ export class DocsDefinitionResolver {
                       } as DocsV1Write.DocsConfig["agents"])
                     : undefined,
             metadata: this.convertMetadata(),
-            redirects: this.withErrorPageRedirects(this.parsedDocsConfig.redirects),
+            redirects: this.withErrorPageRedirects(this.parsedDocsConfig.redirects, root),
             remotePaths: this.parsedDocsConfig.remotePaths,
             integrations,
             footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
