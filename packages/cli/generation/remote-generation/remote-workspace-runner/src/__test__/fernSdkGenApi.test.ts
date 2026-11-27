@@ -4883,7 +4883,8 @@ describe("sdk-gen-api build telemetry", () => {
         const { outcome, targetId } = startBuild(instrumentPostHogEvent);
 
         await expect(outcome).rejects.toMatchObject({ message: "Generator crashed" });
-        expect(instrumentPostHogEvent).toHaveBeenCalledExactlyOnceWith({
+        expect(instrumentPostHogEvent).toHaveBeenCalledTimes(2);
+        expect(instrumentPostHogEvent).toHaveBeenNthCalledWith(1, {
             orgId: "acme",
             command: "sdk-gen-api build submitted",
             properties: {
@@ -4901,6 +4902,19 @@ describe("sdk-gen-api build telemetry", () => {
                 sdkVersion: "1.2.3"
             }
         });
+        expect(instrumentPostHogEvent).toHaveBeenNthCalledWith(2, {
+            orgId: "acme",
+            command: "sdk-gen-api build finished",
+            properties: expect.objectContaining({
+                sdkGenApiBuildId: "build-1",
+                sdkGenApiTargetId: targetId,
+                sdkGenApiTargetStatus: "failed",
+                succeeded: false,
+                timedOut: false,
+                generatorName: "fernapi/fern-typescript-sdk",
+                language: "typescript"
+            })
+        });
     });
 
     it("does not fail the build when telemetry throws", async () => {
@@ -4910,7 +4924,7 @@ describe("sdk-gen-api build telemetry", () => {
         const { outcome } = startBuild(instrumentPostHogEvent);
 
         await expect(outcome).rejects.toMatchObject({ message: "Generator crashed" });
-        expect(instrumentPostHogEvent).toHaveBeenCalledOnce();
+        expect(instrumentPostHogEvent).toHaveBeenCalledTimes(2);
     });
 });
 

@@ -1689,10 +1689,12 @@ async function executeFernSdkGenApiBuild(
                     )
                 )
             );
+            instrumentFernSdkGenApiBuildFinished({ participants, request, origin, buildId, status });
             logGuestBuildLink({ participant: first, status, buildId });
             return results;
         }
         if (isFinalPoll) {
+            instrumentFernSdkGenApiBuildFinished({ participants, request, origin, buildId, status, timedOut: true });
             return first.context.failAndThrow(
                 `Timed out waiting for sdk-gen-api build ${buildId} after ${POLL_TIMEOUT_MS / 60_000} minutes`,
                 undefined,
@@ -1740,6 +1742,59 @@ function instrumentFernSdkGenApiBuildSubmitted({
                     outputMode: target.requestedOutput.type,
                     sdkName: target.sdk.name,
                     sdkVersion: target.sdk.version
+                }
+            });
+        } catch (error) {
+            participant.context.logger.debug(`[telemetry] failed to send sdk-gen-api build event: ${String(error)}`);
+        }
+    }
+}
+
+/**
+ * Records each target's outcome once the build stops, with the same properties as the submitted
+ * event, so pass/fail rates can be read per generator and organization.
+ */
+function instrumentFernSdkGenApiBuildFinished({
+    participants,
+    request,
+    origin,
+    buildId,
+    status,
+    timedOut = false
+}: {
+    participants: FernSdkGenApiBuildParameters[];
+    request: FernSdkGenApiRequest;
+    origin: string;
+    buildId: string;
+    status: FernBuildStatus;
+    timedOut?: boolean;
+}): void {
+    for (const [index, participant] of participants.entries()) {
+        const target = request.targets[index];
+        if (target == null) {
+            continue;
+        }
+        const result = status.targets.find((candidate) => candidate.targetId === target.targetId);
+        try {
+            participant.context.instrumentPostHogEvent({
+                orgId: participant.organization,
+                command: "sdk-gen-api build finished",
+                properties: {
+                    sdkGenApiBuildId: buildId,
+                    sdkGenApiTargetId: target.targetId,
+                    sdkGenApiHost: new URL(origin).host,
+                    sdkGenApiBuildStatus: status.status,
+                    sdkGenApiTargetStatus: result?.status ?? "missing",
+                    succeeded: !timedOut && result?.status === "succeeded",
+                    timedOut,
+                    errorCode: result?.error?.code,
+                    publicationStatus: result?.publication?.status,
+                    apiName: request.apiName,
+                    generatorName: target.fernGenerator.id,
+                    generatorVersion: target.fernGenerator.version ?? participant.generatorInvocation.version,
+                    language: target.language,
+                    payloadKind: target.payloadKind,
+                    outputMode: target.requestedOutput.type
                 }
             });
         } catch (error) {
