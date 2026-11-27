@@ -15,7 +15,12 @@ import { describe, expect, it, vi } from "vitest";
 
 import type { CliContext } from "../../../cli-context/CliContext.js";
 import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.js";
-import { mapFernDefinitionToSdkConfigApi, mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
+import {
+    enableLegacyTestGeneration,
+    existingSdkConfigConfiguresTests,
+    mapFernDefinitionToSdkConfigApi,
+    mapFernGroupToSdkConfig
+} from "../mapFernGroupToSdkConfig.js";
 import {
     identifySourceDerivedApiFields,
     isResolvedMigrationFileSpec,
@@ -69,6 +74,36 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.package).toBeUndefined();
         expect(result.sdkConfig.docs).toBeUndefined();
         expect(result.sdkConfig.generation).toBeUndefined();
+    });
+
+    it("enables unit tests for migrated configs that do not configure tests", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]),
+            source: createSource()
+        });
+
+        expect(enableLegacyTestGeneration(result.sdkConfig).generation).toEqual({ unitTests: { enabled: true } });
+    });
+
+    it("keeps configured test settings when enabling legacy test generation", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]),
+            source: createSource()
+        });
+        const configured = { ...result.sdkConfig, generation: { wireTests: { enabled: false } } };
+
+        expect(enableLegacyTestGeneration(configured)).toBe(configured);
+    });
+
+    it("detects test settings in an existing SDK Config so a merge keeps them", () => {
+        expect(existingSdkConfigConfiguresTests(undefined)).toBe(false);
+        expect(existingSdkConfigConfiguresTests("schemaVersion: sdk-config/v1\ntargets: []\n")).toBe(false);
+        expect(existingSdkConfigConfiguresTests("generation:\n  unitTests:\n    enabled: false\ntargets: []\n")).toBe(
+            true
+        );
+        expect(existingSdkConfigConfiguresTests("generation:\n  wireTests:\n    enabled: true\n")).toBe(true);
     });
 
     it("uses an explicitly resolved SDK name", () => {

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern sdk migrate` now sets `generation.unitTests.enabled: true` in the migrated `sdk-config.yml`, so SDK Config
+    generators keep writing the tests that legacy generators wrote by default. It also warns when a bearer scheme's
+    `token.name` can't be migrated and suggests the `x-fern-bearer` extension that keeps the parameter name.
+  type: fix

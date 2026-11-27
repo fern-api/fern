@@ -38,6 +38,7 @@ interface FernAuthSelection {
 interface LostField {
     path: Path;
     reason: string;
+    suggestedAction?: string;
 }
 
 type SchemeMapping = { scheme: SdkConfigAuthScheme; lostFields: LostField[] } | { unsupportedReason: string };
@@ -191,7 +192,7 @@ function mapFernAuthScheme(
                 ...optional("environmentVariable", bearer.token?.env),
                 ...optional("description", description)
             },
-            lostFields: []
+            lostFields: bearer.token?.name == null ? [] : [bearerTokenNameLostField(id, bearer.token.name)]
         }),
         oauth: (oauth) => mapFernOAuthScheme(id, oauth, description, definition),
         inferredBearer: () => ({
@@ -601,7 +602,17 @@ function fieldUnsupportedDiagnostic(id: string, index: number, field: LostField)
         path: ["auth-schemes", id, ...field.path],
         reason: `Fern auth scheme '${id}' was migrated without ${field.path.join(".")}: ${field.reason}.`,
         sdkConfigPath: ["api", "auth", "schemes", index],
-        suggestedAction: `Review api.auth.schemes.${index} ('${id}') and confirm the generated SDK does not depend on ${field.path.join(".")}.`
+        suggestedAction:
+            field.suggestedAction ??
+            `Review api.auth.schemes.${index} ('${id}') and confirm the generated SDK does not depend on ${field.path.join(".")}.`
+    };
+}
+
+function bearerTokenNameLostField(id: string, name: string): LostField {
+    return {
+        path: ["token", "name"],
+        reason: "SDK Config v1 bearer schemes have no parameter name, so the SDKs fall back to the generator's default token parameter name",
+        suggestedAction: `To keep the '${name}' parameter name, set \`x-fern-bearer: { name: ${name} }\` on the '${id}' security scheme in your OpenAPI spec or an overlay.`
     };
 }
 

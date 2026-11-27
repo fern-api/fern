@@ -10,6 +10,7 @@ import {
     type SdkConfigV1SourceConfig,
     validateSdkConfigV1
 } from "@postman/sdk-config/sdk-config/v1";
+import YAML from "yaml";
 import { mapFernAuthToSdkConfig } from "./mapFernAuthToSdkConfig.js";
 import type { SourceDerivedApiFields } from "./projectMigrationSource.js";
 
@@ -87,6 +88,31 @@ export function mapFernGroupToSdkConfig({
             })
         }
     };
+}
+
+/**
+ * Legacy Fern generators always write unit tests, while SDK Config generators only write tests when
+ * `generation.unitTests` or `generation.wireTests` is enabled. Migrated configs opt in so the first
+ * SDK Config generation keeps the test suite.
+ */
+export function enableLegacyTestGeneration(sdkConfig: MappingResult["sdkConfig"]): MappingResult["sdkConfig"] {
+    const generation = sdkConfig.generation;
+    if (generation?.unitTests != null || generation?.wireTests != null) {
+        return sdkConfig;
+    }
+    return { ...sdkConfig, generation: { ...generation, unitTests: { enabled: true } } };
+}
+
+/** Whether an existing sdk-config.yml sets root `generation.unitTests` or `generation.wireTests`, which a merge must keep. */
+export function existingSdkConfigConfiguresTests(contents: string | undefined): boolean {
+    if (contents == null) {
+        return false;
+    }
+    const parsed: unknown = YAML.parse(contents);
+    if (!isRecord(parsed) || !isRecord(parsed.generation)) {
+        return false;
+    }
+    return parsed.generation.unitTests != null || parsed.generation.wireTests != null;
 }
 
 function sanitizeMigratedPublishIntent<
