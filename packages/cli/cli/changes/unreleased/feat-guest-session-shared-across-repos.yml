@@ -1,0 +1,6 @@
+- summary: |
+    `fern generate --guest` now reuses the live guest session this machine last used even from another
+    repository, so docs published from several repos land in one guest session and one claim gets them all;
+    `fern/.guest-session` in a repo still wins, and `--new-session` still starts a fresh one. The docs.yml URL
+    is sent to FDR so each docs project gets its own Fern Drop site within the session.
+  type: feat
