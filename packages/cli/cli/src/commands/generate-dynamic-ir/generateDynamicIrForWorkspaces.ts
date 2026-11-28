@@ -5,6 +5,7 @@ import { CliError } from "@fern-api/task-context";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { generateIrForFernWorkspace } from "../generate-ir/generateIrForFernWorkspace.js";
+import { resolveCasingForIr } from "../generate-ir/resolveCasingForIr.js";
 
 export async function generateDynamicIrForWorkspaces({
     project,
@@ -24,7 +25,8 @@ export async function generateDynamicIrForWorkspaces({
     audiences: Audiences;
     version: string | undefined;
     keywords: string[] | undefined;
-    smartCasing: boolean;
+    /** Explicit `--smart-casing`/`--no-smart-casing`; when undefined, read from generators.yml for `generationLanguage`. */
+    smartCasing: boolean | undefined;
     disableDynamicExamples: boolean;
 }): Promise<void> {
     await Promise.all(
@@ -32,13 +34,15 @@ export async function generateDynamicIrForWorkspaces({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName ?? "api"}`);
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
+                const casing = resolveCasingForIr({ workspace, generationLanguage, smartCasing, context });
 
                 const intermediateRepresentation = await generateIrForFernWorkspace({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage,
                     keywords,
-                    smartCasing,
+                    smartCasing: casing.smartCasing,
+                    smartCasingDigitWordBoundary: casing.smartCasingDigitWordBoundary,
                     disableExamples: false,
                     audiences,
                     readme: undefined,

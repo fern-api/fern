@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern ir --language <lang>` and `fern dynamic-ir --language <lang>` now default `smart-casing` (and
+    `smart-casing-digit-word-boundary`) from that language's generator in generators.yml, the same way `fern generate`
+    and docs publishing do. For a Go generator with `smart-casing: true`, `fern ir --language go` yields `StoreID`
+    instead of `StoreId` without passing `--smart-casing`. An explicit `--smart-casing` / `--no-smart-casing` still
+    wins.
+  type: fix

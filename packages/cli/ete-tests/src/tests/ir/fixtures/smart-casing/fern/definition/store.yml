@@ -1,0 +1,18 @@
+types:
+  Identifier:
+    properties:
+      idType: string
+      value: string
+
+service:
+  auth: false
+  base-path: /stores
+  endpoints:
+    createIdentifier:
+      method: POST
+      path: /{storeId}/profiles/{profileId}/identifiers
+      path-parameters:
+        storeId: string
+        profileId: string
+      request: Identifier
+      response: Identifier
